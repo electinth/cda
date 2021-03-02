@@ -1,10 +1,10 @@
-const { tailwindExtractor } = require("tailwindcss/lib/lib/purgeUnusedStyles");
-const defaultTheme = require("tailwindcss/defaultTheme");
+const { tailwindExtractor } = require('tailwindcss/lib/lib/purgeUnusedStyles');
+const defaultTheme = require('tailwindcss/defaultTheme');
 
 module.exports = {
   purge: {
-    mode: "all",
-    content: ["./src/**/*.svelte", "./src/**/*.html"],
+    mode: 'all',
+    content: ['./src/**/*.svelte', './src/**/*.html'],
     options: {
       defaultExtractor: (content) => [
         ...tailwindExtractor(content),
@@ -19,9 +19,9 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     fontFamily: {
-      heading: ["Kondolar Thai", ...defaultTheme.fontFamily.serif],
-      subtitle: ["Anuphan", ...defaultTheme.fontFamily.sans],
-      body: ["Bai Jamjuri", ...defaultTheme.fontFamily.sans],
+      heading: ['Kondolar Thai', ...defaultTheme.fontFamily.serif],
+      subtitle: ['Anuphan', ...defaultTheme.fontFamily.sans],
+      body: ['Bai Jamjuri', ...defaultTheme.fontFamily.sans],
     },
     extend: {},
   },

@@ -1,0 +1,4 @@
+__sapper__
+node_modules
+static/global.css
+package-lock.json
