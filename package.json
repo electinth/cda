@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "compression": "^1.7.1",
+    "@electinth/common": "^1.0.0",
     "polka": "next",
     "sirv": "^1.0.0"
   },
