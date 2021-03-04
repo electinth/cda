@@ -1,7 +1,11 @@
+<script>
+  import CdaSpace from '../components/cda-space.svelte';
+</script>
+
 <svelte:head>
-  <title>Sapper project template</title>
+  <title>ELECT - CDA</title>
 </svelte:head>
 
-<h1 class="text-2xl font-bold">Great success!</h1>
-
-<p>Try editing this file (src/routes/index.svelte) to test live reloading.</p>
+<div class="h-screen">
+  <CdaSpace />
+</div>
