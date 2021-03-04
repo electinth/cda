@@ -4,22 +4,30 @@ import { Sphere } from './sphere';
 const SPHERE_SIZE = 4;
 const SPACE_BETWEEN_SPHERE = 4;
 
-export const SpherePlane = (amount: number) => {
-  const group = new Group();
+export class SpherePlane extends Group {
+  isSpinning = true;
 
-  const radius =
-    (amount * (2 * SPHERE_SIZE + SPACE_BETWEEN_SPHERE)) / (2 * Math.PI);
-  const oneSphereRadient = (Math.PI * 2) / amount;
+  constructor(amount: number) {
+    super();
 
-  for (let i = 0; i < amount; i++) {
-    const sphere = Sphere(SPHERE_SIZE);
+    const radius =
+      (amount * (2 * SPHERE_SIZE + SPACE_BETWEEN_SPHERE)) / (2 * Math.PI);
+    const oneSphereRadient = (Math.PI * 2) / amount;
 
-    sphere.position.setFromSpherical(
-      new Spherical(radius, i * oneSphereRadient)
-    );
+    for (let i = 0; i < amount; i++) {
+      const sphere = new Sphere(SPHERE_SIZE);
 
-    group.add(sphere);
+      sphere.position.setFromSpherical(
+        new Spherical(radius, i * oneSphereRadient)
+      );
+
+      this.add(sphere);
+    }
   }
 
-  return group;
-};
+  spin() {
+    if (this.isSpinning) {
+      this.rotateX(Math.PI / 2000);
+    }
+  }
+}

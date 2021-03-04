@@ -3,6 +3,9 @@
   import * as THREE from 'three';
   import { SpherePlane } from '../utils/three/sphere-plane';
 
+  const PLANE_DISTANCE = 200;
+  const CDA_IN_EACH_YEAR = [40, 240, 99, 100];
+
   let container: HTMLElement;
 
   onMount(() => {
@@ -22,29 +25,28 @@
       1000
     );
 
+    camera.position.x = 10;
+    camera.position.y = -20;
+    camera.lookAt(0, 0, 0);
+
     const renderer = new THREE.WebGLRenderer();
     renderer.setSize(container.clientWidth, container.clientHeight);
     container.appendChild(renderer.domElement);
 
-    const plane2 = SpherePlane(100);
-    const plane = SpherePlane(240);
+    const spherePlanes = CDA_IN_EACH_YEAR.map((cdaAmount, index) => {
+      const spherePlane = new SpherePlane(cdaAmount);
+      spherePlane.position.x =
+        (PLANE_DISTANCE * CDA_IN_EACH_YEAR.length) / 2 - index * PLANE_DISTANCE;
 
-    plane.position.x = -100;
-    plane2.position.x = 100;
+      return spherePlane;
+    });
 
-    scene.add(plane);
-    scene.add(plane2);
-
-    camera.position.x = 10;
-    camera.position.y = -20;
-
-    camera.lookAt(0, 0, 0);
+    scene.add(...spherePlanes);
 
     const animate = function () {
       requestAnimationFrame(animate);
 
-      plane.rotateX(Math.PI / 2000);
-      plane2.rotateX(-Math.PI / 2000);
+      spherePlanes.forEach((plane) => plane.spin());
 
       renderer.render(scene, camera);
     };
