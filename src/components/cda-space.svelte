@@ -26,8 +26,8 @@
     renderer.setSize(container.clientWidth, container.clientHeight);
     container.appendChild(renderer.domElement);
 
-    const plane2 = SpherePlane(100, 200);
-    const plane = SpherePlane(240, 500);
+    const plane2 = SpherePlane(100);
+    const plane = SpherePlane(240);
 
     plane.position.x = -100;
     plane2.position.x = 100;

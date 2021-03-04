@@ -1,17 +1,24 @@
-import { Group } from 'three';
+import { Group, Spherical } from 'three';
 import { Sphere } from './sphere';
 
-export const SpherePlane = (amount, radius) => {
+const SPHERE_SIZE = 4;
+const SPACE_BETWEEN_SPHERE = 4;
+
+export const SpherePlane = (amount: number) => {
   const group = new Group();
 
+  const radius =
+    (amount * (2 * SPHERE_SIZE + SPACE_BETWEEN_SPHERE)) / (2 * Math.PI);
+  const oneSphereRadient = (Math.PI * 2) / amount;
+
   for (let i = 0; i < amount; i++) {
-    group.add(
-      Sphere(
-        radius,
-        (i * (Math.PI * 2)) / amount,
-        i < amount / 3 ? 0x00ff00 : i < (amount * 2) / 3 ? 0x0000ff : 0xff0000
-      )
+    const sphere = Sphere(SPHERE_SIZE);
+
+    sphere.position.setFromSpherical(
+      new Spherical(radius, i * oneSphereRadient)
     );
+
+    group.add(sphere);
   }
 
   return group;
