@@ -5,8 +5,6 @@ const SPHERE_SIZE = 4;
 const SPACE_BETWEEN_SPHERE = 4;
 
 export class SpherePlane extends Group {
-  isSpinning = true;
-
   constructor(amount: number) {
     super();
 
@@ -26,8 +24,6 @@ export class SpherePlane extends Group {
   }
 
   spin() {
-    if (this.isSpinning) {
-      this.rotateX(Math.PI / 2000);
-    }
+    this.rotateX(Math.PI / 2000);
   }
 }

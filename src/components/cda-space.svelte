@@ -70,6 +70,8 @@
   };
 
   onMount(() => {
+    let isSpinning = true;
+
     renderer = new WebGLRenderer();
     renderer.setPixelRatio(window.devicePixelRatio);
 
@@ -90,14 +92,18 @@
       ) {
         hoveredSphere.resetColor();
         hoveredSphere = null;
+        isSpinning = true;
       }
 
       if (intersection && intersection.object.type === 'SphereMesh') {
+        isSpinning = false;
         hoveredSphere = intersection.object as Sphere;
         hoveredSphere.setColor('#000000');
       }
 
-      spherePlanes.forEach((plane) => plane.spin());
+      if (isSpinning) {
+        spherePlanes.forEach((plane) => plane.spin());
+      }
 
       renderer.render(scene, camera);
     };
