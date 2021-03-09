@@ -1,36 +1,57 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import * as THREE from 'three';
+  import {
+    Raycaster,
+    Scene,
+    Color,
+    OrthographicCamera,
+    WebGLRenderer,
+    AxesHelper,
+    Vector2,
+  } from 'three';
+  import type { Sphere } from '../utils/three/sphere';
   import { SpherePlane } from '../utils/three/sphere-plane';
 
+  const FRUSTUM_SIZE = 1000;
   const PLANE_DISTANCE = 200;
   const CDA_IN_EACH_YEAR = [40, 240, 99, 100];
 
   let container: HTMLElement;
+  let mouse = new Vector2(1, 1);
+
+  const updateMousePosition = (event: MouseEvent) => {
+    event.preventDefault();
+
+    const { offsetX, offsetY } = event;
+
+    mouse.x = (offsetX / container.clientWidth) * 2 - 1;
+    mouse.y = -(offsetY / container.clientHeight) * 2 + 1;
+  };
 
   onMount(() => {
-    const scene = new THREE.Scene();
+    const scene = new Scene();
+    scene.background = new Color('#ffffff');
 
-    const axesHelper = new THREE.AxesHelper(500);
+    const axesHelper = new AxesHelper(500);
     scene.add(axesHelper);
 
-    scene.background = new THREE.Color('ffffff');
+    const aspect = container.clientWidth / container.clientHeight;
 
-    const camera = new THREE.OrthographicCamera(
-      container.clientWidth / -2,
-      container.clientWidth / 2,
-      container.clientHeight / 2,
-      container.clientHeight / -2,
-      -1000,
-      1000
+    const camera = new OrthographicCamera(
+      (FRUSTUM_SIZE * aspect) / -2,
+      (FRUSTUM_SIZE * aspect) / 2,
+      FRUSTUM_SIZE / 2,
+      FRUSTUM_SIZE / -2,
+      0,
+      10000
     );
 
-    camera.position.x = 10;
-    camera.position.y = -20;
-    camera.lookAt(0, 0, 0);
+    camera.position.set(1000, -2000, 0);
+    camera.lookAt(scene.position);
 
-    const renderer = new THREE.WebGLRenderer();
+    const renderer = new WebGLRenderer();
     renderer.setSize(container.clientWidth, container.clientHeight);
+    renderer.setPixelRatio(window.devicePixelRatio);
     container.appendChild(renderer.domElement);
 
     const spherePlanes = CDA_IN_EACH_YEAR.map((cdaAmount, index) => {
@@ -43,8 +64,32 @@
 
     scene.add(...spherePlanes);
 
-    const animate = function () {
+    const raycaster = new Raycaster();
+    let hoveredSphere: Sphere = null;
+
+    const spheres = spherePlanes.reduce(
+      (flatChildren, plane) => [...flatChildren, ...plane.children],
+      []
+    );
+
+    const animate = () => {
       requestAnimationFrame(animate);
+
+      raycaster.setFromCamera(mouse, camera);
+      const [intersection] = raycaster.intersectObjects(spheres);
+
+      if (
+        hoveredSphere &&
+        (!intersection || intersection.object.uuid !== hoveredSphere.uuid)
+      ) {
+        hoveredSphere.resetColor();
+        hoveredSphere = null;
+      }
+
+      if (intersection && intersection.object.type === 'SphereMesh') {
+        hoveredSphere = intersection.object as Sphere;
+        hoveredSphere.setColor('#000000');
+      }
 
       spherePlanes.forEach((plane) => plane.spin());
 
@@ -55,4 +100,9 @@
   });
 </script>
 
-<div class="w-full h-full flex-1" bind:this={container} />
+<!-- <div>{mouse.x}, {mouse.y}</div> -->
+<div
+  class="w-full h-full flex-1"
+  bind:this={container}
+  on:mousemove={updateMousePosition}
+/>
