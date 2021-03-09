@@ -7,5 +7,5 @@
 </svelte:head>
 
 <div class="h-screen">
-  <CdaSpace />
+  <CdaSpace on:nodeclick={console.log} />
 </div>

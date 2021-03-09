@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
+  import { createEventDispatcher, onMount } from 'svelte';
   import {
     Raycaster,
     Scene,
@@ -19,6 +19,8 @@
   let container: HTMLElement;
   let mouse = new Vector2(1, 1);
   let hoveredSphere: Sphere = null;
+
+  const dispatch = createEventDispatcher();
 
   const scene = new Scene();
   scene.background = new Color('#ffffff');
@@ -116,4 +118,5 @@
   class="w-full h-full flex-1"
   bind:this={container}
   on:mousemove={updateMousePosition}
+  on:click={() => hoveredSphere && dispatch('nodeclick', hoveredSphere)}
 />
