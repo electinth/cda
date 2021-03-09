@@ -2,10 +2,12 @@
   import Nav from '../components/nav.svelte';
 
   export let segment: string;
+
+  $: activePath = segment || '';
 </script>
 
 <div class="flex flex-col min-h-screen">
-  <Nav {segment} />
+  <Nav {activePath} />
 
   <slot />
 
