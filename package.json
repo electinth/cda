@@ -19,7 +19,9 @@
   "dependencies": {
     "@electinth/common": "^1.1.0",
     "compression": "^1.7.1",
+    "node-sass": "^5.0.0",
     "polka": "next",
+    "sass": "^1.32.8",
     "sirv": "^1.0.0",
     "three": "^0.126.1"
   },

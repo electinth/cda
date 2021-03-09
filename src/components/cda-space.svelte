@@ -31,7 +31,7 @@
   const spherePlanes = CDA_IN_EACH_YEAR.map((cdaAmount, index) => {
     const spherePlane = new SpherePlane(cdaAmount);
     spherePlane.position.x =
-      (PLANE_DISTANCE * CDA_IN_EACH_YEAR.length) / 2 - index * PLANE_DISTANCE;
+      PLANE_DISTANCE * ((CDA_IN_EACH_YEAR.length - 1) / 2 - index);
 
     return spherePlane;
   });

@@ -6,6 +6,16 @@
   <title>ELECT - CDA</title>
 </svelte:head>
 
-<div class="h-screen">
+<section>
   <CdaSpace on:nodeclick={console.log} />
-</div>
+</section>
+
+<style lang="scss">
+  section {
+    height: calc(100vh - 2.5rem);
+
+    @media (min-width: 768px) {
+      height: calc(100vh - 3rem);
+    }
+  }
+</style>
