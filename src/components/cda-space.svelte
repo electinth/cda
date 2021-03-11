@@ -29,7 +29,12 @@
   scene.add(axesHelper);
 
   const spherePlanes = CDA_IN_EACH_YEAR.map((cdaAmount, index) => {
-    const spherePlane = new SpherePlane(cdaAmount);
+    const spherePlane = new SpherePlane(
+      new Array(cdaAmount).fill({
+        accentColor: new Color('#ffd3d3'),
+        group: index % 2 === 0 ? `${index}` : null,
+      })
+    );
     spherePlane.position.x =
       PLANE_DISTANCE * ((CDA_IN_EACH_YEAR.length - 1) / 2 - index);
 
@@ -45,7 +50,7 @@
   const raycaster = new Raycaster();
   let renderer: WebGLRenderer;
 
-  const spheres = spherePlanes.reduce(
+  const spheres: Sphere[] = spherePlanes.reduce(
     (flatChildren, plane) => [...flatChildren, ...plane.children],
     []
   );
@@ -82,8 +87,19 @@
 
     container.appendChild(renderer.domElement);
 
-    const animate = () => {
-      requestAnimationFrame(animate);
+    const updateSpheresState = (action: 'toNormalState' | 'toHoverState') => {
+      if (hoveredSphere.group) {
+        spheres.forEach(
+          (sphere) =>
+            sphere.isInTheSameGroupWith(hoveredSphere) && sphere[action]()
+        );
+      } else {
+        hoveredSphere[action]();
+      }
+    };
+
+    const onEachFrame = () => {
+      requestAnimationFrame(onEachFrame);
 
       raycaster.setFromCamera(mouse, camera);
       const [intersection] = raycaster.intersectObjects(spheres);
@@ -92,7 +108,7 @@
         hoveredSphere &&
         (!intersection || intersection.object.uuid !== hoveredSphere.uuid)
       ) {
-        hoveredSphere.resetColor();
+        updateSpheresState('toNormalState');
         hoveredSphere = null;
         isSpinning = true;
       }
@@ -100,7 +116,7 @@
       if (intersection && intersection.object.type === 'SphereMesh') {
         isSpinning = false;
         hoveredSphere = intersection.object as Sphere;
-        hoveredSphere.setColor('#000000');
+        updateSpheresState('toHoverState');
       }
 
       if (isSpinning) {
@@ -110,7 +126,7 @@
       renderer.render(scene, camera);
     };
 
-    animate();
+    onEachFrame();
   });
 </script>
 

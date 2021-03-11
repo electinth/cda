@@ -1,29 +1,30 @@
 import { Group, Spherical } from 'three';
-import { Sphere } from './sphere';
+import { Sphere, SphereConstructorProps, SPHERE_SIZE } from './sphere';
 
-const SPHERE_SIZE = 4;
 const SPACE_BETWEEN_SPHERE = 4;
+const SPIN_FRAME_ROTATION = Math.PI / 2000;
 
 export class SpherePlane extends Group {
-  constructor(amount: number) {
+  constructor(spheresData: SphereConstructorProps[]) {
     super();
 
     const radius =
-      (amount * (2 * SPHERE_SIZE + SPACE_BETWEEN_SPHERE)) / (2 * Math.PI);
-    const oneSphereRadient = (Math.PI * 2) / amount;
+      (spheresData.length * (2 * SPHERE_SIZE + SPACE_BETWEEN_SPHERE)) /
+      (2 * Math.PI);
+    const oneSphereRadient = (Math.PI * 2) / spheresData.length;
 
-    for (let i = 0; i < amount; i++) {
-      const sphere = new Sphere(SPHERE_SIZE);
+    spheresData.forEach((data, i) => {
+      const sphere = new Sphere(data);
 
       sphere.position.setFromSpherical(
         new Spherical(radius, i * oneSphereRadient)
       );
 
       this.add(sphere);
-    }
+    });
   }
 
   spin() {
-    this.rotateX(Math.PI / 2000);
+    this.rotateX(SPIN_FRAME_ROTATION);
   }
 }
