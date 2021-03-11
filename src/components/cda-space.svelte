@@ -28,15 +28,25 @@
   const axesHelper = new AxesHelper(500);
   scene.add(axesHelper);
 
-  const spherePlanes = CDA_IN_EACH_YEAR.map((cdaAmount, index) => {
+  const spherePlanes = CDA_IN_EACH_YEAR.map((cdaAmount, yearIndex) => {
     const spherePlane = new SpherePlane(
-      new Array(cdaAmount).fill({
-        accentColor: new Color('#ffd3d3'),
-        group: index % 2 === 0 ? `${index}` : null,
-      })
+      new Array(cdaAmount)
+        .fill({
+          accentColor: new Color('#ff5555'),
+          group: yearIndex % 2 === 0 ? `${yearIndex}` : null,
+        })
+        .map((sphere, sphereIndex) => ({
+          ...sphere,
+          ...(yearIndex % 2 !== 0 && sphereIndex % 10 === 0
+            ? {
+                primaryColor: new Color('#ff5555'),
+                data: 'DATA',
+              }
+            : {}),
+        }))
     );
     spherePlane.position.x =
-      PLANE_DISTANCE * ((CDA_IN_EACH_YEAR.length - 1) / 2 - index);
+      PLANE_DISTANCE * ((CDA_IN_EACH_YEAR.length - 1) / 2 - yearIndex);
 
     return spherePlane;
   });
@@ -113,7 +123,11 @@
         isSpinning = true;
       }
 
-      if (intersection && intersection.object.type === 'SphereMesh') {
+      if (
+        intersection &&
+        intersection.object.type === 'SphereMesh' &&
+        intersection.object.uuid !== hoveredSphere?.uuid
+      ) {
         isSpinning = false;
         hoveredSphere = intersection.object as Sphere;
         updateSpheresState('toHoverState');
