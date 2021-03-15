@@ -7,11 +7,11 @@
   let tooltip: TooltipProps;
 
   const onMouseOverNode = ({
-    detail: { pointerOffset, data },
+    detail: { offset, data },
   }: CustomEvent<NodeEventDetail>) => {
     if (data) {
       tooltip = {
-        offset: pointerOffset,
+        offset,
         label: data as string,
       };
     }

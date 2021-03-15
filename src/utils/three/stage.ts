@@ -7,11 +7,13 @@ import {
   AxesHelper,
   Vector2,
   Object3D,
+  Vector3,
 } from 'three';
 
 const FRUSTUM_SIZE = 1000;
 
 export const createStage = () => {
+  let container: HTMLElement;
   let renderer: WebGLRenderer;
 
   const scene = new Scene();
@@ -26,7 +28,8 @@ export const createStage = () => {
 
   const raycaster = new Raycaster();
 
-  const updateCanvasSize = ({ clientWidth, clientHeight }: HTMLElement) => {
+  const updateCanvasSize = () => {
+    const { clientWidth, clientHeight } = container;
     const aspect = clientWidth / clientHeight;
 
     camera.left = (FRUSTUM_SIZE * aspect) / -2;
@@ -38,12 +41,14 @@ export const createStage = () => {
     renderer.setSize(clientWidth, clientHeight);
   };
 
-  const initRenderer = (container: HTMLElement) => {
+  const initRenderer = (htmlContainer: HTMLElement) => {
+    container = htmlContainer;
+
     renderer = new WebGLRenderer();
     renderer.setPixelRatio(window.devicePixelRatio);
 
     container.appendChild(renderer.domElement);
-    updateCanvasSize(container);
+    updateCanvasSize();
   };
 
   const renderScene = () => renderer.render(scene, camera);
@@ -53,13 +58,25 @@ export const createStage = () => {
     return raycaster.intersectObjects(objects);
   };
 
+  const getObjectCanvasOffset = (object: Object3D) => {
+    const position = new Vector3();
+
+    object.updateWorldMatrix(true, false);
+    object.getWorldPosition(position);
+    position.project(camera);
+
+    return {
+      x: (position.x * 0.5 + 0.5) * container.clientWidth,
+      y: (position.y * -0.5 + 0.5) * container.clientHeight,
+    };
+  };
+
   return {
     scene,
-    camera,
-    raycaster,
     renderScene,
     initRenderer,
     updateCanvasSize,
     getMouseIntersections,
+    getObjectCanvasOffset,
   };
 };

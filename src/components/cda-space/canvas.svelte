@@ -1,7 +1,7 @@
 <script lang="ts" context="module">
   import type { CartesianCoord } from './tooltip.svelte';
   export interface NodeEventDetail {
-    pointerOffset: CartesianCoord;
+    offset: CartesianCoord;
     data: unknown;
   }
 </script>
@@ -17,16 +17,8 @@
   const CDA_IN_EACH_YEAR = [40, 240, 99, 100];
 
   let container: HTMLElement,
-    pointerOffset = { x: 0, y: 0 },
     mouse = new Vector2(1, 1),
     hoveredSphere: Sphere = null;
-
-  $: {
-    if (container) {
-      mouse.x = (pointerOffset.x / container.clientWidth) * 2 - 1;
-      mouse.y = -(pointerOffset.y / container.clientHeight) * 2 + 1;
-    }
-  }
 
   const dispatch = createEventDispatcher();
 
@@ -36,6 +28,7 @@
     renderScene,
     updateCanvasSize,
     getMouseIntersections,
+    getObjectCanvasOffset,
   } = createStage();
 
   const spherePlanes = CDA_IN_EACH_YEAR.map((cdaAmount, yearIndex) => {
@@ -71,14 +64,14 @@
   const updateMousePosition = (event: MouseEvent) => {
     event.preventDefault();
 
-    pointerOffset = {
-      x: event.offsetX,
-      y: event.offsetY,
-    };
+    const { offsetX, offsetY } = event;
+
+    mouse.x = (offsetX / container.clientWidth) * 2 - 1;
+    mouse.y = -(offsetY / container.clientHeight) * 2 + 1;
   };
 
   const parseNodeEventDetail = (): NodeEventDetail => ({
-    pointerOffset,
+    offset: getObjectCanvasOffset(hoveredSphere),
     data: hoveredSphere.data,
   });
 
@@ -87,7 +80,7 @@
 
     initRenderer(container);
 
-    window.addEventListener('resize', () => updateCanvasSize(container));
+    window.addEventListener('resize', updateCanvasSize);
 
     const updateSpheresState = (action: 'toNormalState' | 'toHoverState') => {
       if (hoveredSphere.group) {
