@@ -1,6 +1,6 @@
 <script lang="ts" context="module">
   import type { CartesianCoord } from './tooltip.svelte';
-  export interface NodeEventDetail {
+  export interface DataNode {
     offset: CartesianCoord;
     data: unknown;
   }
@@ -12,6 +12,8 @@
   import type { Sphere } from '../../utils/three/sphere';
   import { SpherePlane } from '../../utils/three/sphere-plane';
   import { createStage } from '../../utils/three/stage';
+
+  export let selectedNode: DataNode;
 
   const PLANE_DISTANCE = 200;
   const CDA_IN_EACH_YEAR = [40, 240, 99, 100];
@@ -70,14 +72,20 @@
     mouse.y = -(offsetY / container.clientHeight) * 2 + 1;
   };
 
-  const parseNodeEventDetail = (): NodeEventDetail => ({
+  const parseDataNode = (): DataNode => ({
     offset: getObjectCanvasOffset(hoveredSphere),
     data: hoveredSphere.data,
   });
 
-  onMount(() => {
-    let isSpinning = true;
+  const onContainerClick = () => {
+    if (hoveredSphere?.data) {
+      selectedNode = parseDataNode();
+    } else {
+      selectedNode = null;
+    }
+  };
 
+  onMount(() => {
     initRenderer(container);
 
     window.addEventListener('resize', updateCanvasSize);
@@ -104,7 +112,6 @@
       ) {
         updateSpheresState('toNormalState');
         hoveredSphere = null;
-        isSpinning = true;
 
         dispatch('nodemouseleave');
       }
@@ -114,14 +121,13 @@
         intersection.object.type === 'SphereMesh' &&
         intersection.object.uuid !== hoveredSphere?.uuid
       ) {
-        isSpinning = false;
         hoveredSphere = intersection.object as Sphere;
         updateSpheresState('toHoverState');
 
-        dispatch('nodemouseover', parseNodeEventDetail());
+        dispatch('nodemouseover', parseDataNode());
       }
 
-      if (isSpinning) {
+      if (!selectedNode && !hoveredSphere) {
         spherePlanes.forEach((plane) => plane.spin());
       }
 
@@ -136,6 +142,5 @@
   class="w-full h-full flex-1"
   bind:this={container}
   on:mousemove={updateMousePosition}
-  on:click={() =>
-    hoveredSphere && dispatch('nodeclick', parseNodeEventDetail())}
+  on:click={onContainerClick}
 />
