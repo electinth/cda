@@ -1,24 +1,15 @@
-<script lang="ts" context="module">
-  const TOP_OFFSET = 16;
-  export interface CartesianCoord {
-    x: number;
-    y: number;
-  }
-
-  export interface TooltipProps {
-    offset: CartesianCoord;
-    label: string;
-  }
-</script>
-
 <script lang="ts">
-  export let offset: CartesianCoord;
-  export let label: string;
+  import type { ScreenCoord } from './index.svelte';
+
+  const TOP_OFFSET = 16;
+
+  export let offset: ScreenCoord;
+  export let data: unknown;
 </script>
 
 <div
   class="absolute transform -translate-x-1/2 -translate-y-full p-2 rounded shadow bg-white"
   style="top: {offset.y - TOP_OFFSET}px; left: {offset.x}px;"
 >
-  {label}
+  {JSON.stringify(data)}
 </div>

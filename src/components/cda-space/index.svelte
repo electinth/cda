@@ -1,20 +1,22 @@
+<script lang="ts" context="module">
+  export interface ScreenCoord {
+    x: number;
+    y: number;
+  }
+</script>
+
 <script lang="ts">
   import Canvas from './canvas.svelte';
   import type { DataNode } from './canvas.svelte';
   import Tooltip from './tooltip.svelte';
-  import type { TooltipProps } from './tooltip.svelte';
+  import Marker from './marker.svelte';
 
-  let tooltip: TooltipProps;
+  let hoveredNode: DataNode;
   let selectedNode: DataNode;
 
-  const onMouseOverNode = ({
-    detail: { offset, data },
-  }: CustomEvent<DataNode>) => {
-    if (data) {
-      tooltip = {
-        offset,
-        label: data as string,
-      };
+  const onMouseOverNode = ({ detail }: CustomEvent<DataNode>) => {
+    if (detail.data) {
+      hoveredNode = detail;
     }
   };
 </script>
@@ -23,10 +25,13 @@
   <Canvas
     bind:selectedNode
     on:nodemouseover={onMouseOverNode}
-    on:nodemouseleave={() => (tooltip = null)}
+    on:nodemouseleave={() => (hoveredNode = null)}
   />
-  {#if tooltip}
-    <Tooltip {...tooltip} />
+  {#if hoveredNode}
+    <Tooltip {...hoveredNode} />
+  {/if}
+  {#if selectedNode || hoveredNode}
+    <Marker {...selectedNode || hoveredNode} />
   {/if}
   {#if selectedNode}
     <div class="absolute top-0 left-0">

@@ -1,7 +1,7 @@
 <script lang="ts" context="module">
-  import type { CartesianCoord } from './tooltip.svelte';
+  import type { ScreenCoord } from './index.svelte';
   export interface DataNode {
-    offset: CartesianCoord;
+    offset: ScreenCoord;
     data: unknown;
   }
 </script>
@@ -13,7 +13,7 @@
   import { SpherePlane } from '../../utils/three/sphere-plane';
   import { createStage } from '../../utils/three/stage';
 
-  export let selectedNode: DataNode;
+  export let selectedNode: DataNode | null;
 
   const PLANE_DISTANCE = 200;
   const CDA_IN_EACH_YEAR = [40, 240, 99, 100];
@@ -45,7 +45,9 @@
           ...(yearIndex % 2 !== 0 && sphereIndex % 10 === 0
             ? {
                 primaryColor: new Color('#ff5555'),
-                data: 'DATA',
+                data: {
+                  number: yearIndex,
+                },
               }
             : {}),
         }))
