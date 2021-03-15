@@ -1,9 +1,9 @@
 <script lang="ts">
   import { createEventDispatcher, onMount } from 'svelte';
   import { Color, Vector2 } from 'three';
-  import type { Sphere } from '../utils/three/sphere';
-  import { SpherePlane } from '../utils/three/sphere-plane';
-  import { createStage } from '../utils/three/stage';
+  import type { Sphere } from '../../utils/three/sphere';
+  import { SpherePlane } from '../../utils/three/sphere-plane';
+  import { createStage } from '../../utils/three/stage';
 
   const PLANE_DISTANCE = 200;
   const CDA_IN_EACH_YEAR = [40, 240, 99, 100];

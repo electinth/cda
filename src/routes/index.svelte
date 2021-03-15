@@ -1,5 +1,5 @@
 <script>
-  import CdaSpace from '../components/cda-space.svelte';
+  import CdaSpace from '../components/cda-space/index.svelte';
 </script>
 
 <svelte:head>
@@ -7,7 +7,7 @@
 </svelte:head>
 
 <section>
-  <CdaSpace on:nodeclick={console.log} />
+  <CdaSpace />
 </section>
 
 <style lang="scss">
