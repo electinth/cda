@@ -1,18 +1,10 @@
 <script lang="ts">
   import { createEventDispatcher, onMount } from 'svelte';
-  import {
-    Raycaster,
-    Scene,
-    Color,
-    OrthographicCamera,
-    WebGLRenderer,
-    AxesHelper,
-    Vector2,
-  } from 'three';
+  import { Color, Vector2 } from 'three';
   import type { Sphere } from '../utils/three/sphere';
   import { SpherePlane } from '../utils/three/sphere-plane';
+  import { createStage } from '../utils/three/stage';
 
-  const FRUSTUM_SIZE = 1000;
   const PLANE_DISTANCE = 200;
   const CDA_IN_EACH_YEAR = [40, 240, 99, 100];
 
@@ -22,11 +14,13 @@
 
   const dispatch = createEventDispatcher();
 
-  const scene = new Scene();
-  scene.background = new Color('#ffffff');
-
-  const axesHelper = new AxesHelper(500);
-  scene.add(axesHelper);
+  const {
+    scene,
+    initRenderer,
+    renderScene,
+    updateCanvasSize,
+    getMouseIntersections,
+  } = createStage();
 
   const spherePlanes = CDA_IN_EACH_YEAR.map((cdaAmount, yearIndex) => {
     const spherePlane = new SpherePlane(
@@ -53,13 +47,6 @@
 
   scene.add(...spherePlanes);
 
-  const camera = new OrthographicCamera(0, 0, 0, 0, 0, 10000);
-  camera.position.set(1000, -2000, 0);
-  camera.lookAt(scene.position);
-
-  const raycaster = new Raycaster();
-  let renderer: WebGLRenderer;
-
   const spheres: Sphere[] = spherePlanes.reduce(
     (flatChildren, plane) => [...flatChildren, ...plane.children],
     []
@@ -74,28 +61,12 @@
     mouse.y = -(offsetY / container.clientHeight) * 2 + 1;
   };
 
-  const updateCanvasSize = ({ clientWidth, clientHeight }: HTMLElement) => {
-    const aspect = clientWidth / clientHeight;
-
-    camera.left = (FRUSTUM_SIZE * aspect) / -2;
-    camera.right = (FRUSTUM_SIZE * aspect) / 2;
-    camera.top = FRUSTUM_SIZE / 2;
-    camera.bottom = FRUSTUM_SIZE / -2;
-    camera.updateProjectionMatrix();
-
-    renderer.setSize(clientWidth, clientHeight);
-  };
-
   onMount(() => {
     let isSpinning = true;
 
-    renderer = new WebGLRenderer();
-    renderer.setPixelRatio(window.devicePixelRatio);
+    initRenderer(container);
 
-    updateCanvasSize(container);
     window.addEventListener('resize', () => updateCanvasSize(container));
-
-    container.appendChild(renderer.domElement);
 
     const updateSpheresState = (action: 'toNormalState' | 'toHoverState') => {
       if (hoveredSphere.group) {
@@ -111,8 +82,7 @@
     const onEachFrame = () => {
       requestAnimationFrame(onEachFrame);
 
-      raycaster.setFromCamera(mouse, camera);
-      const [intersection] = raycaster.intersectObjects(spheres);
+      const [intersection] = getMouseIntersections(mouse, spheres);
 
       if (
         hoveredSphere &&
@@ -137,7 +107,7 @@
         spherePlanes.forEach((plane) => plane.spin());
       }
 
-      renderer.render(scene, camera);
+      renderScene();
     };
 
     onEachFrame();
