@@ -1,3 +1,11 @@
+<script lang="ts" context="module">
+  import type { CartesianCoord } from './tooltip.svelte';
+  export interface NodeEventDetail {
+    pointerOffset: CartesianCoord;
+    data: unknown;
+  }
+</script>
+
 <script lang="ts">
   import { createEventDispatcher, onMount } from 'svelte';
   import { Color, Vector2 } from 'three';
@@ -8,9 +16,17 @@
   const PLANE_DISTANCE = 200;
   const CDA_IN_EACH_YEAR = [40, 240, 99, 100];
 
-  let container: HTMLElement;
-  let mouse = new Vector2(1, 1);
-  let hoveredSphere: Sphere = null;
+  let container: HTMLElement,
+    pointerOffset = { x: 0, y: 0 },
+    mouse = new Vector2(1, 1),
+    hoveredSphere: Sphere = null;
+
+  $: {
+    if (container) {
+      mouse.x = (pointerOffset.x / container.clientWidth) * 2 - 1;
+      mouse.y = -(pointerOffset.y / container.clientHeight) * 2 + 1;
+    }
+  }
 
   const dispatch = createEventDispatcher();
 
@@ -55,11 +71,16 @@
   const updateMousePosition = (event: MouseEvent) => {
     event.preventDefault();
 
-    const { offsetX, offsetY } = event;
-
-    mouse.x = (offsetX / container.clientWidth) * 2 - 1;
-    mouse.y = -(offsetY / container.clientHeight) * 2 + 1;
+    pointerOffset = {
+      x: event.offsetX,
+      y: event.offsetY,
+    };
   };
+
+  const parseNodeEventDetail = (): NodeEventDetail => ({
+    pointerOffset,
+    data: hoveredSphere.data,
+  });
 
   onMount(() => {
     let isSpinning = true;
@@ -91,6 +112,8 @@
         updateSpheresState('toNormalState');
         hoveredSphere = null;
         isSpinning = true;
+
+        dispatch('nodemouseleave');
       }
 
       if (
@@ -101,6 +124,8 @@
         isSpinning = false;
         hoveredSphere = intersection.object as Sphere;
         updateSpheresState('toHoverState');
+
+        dispatch('nodemouseover', parseNodeEventDetail());
       }
 
       if (isSpinning) {
@@ -118,5 +143,6 @@
   class="w-full h-full flex-1"
   bind:this={container}
   on:mousemove={updateMousePosition}
-  on:click={() => hoveredSphere && dispatch('nodeclick', hoveredSphere)}
+  on:click={() =>
+    hoveredSphere && dispatch('nodeclick', parseNodeEventDetail())}
 />
