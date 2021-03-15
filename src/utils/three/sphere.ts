@@ -1,13 +1,26 @@
 import { SphereGeometry, MeshBasicMaterial, Mesh, Color } from 'three';
 
 export const SPHERE_SIZE = 4;
-const SPHERE_DATA_SIZE = 6;
-const SPHERE_DATA_HOVER_SCALE = 1.5;
 const SPHERE_TRIANGLE = 32;
-const HALO_SIZE = 10;
+const SPHERE_DATA_SIZE = 8;
+const SPHERE_DATA_HOVER_SCALE = 1.5;
+const SPHERE_DATA_HALO_HOVER_SCALE = 2.5;
 const HALO_OPACITY = 0.2;
 
 type scaleArray = [number, number, number];
+
+const getScaleArray = (scaleValue: number) =>
+  new Array(3).fill(scaleValue) as scaleArray;
+
+const scaleUpArrays = [
+  getScaleArray(SPHERE_DATA_HOVER_SCALE),
+  getScaleArray(SPHERE_DATA_HALO_HOVER_SCALE),
+];
+
+const scaleDownArrays = [
+  getScaleArray(1 / SPHERE_DATA_HOVER_SCALE),
+  getScaleArray(1 / SPHERE_DATA_HALO_HOVER_SCALE),
+];
 
 export interface SphereConstructorProps {
   primaryColor: Color;
@@ -29,11 +42,8 @@ export class Sphere extends Mesh<SphereGeometry, MeshBasicMaterial> {
     group,
     data,
   }: SphereConstructorProps) {
-    const geometry = new SphereGeometry(
-      data ? SPHERE_DATA_SIZE : SPHERE_SIZE,
-      SPHERE_TRIANGLE,
-      SPHERE_TRIANGLE
-    );
+    const size = data ? SPHERE_DATA_SIZE : SPHERE_SIZE;
+    const geometry = new SphereGeometry(size, SPHERE_TRIANGLE, SPHERE_TRIANGLE);
     const material = new MeshBasicMaterial();
     super(geometry, material);
 
@@ -48,7 +58,7 @@ export class Sphere extends Mesh<SphereGeometry, MeshBasicMaterial> {
       this.data = data;
 
       this.haloMesh = new Mesh(
-        new SphereGeometry(HALO_SIZE, SPHERE_TRIANGLE, SPHERE_TRIANGLE),
+        new SphereGeometry(size, SPHERE_TRIANGLE, SPHERE_TRIANGLE),
         new MeshBasicMaterial({ color: accentColor })
       );
       this.haloMesh.material.transparent = true;
@@ -60,9 +70,7 @@ export class Sphere extends Mesh<SphereGeometry, MeshBasicMaterial> {
 
   public toHoverState() {
     if (this.data) {
-      this.haloMesh.geometry.scale(
-        ...(new Array(3).fill(SPHERE_DATA_HOVER_SCALE) as scaleArray)
-      );
+      this.scaleMesh('up');
     } else {
       this.material.color = this.accentColor;
     }
@@ -70,9 +78,7 @@ export class Sphere extends Mesh<SphereGeometry, MeshBasicMaterial> {
 
   public toNormalState() {
     if (this.data) {
-      this.haloMesh.geometry.scale(
-        ...(new Array(3).fill(1 / SPHERE_DATA_HOVER_SCALE) as scaleArray)
-      );
+      this.scaleMesh('down');
     } else {
       this.material.color = this.primaryColor;
     }
@@ -80,5 +86,13 @@ export class Sphere extends Mesh<SphereGeometry, MeshBasicMaterial> {
 
   public isInTheSameGroupWith(otherSphere: Sphere) {
     return this.group && this.group === otherSphere.group;
+  }
+
+  private scaleMesh(direction: 'up' | 'down') {
+    const [mainMeshScale, haloMeshScale] =
+      direction === 'up' ? scaleUpArrays : scaleDownArrays;
+
+    this.geometry.scale(...mainMeshScale);
+    this.haloMesh.geometry.scale(...haloMeshScale);
   }
 }
