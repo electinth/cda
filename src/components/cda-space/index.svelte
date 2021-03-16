@@ -1,20 +1,23 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { Color, Vector2 } from 'three';
-  import type { Sphere } from '../../utils/three/sphere';
+  import { Vector2 } from 'three';
+  import type {
+    Sphere,
+    SphereConstructorProps,
+  } from '../../utils/three/sphere';
   import { SpherePlane } from '../../utils/three/sphere-plane';
   import { createStage } from '../../utils/three/stage';
   import Marker from './marker.svelte';
   import Tooltip from './tooltip.svelte';
 
-  export let selectedNodes: Sphere[] = [];
+  export let data: SphereConstructorProps[][];
 
   const PLANE_DISTANCE = 200;
-  const CDA_IN_EACH_YEAR = [40, 240, 99, 100];
 
   let container: HTMLElement,
     mouse = new Vector2(1, 1),
-    hoveredSphere: Sphere = null;
+    hoveredSphere: Sphere = null,
+    selectedNodes: Sphere[] = [];
 
   const {
     scene,
@@ -25,48 +28,11 @@
     getObjectCanvasOffset,
   } = createStage();
 
-  const dataSphereColors = [
-    new Color('#ff5555'),
-    new Color('#55ff55'),
-    new Color('#5555ff'),
-  ];
+  const spherePlanes = data.map((planeData) => new SpherePlane(planeData));
 
-  const spherePlanes = CDA_IN_EACH_YEAR.map((cdaAmount, yearIndex) => {
-    const spherePlane = new SpherePlane(
-      new Array(cdaAmount).fill(null).map((sphere, sphereIndex) => {
-        const group = Math.floor(Math.random() * 3);
-
-        return {
-          ...sphere,
-          ...(yearIndex % 2 === 0
-            ? {
-                primaryColor: new Color('#d3d3d3'),
-                accentColor: dataSphereColors[2],
-                group: `g${yearIndex + 1}`,
-                data: {
-                  yearIndex,
-                },
-              }
-            : sphereIndex % 10 === 0
-            ? {
-                primaryColor: dataSphereColors[group],
-                accentColor: dataSphereColors[group],
-                data: {
-                  number: group + 1,
-                },
-                group: `${yearIndex + 1}-${group + 1}`,
-                isIndividual: true,
-              }
-            : {
-                primaryColor: new Color('#d3d3d3'),
-              }),
-        };
-      })
-    );
+  spherePlanes.forEach((spherePlane, yearIndex) => {
     spherePlane.position.x =
-      PLANE_DISTANCE * ((CDA_IN_EACH_YEAR.length - 1) / 2 - yearIndex);
-
-    return spherePlane;
+      PLANE_DISTANCE * ((data.length - 1) / 2 - yearIndex);
   });
 
   scene.add(...spherePlanes);
@@ -160,7 +126,7 @@
 </script>
 
 <div
-  class="relative w-full h-full flex-1"
+  class="relative w-full h-screen flex-1"
   bind:this={container}
   on:mousemove={updateMousePosition}
   on:click={onContainerClick}

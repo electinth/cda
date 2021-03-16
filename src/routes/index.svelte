@@ -1,5 +1,6 @@
 <script>
-  import CdaSpace from '../components/cda-space/index.svelte';
+  import DemoGroup from '../components/visualizations/demo-group.svelte';
+  import DemoIndividual from '../components/visualizations/demo-individual.svelte';
 </script>
 
 <svelte:head>
@@ -7,15 +8,9 @@
 </svelte:head>
 
 <section>
-  <CdaSpace />
+  <h1>Demo Space Group</h1>
+  <DemoGroup />
+
+  <h1>Demo Space Individual</h1>
+  <DemoIndividual />
 </section>
-
-<style lang="scss">
-  section {
-    height: calc(100vh - 2.5rem);
-
-    @media (min-width: 768px) {
-      height: calc(100vh - 3rem);
-    }
-  }
-</style>
