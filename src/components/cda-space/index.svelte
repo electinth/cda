@@ -48,9 +48,9 @@
                   primaryColor: dataSphereColors[group],
                   accentColor: dataSphereColors[group],
                   data: {
-                    number: group,
+                    number: group + 1,
                   },
-                  group,
+                  group: group + 1,
                 }
               : {}),
           };
@@ -98,7 +98,11 @@
     action: 'toNormalState' | 'toActiveState'
   ) => {
     getAllSphereInHoveredSphereGroup()
-      .filter(({ uuid }) => !selectedNodes.some((node) => node.uuid === uuid))
+      .filter(
+        ({ uuid, data }) =>
+          (!data || uuid === hoveredSphere.uuid) &&
+          !selectedNodes.some((node) => node.uuid === uuid)
+      )
       .forEach((sphere) => sphere[action]());
   };
 
@@ -151,6 +155,12 @@
       {...getObjectCanvasOffset(hoveredSphere)}
       label={JSON.stringify(hoveredSphere.data)}
     />
+    {#if selectedNodes.every(({ uuid }) => uuid !== hoveredSphere.uuid)}
+      <Marker
+        {...getObjectCanvasOffset(hoveredSphere)}
+        number={hoveredSphere.data['number']}
+      />
+    {/if}
   {/if}
   {#each selectedNodes as node}
     <Marker {...getObjectCanvasOffset(node)} number={node.data['number']} />
