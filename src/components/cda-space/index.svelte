@@ -85,38 +85,38 @@
       : [hoveredSphere];
 
   const onContainerClick = () => {
-    selectedNodes.forEach((sphere) => sphere.toNormalState());
-
-    if (hoveredSphere?.data) {
-      selectedNodes = getAllSphereInHoveredSphereGroup();
-
-      spherePlanes.forEach(({ children }) => {
-        const action = children.some(({ uuid }) =>
-          selectedNodes.find((sphere) => sphere.uuid === uuid)
-        )
-          ? 'enable'
-          : 'disable';
-
-        children.forEach((sphere: Sphere) => sphere[action]());
-      });
-
-      selectedNodes.forEach((sphere) => sphere.toActiveState());
-    } else {
-      spheres.forEach((sphere) => sphere.enable());
-      selectedNodes = [];
-    }
+    selectedNodes = hoveredSphere ? getAllSphereInHoveredSphereGroup() : [];
+    updateSpheresAppearance();
   };
 
-  const updateNonSelectedSpheresState = (
-    action: 'toNormalState' | 'toActiveState'
-  ) => {
-    getAllSphereInHoveredSphereGroup()
-      .filter(
-        ({ uuid, data }) =>
-          (!data || uuid === hoveredSphere.uuid) &&
-          !selectedNodes.some((node) => node.uuid === uuid)
-      )
-      .forEach((sphere) => sphere[action]());
+  const updateSpheresAppearance = () => {
+    spherePlanes.forEach(({ children }) => {
+      const isChildrenEnabled =
+        selectedNodes.length === 0 ||
+        children.some(({ uuid }) =>
+          selectedNodes.find((sphere) => sphere.uuid === uuid)
+        );
+
+      children.forEach((sphere: Sphere) => {
+        if (
+          (hoveredSphere && sphere.uuid === hoveredSphere.uuid) ||
+          (hoveredSphere?.group &&
+            !hoveredSphere.data &&
+            hoveredSphere.group === sphere.group) ||
+          selectedNodes.find(({ uuid }) => sphere.uuid === uuid)
+        ) {
+          sphere.toActiveState();
+        } else {
+          sphere.toNormalState();
+        }
+
+        if (isChildrenEnabled) {
+          sphere.enable();
+        } else {
+          sphere.disable();
+        }
+      });
+    });
   };
 
   onMount(() => {
@@ -133,17 +133,15 @@
         hoveredSphere &&
         (!intersection || intersection.object.uuid !== hoveredSphere.uuid)
       ) {
-        updateNonSelectedSpheresState('toNormalState');
         hoveredSphere = null;
-      }
-
-      if (
+        updateSpheresAppearance();
+      } else if (
         intersection &&
         intersection.object.type === 'SphereMesh' &&
         intersection.object.uuid !== hoveredSphere?.uuid
       ) {
         hoveredSphere = intersection.object as Sphere;
-        updateNonSelectedSpheresState('toActiveState');
+        updateSpheresAppearance();
       }
 
       if (selectedNodes.length === 0 && !hoveredSphere) {
@@ -168,14 +166,14 @@
       {...getObjectCanvasOffset(hoveredSphere)}
       label={JSON.stringify(hoveredSphere.data)}
     />
-    {#if selectedNodes.every(({ uuid }) => uuid !== hoveredSphere.uuid)}
+    {#if selectedNodes.every(({ uuid, data }) => data && uuid !== hoveredSphere.uuid)}
       <Marker
         {...getObjectCanvasOffset(hoveredSphere)}
         number={hoveredSphere.data['number']}
       />
     {/if}
   {/if}
-  {#each selectedNodes as node}
+  {#each selectedNodes.filter(({ data }) => data) as node}
     <Marker {...getObjectCanvasOffset(node)} number={node.data['number']} />
   {/each}
 </div>

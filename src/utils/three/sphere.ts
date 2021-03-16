@@ -112,7 +112,7 @@ export class Sphere extends Mesh<SphereGeometry, MeshBasicMaterial> {
   }
 
   public enable() {
-    this.material.color = this.primaryColor;
+    this.material.color = this.isActive ? this.accentColor : this.primaryColor;
 
     if (this.data) {
       this.haloMesh.material.color = this.accentColor;
