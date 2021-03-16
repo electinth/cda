@@ -84,30 +84,6 @@ export class Sphere extends Mesh<SphereGeometry, MeshBasicMaterial> {
     }
   }
 
-  public toActiveState() {
-    if (!this.isSelectable || this.isActive) return;
-
-    if (this.isIndividual) {
-      this.scaleMesh('up');
-    } else {
-      this.material.color = this.accentColor;
-    }
-
-    this.isActive = true;
-  }
-
-  public toNormalState() {
-    if (!this.isSelectable || !this.isActive) return;
-
-    if (this.isIndividual) {
-      this.scaleMesh('down');
-    } else {
-      this.material.color = this.isEnabled ? this.primaryColor : DISABLED_COLOR;
-    }
-
-    this.isActive = false;
-  }
-
   public is(object: Object3D | null) {
     return this.uuid === object?.uuid;
   }
@@ -116,24 +92,55 @@ export class Sphere extends Mesh<SphereGeometry, MeshBasicMaterial> {
     return this.group && otherSphere?.group && this.group === otherSphere.group;
   }
 
-  public disable() {
-    this.material.color = DISABLED_COLOR;
+  public toActiveState() {
+    if (!this.isSelectable || this.isActive) return;
 
     if (this.isIndividual) {
-      this.haloMesh.material.color = DISABLED_COLOR;
+      this.scaleMesh('up');
     }
 
+    this.isActive = true;
+
+    this.updateMeshColor();
+  }
+
+  public toNormalState() {
+    if (!this.isSelectable || !this.isActive) return;
+
+    if (this.isIndividual) {
+      this.scaleMesh('down');
+    }
+
+    this.isActive = false;
+
+    this.updateMeshColor();
+  }
+
+  public disable() {
     this.isEnabled = false;
+    this.updateMeshColor();
   }
 
   public enable() {
-    this.material.color = this.isActive ? this.accentColor : this.primaryColor;
+    this.isEnabled = true;
+    this.updateMeshColor();
+  }
+
+  private updateMeshColor() {
+    const color = this.getColorFromCurrentState();
+    this.material.color = color;
 
     if (this.isIndividual) {
-      this.haloMesh.material.color = this.accentColor;
+      this.haloMesh.material.color = color;
     }
+  }
 
-    this.isEnabled = true;
+  private getColorFromCurrentState(): Color {
+    return this.isActive
+      ? this.accentColor
+      : this.isEnabled
+      ? this.primaryColor
+      : DISABLED_COLOR;
   }
 
   private scaleMesh(direction: 'up' | 'down') {
