@@ -35,7 +35,8 @@
     const spherePlane = new SpherePlane(
       new Array(cdaAmount)
         .fill({
-          accentColor: new Color('#ff5555'),
+          primaryColor: new Color('#d3d3d3'),
+          accentColor: dataSphereColors[2],
           group: yearIndex % 2 === 0 ? `${yearIndex}` : null,
         })
         .map((sphere, sphereIndex) => {
@@ -88,8 +89,20 @@
 
     if (hoveredSphere?.data) {
       selectedNodes = getAllSphereInHoveredSphereGroup();
+
+      spherePlanes.forEach(({ children }) => {
+        const action = children.some(({ uuid }) =>
+          selectedNodes.find((sphere) => sphere.uuid === uuid)
+        )
+          ? 'enable'
+          : 'disable';
+
+        children.forEach((sphere: Sphere) => sphere[action]());
+      });
+
       selectedNodes.forEach((sphere) => sphere.toActiveState());
     } else {
+      spheres.forEach((sphere) => sphere.enable());
       selectedNodes = [];
     }
   };

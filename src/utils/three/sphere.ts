@@ -6,6 +6,7 @@ const SPHERE_DATA_SIZE = 8;
 const SPHERE_DATA_HOVER_SCALE = 1.5;
 const SPHERE_DATA_HALO_HOVER_SCALE = 2.5;
 const HALO_OPACITY = 0.2;
+const DISABLED_COLOR = new Color('#f6f6f6');
 
 type scaleArray = [number, number, number];
 
@@ -34,11 +35,12 @@ export class Sphere extends Mesh<SphereGeometry, MeshBasicMaterial> {
   private accentColor: Color;
   private haloMesh: Mesh<SphereGeometry, MeshBasicMaterial>;
   private isActive: boolean;
+  private isEnabled: boolean;
   public group: string;
   public data: unknown;
 
   constructor({
-    primaryColor = new Color('#d3d3d3'),
+    primaryColor,
     accentColor,
     group,
     data,
@@ -53,6 +55,7 @@ export class Sphere extends Mesh<SphereGeometry, MeshBasicMaterial> {
     this.accentColor = accentColor;
     this.group = group;
     this.isActive = false;
+    this.isEnabled = true;
 
     this.material.color = this.primaryColor;
 
@@ -88,7 +91,7 @@ export class Sphere extends Mesh<SphereGeometry, MeshBasicMaterial> {
     if (this.data) {
       this.scaleMesh('down');
     } else {
-      this.material.color = this.primaryColor;
+      this.material.color = this.isEnabled ? this.primaryColor : DISABLED_COLOR;
     }
 
     this.isActive = false;
@@ -96,6 +99,26 @@ export class Sphere extends Mesh<SphereGeometry, MeshBasicMaterial> {
 
   public isInTheSameGroupWith(otherSphere: Sphere) {
     return this.group && this.group === otherSphere.group;
+  }
+
+  public disable() {
+    this.material.color = DISABLED_COLOR;
+
+    if (this.data) {
+      this.haloMesh.material.color = DISABLED_COLOR;
+    }
+
+    this.isEnabled = false;
+  }
+
+  public enable() {
+    this.material.color = this.primaryColor;
+
+    if (this.data) {
+      this.haloMesh.material.color = this.accentColor;
+    }
+
+    this.isEnabled = true;
   }
 
   private scaleMesh(direction: 'up' | 'down') {
