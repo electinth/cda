@@ -13,7 +13,7 @@
   import { SpherePlane } from '../../utils/three/sphere-plane';
   import { createStage } from '../../utils/three/stage';
 
-  export let selectedNode: DataNode | null;
+  export let selectedNodes: Sphere[] = [];
 
   const PLANE_DISTANCE = 200;
   const CDA_IN_EACH_YEAR = [40, 240, 99, 100];
@@ -79,29 +79,34 @@
     data: hoveredSphere.data,
   });
 
+  const getAllSphereInHoveredSphereGroup = () =>
+    hoveredSphere.group
+      ? spheres.filter((sphere) => sphere.isInTheSameGroupWith(hoveredSphere))
+      : [hoveredSphere];
+
   const onContainerClick = () => {
+    selectedNodes.forEach((sphere) => sphere.toNormalState());
+
     if (hoveredSphere?.data) {
-      selectedNode = parseDataNode();
+      selectedNodes = getAllSphereInHoveredSphereGroup();
+      selectedNodes.forEach((sphere) => sphere.toActiveState());
     } else {
-      selectedNode = null;
+      selectedNodes = [];
     }
+  };
+
+  const updateNonSelectedSpheresState = (
+    action: 'toNormalState' | 'toActiveState'
+  ) => {
+    getAllSphereInHoveredSphereGroup()
+      .filter(({ uuid }) => !selectedNodes.some((node) => node.uuid === uuid))
+      .forEach((sphere) => sphere[action]());
   };
 
   onMount(() => {
     initRenderer(container);
 
     window.addEventListener('resize', updateCanvasSize);
-
-    const updateSpheresState = (action: 'toNormalState' | 'toHoverState') => {
-      if (hoveredSphere.group) {
-        spheres.forEach(
-          (sphere) =>
-            sphere.isInTheSameGroupWith(hoveredSphere) && sphere[action]()
-        );
-      } else {
-        hoveredSphere[action]();
-      }
-    };
 
     const onEachFrame = () => {
       requestAnimationFrame(onEachFrame);
@@ -112,7 +117,7 @@
         hoveredSphere &&
         (!intersection || intersection.object.uuid !== hoveredSphere.uuid)
       ) {
-        updateSpheresState('toNormalState');
+        updateNonSelectedSpheresState('toNormalState');
         hoveredSphere = null;
 
         dispatch('nodemouseleave');
@@ -124,12 +129,12 @@
         intersection.object.uuid !== hoveredSphere?.uuid
       ) {
         hoveredSphere = intersection.object as Sphere;
-        updateSpheresState('toHoverState');
+        updateNonSelectedSpheresState('toActiveState');
 
         dispatch('nodemouseover', parseDataNode());
       }
 
-      if (!selectedNode && !hoveredSphere) {
+      if (selectedNodes.length === 0 && !hoveredSphere) {
         spherePlanes.forEach((plane) => plane.spin());
       }
 

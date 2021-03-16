@@ -10,9 +10,10 @@
   import type { DataNode } from './canvas.svelte';
   import Tooltip from './tooltip.svelte';
   import Marker from './marker.svelte';
+  import type { Sphere } from '../../utils/three/sphere';
 
   let hoveredNode: DataNode;
-  let selectedNode: DataNode;
+  let selectedNodes: Sphere[] = [];
 
   const onMouseOverNode = ({ detail }: CustomEvent<DataNode>) => {
     if (detail.data) {
@@ -23,11 +24,11 @@
 
 <div class="w-full h-full flex-1 relative">
   <Canvas
-    bind:selectedNode
+    bind:selectedNodes
     on:nodemouseover={onMouseOverNode}
     on:nodemouseleave={() => (hoveredNode = null)}
   />
-  {#if hoveredNode}
+  <!-- {#if hoveredNode}
     <Tooltip {...hoveredNode} />
   {/if}
   {#if selectedNode || hoveredNode}
@@ -37,5 +38,5 @@
     <div class="absolute top-0 left-0">
       {JSON.stringify(selectedNode)}
     </div>
-  {/if}
+  {/if} -->
 </div>

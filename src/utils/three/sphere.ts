@@ -33,6 +33,7 @@ export class Sphere extends Mesh<SphereGeometry, MeshBasicMaterial> {
   private primaryColor: Color;
   private accentColor: Color;
   private haloMesh: Mesh<SphereGeometry, MeshBasicMaterial>;
+  private isActive: boolean;
   public group: string;
   public data: unknown;
 
@@ -51,8 +52,9 @@ export class Sphere extends Mesh<SphereGeometry, MeshBasicMaterial> {
     this.primaryColor = primaryColor;
     this.accentColor = accentColor;
     this.group = group;
+    this.isActive = false;
 
-    this.toNormalState();
+    this.material.color = this.primaryColor;
 
     if (data) {
       this.data = data;
@@ -68,20 +70,28 @@ export class Sphere extends Mesh<SphereGeometry, MeshBasicMaterial> {
     }
   }
 
-  public toHoverState() {
+  public toActiveState() {
+    if (this.isActive) return;
+
     if (this.data) {
       this.scaleMesh('up');
     } else {
       this.material.color = this.accentColor;
     }
+
+    this.isActive = true;
   }
 
   public toNormalState() {
+    if (!this.isActive) return;
+
     if (this.data) {
       this.scaleMesh('down');
     } else {
       this.material.color = this.primaryColor;
     }
+
+    this.isActive = false;
   }
 
   public isInTheSameGroupWith(otherSphere: Sphere) {
