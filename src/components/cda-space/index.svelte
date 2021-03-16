@@ -93,17 +93,15 @@
     spherePlanes.forEach(({ children }) => {
       const isChildrenEnabled =
         selectedNodes.length === 0 ||
-        children.some(({ uuid }) =>
-          selectedNodes.find((sphere) => sphere.uuid === uuid)
+        children.some((sphere: Sphere) =>
+          selectedNodes.some((node) => sphere.is(node))
         );
 
       children.forEach((sphere: Sphere) => {
         if (
-          (hoveredSphere && sphere.uuid === hoveredSphere.uuid) ||
-          (hoveredSphere?.group &&
-            !hoveredSphere.data &&
-            hoveredSphere.group === sphere.group) ||
-          selectedNodes.find(({ uuid }) => sphere.uuid === uuid)
+          sphere.is(hoveredSphere) ||
+          (!sphere.data && sphere.isInTheSameGroupWith(hoveredSphere)) ||
+          selectedNodes.some((node) => sphere.is(node))
         ) {
           sphere.toActiveState();
         } else {
@@ -129,16 +127,13 @@
 
       const [intersection] = getMouseIntersections(mouse, spheres);
 
-      if (
-        hoveredSphere &&
-        (!intersection || intersection.object.uuid !== hoveredSphere.uuid)
-      ) {
+      if (hoveredSphere && !hoveredSphere.is(intersection?.object)) {
         hoveredSphere = null;
         updateSpheresAppearance();
       } else if (
+        !hoveredSphere &&
         intersection &&
-        intersection.object.type === 'SphereMesh' &&
-        intersection.object.uuid !== hoveredSphere?.uuid
+        intersection.object.type === 'SphereMesh'
       ) {
         hoveredSphere = intersection.object as Sphere;
         updateSpheresAppearance();

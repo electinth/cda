@@ -1,4 +1,10 @@
-import { SphereGeometry, MeshBasicMaterial, Mesh, Color } from 'three';
+import {
+  SphereGeometry,
+  MeshBasicMaterial,
+  Mesh,
+  Color,
+  Object3D,
+} from 'three';
 
 export const SPHERE_SIZE = 4;
 const SPHERE_TRIANGLE = 32;
@@ -97,8 +103,12 @@ export class Sphere extends Mesh<SphereGeometry, MeshBasicMaterial> {
     this.isActive = false;
   }
 
-  public isInTheSameGroupWith(otherSphere: Sphere) {
-    return this.group && this.group === otherSphere.group;
+  public is(object: Object3D | null) {
+    return this.uuid === object?.uuid;
+  }
+
+  public isInTheSameGroupWith(otherSphere: Sphere | null) {
+    return this.group && otherSphere?.group && this.group === otherSphere.group;
   }
 
   public disable() {
