@@ -58,7 +58,11 @@ export const createStage = () => {
     return raycaster.intersectObjects(objects);
   };
 
-  const getObjectCanvasOffset = (object: Object3D) => {
+  const getObjectCanvasOffset = (object?: Object3D) => {
+    if (!object) {
+      return { x: 0, y: 0 };
+    }
+
     const position = new Vector3();
 
     object.updateWorldMatrix(true, false);

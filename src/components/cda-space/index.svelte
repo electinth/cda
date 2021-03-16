@@ -63,7 +63,7 @@
     updateSpheresAppearance();
   };
 
-  const updateSpheresAppearance = () => {
+  const updateSpheresAppearance = () =>
     spherePlanes.forEach(({ children }) => {
       const isChildrenEnabled =
         selectedNodes.length === 0 ||
@@ -90,7 +90,6 @@
         }
       });
     });
-  };
 
   onMount(() => {
     initRenderer(container);
@@ -123,6 +122,15 @@
 
     onEachFrame();
   });
+
+  $: hoveredSphereIsIndividual = hoveredSphere?.isIndividual;
+  $: hoveredSphereIsNotSelected = !selectedNodes.some((node) =>
+    node.is(hoveredSphere)
+  );
+  $: hoveredSphereOffset = getObjectCanvasOffset(hoveredSphere);
+  $: individualSelectedNodes = selectedNodes.filter(
+    ({ isIndividual }) => isIndividual
+  );
 </script>
 
 <div
@@ -131,19 +139,16 @@
   on:mousemove={updateMousePosition}
   on:click={onContainerClick}
 >
-  {#if hoveredSphere && hoveredSphere.isIndividual}
+  {#if hoveredSphereIsIndividual}
     <Tooltip
-      {...getObjectCanvasOffset(hoveredSphere)}
+      {...hoveredSphereOffset}
       label={JSON.stringify(hoveredSphere.data)}
     />
-    {#if !selectedNodes.some((node) => node.is(hoveredSphere))}
-      <Marker
-        {...getObjectCanvasOffset(hoveredSphere)}
-        number={hoveredSphere.data['number']}
-      />
+    {#if hoveredSphereIsNotSelected}
+      <Marker {...hoveredSphereOffset} number={hoveredSphere.data['number']} />
     {/if}
   {/if}
-  {#each selectedNodes.filter(({ isIndividual }) => isIndividual) as node}
+  {#each individualSelectedNodes as node}
     <Marker {...getObjectCanvasOffset(node)} number={node.data['number']} />
   {/each}
 </div>
