@@ -31,9 +31,10 @@ const scaleDownArrays = [
 
 export interface SphereConstructorProps {
   primaryColor: Color;
-  accentColor: Color;
+  accentColor?: Color;
   group: string;
-  data: unknown;
+  data?: unknown;
+  isIndividual?: boolean;
 }
 
 export class Sphere extends Mesh<SphereGeometry, MeshBasicMaterial> {
@@ -44,33 +45,37 @@ export class Sphere extends Mesh<SphereGeometry, MeshBasicMaterial> {
   private isEnabled: boolean;
   public group: string;
   public data: unknown;
+  public isIndividual: boolean;
+  public isSelectable: boolean;
 
   constructor({
     primaryColor,
     accentColor,
     group,
-    data,
+    data = null,
+    isIndividual = false,
   }: SphereConstructorProps) {
-    const size = data ? SPHERE_DATA_SIZE : SPHERE_SIZE;
+    const size = isIndividual ? SPHERE_DATA_SIZE : SPHERE_SIZE;
     const geometry = new SphereGeometry(size, SPHERE_TRIANGLE, SPHERE_TRIANGLE);
     const material = new MeshBasicMaterial();
     super(geometry, material);
 
     this.type = 'SphereMesh';
     this.primaryColor = primaryColor;
-    this.accentColor = accentColor;
+    this.accentColor = accentColor || primaryColor;
     this.group = group;
+    this.isIndividual = isIndividual;
     this.isActive = false;
     this.isEnabled = true;
+    this.data = data;
+    this.isSelectable = data !== null;
 
     this.material.color = this.primaryColor;
 
-    if (data) {
-      this.data = data;
-
+    if (isIndividual) {
       this.haloMesh = new Mesh(
         new SphereGeometry(size, SPHERE_TRIANGLE, SPHERE_TRIANGLE),
-        new MeshBasicMaterial({ color: accentColor })
+        new MeshBasicMaterial({ color: this.accentColor })
       );
       this.haloMesh.material.transparent = true;
       this.haloMesh.material.opacity = HALO_OPACITY;
@@ -80,9 +85,9 @@ export class Sphere extends Mesh<SphereGeometry, MeshBasicMaterial> {
   }
 
   public toActiveState() {
-    if (this.isActive) return;
+    if (!this.isSelectable || this.isActive) return;
 
-    if (this.data) {
+    if (this.isIndividual) {
       this.scaleMesh('up');
     } else {
       this.material.color = this.accentColor;
@@ -92,9 +97,9 @@ export class Sphere extends Mesh<SphereGeometry, MeshBasicMaterial> {
   }
 
   public toNormalState() {
-    if (!this.isActive) return;
+    if (!this.isSelectable || !this.isActive) return;
 
-    if (this.data) {
+    if (this.isIndividual) {
       this.scaleMesh('down');
     } else {
       this.material.color = this.isEnabled ? this.primaryColor : DISABLED_COLOR;
@@ -114,7 +119,7 @@ export class Sphere extends Mesh<SphereGeometry, MeshBasicMaterial> {
   public disable() {
     this.material.color = DISABLED_COLOR;
 
-    if (this.data) {
+    if (this.isIndividual) {
       this.haloMesh.material.color = DISABLED_COLOR;
     }
 
@@ -124,7 +129,7 @@ export class Sphere extends Mesh<SphereGeometry, MeshBasicMaterial> {
   public enable() {
     this.material.color = this.isActive ? this.accentColor : this.primaryColor;
 
-    if (this.data) {
+    if (this.isIndividual) {
       this.haloMesh.material.color = this.accentColor;
     }
 

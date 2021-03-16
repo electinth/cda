@@ -33,29 +33,35 @@
 
   const spherePlanes = CDA_IN_EACH_YEAR.map((cdaAmount, yearIndex) => {
     const spherePlane = new SpherePlane(
-      new Array(cdaAmount)
-        .fill({
-          primaryColor: new Color('#d3d3d3'),
-          accentColor: dataSphereColors[2],
-          group: yearIndex % 2 === 0 ? `${yearIndex}` : null,
-        })
-        .map((sphere, sphereIndex) => {
-          const group = Math.floor(Math.random() * 3);
+      new Array(cdaAmount).fill(null).map((sphere, sphereIndex) => {
+        const group = Math.floor(Math.random() * 3);
 
-          return {
-            ...sphere,
-            ...(yearIndex % 2 !== 0 && sphereIndex % 10 === 0
-              ? {
-                  primaryColor: dataSphereColors[group],
-                  accentColor: dataSphereColors[group],
-                  data: {
-                    number: group + 1,
-                  },
-                  group: group + 1,
-                }
-              : {}),
-          };
-        })
+        return {
+          ...sphere,
+          ...(yearIndex % 2 === 0
+            ? {
+                primaryColor: new Color('#d3d3d3'),
+                accentColor: dataSphereColors[2],
+                group: `g${yearIndex + 1}`,
+                data: {
+                  yearIndex,
+                },
+              }
+            : sphereIndex % 10 === 0
+            ? {
+                primaryColor: dataSphereColors[group],
+                accentColor: dataSphereColors[group],
+                data: {
+                  number: group + 1,
+                },
+                group: `${yearIndex + 1}-${group + 1}`,
+                isIndividual: true,
+              }
+            : {
+                primaryColor: new Color('#d3d3d3'),
+              }),
+        };
+      })
     );
     spherePlane.position.x =
       PLANE_DISTANCE * ((CDA_IN_EACH_YEAR.length - 1) / 2 - yearIndex);
@@ -85,7 +91,9 @@
       : [hoveredSphere];
 
   const onContainerClick = () => {
-    selectedNodes = hoveredSphere ? getAllSphereInHoveredSphereGroup() : [];
+    selectedNodes = hoveredSphere?.isSelectable
+      ? getAllSphereInHoveredSphereGroup()
+      : [];
     updateSpheresAppearance();
   };
 
@@ -100,7 +108,8 @@
       children.forEach((sphere: Sphere) => {
         if (
           sphere.is(hoveredSphere) ||
-          (!sphere.data && sphere.isInTheSameGroupWith(hoveredSphere)) ||
+          (!sphere.isIndividual &&
+            sphere.isInTheSameGroupWith(hoveredSphere)) ||
           selectedNodes.some((node) => sphere.is(node))
         ) {
           sphere.toActiveState();
@@ -156,19 +165,19 @@
   on:mousemove={updateMousePosition}
   on:click={onContainerClick}
 >
-  {#if hoveredSphere && hoveredSphere.data}
+  {#if hoveredSphere && hoveredSphere.isIndividual}
     <Tooltip
       {...getObjectCanvasOffset(hoveredSphere)}
       label={JSON.stringify(hoveredSphere.data)}
     />
-    {#if selectedNodes.every(({ uuid, data }) => data && uuid !== hoveredSphere.uuid)}
+    {#if !selectedNodes.some((node) => node.is(hoveredSphere))}
       <Marker
         {...getObjectCanvasOffset(hoveredSphere)}
         number={hoveredSphere.data['number']}
       />
     {/if}
   {/if}
-  {#each selectedNodes.filter(({ data }) => data) as node}
+  {#each selectedNodes.filter(({ isIndividual }) => isIndividual) as node}
     <Marker {...getObjectCanvasOffset(node)} number={node.data['number']} />
   {/each}
 </div>
