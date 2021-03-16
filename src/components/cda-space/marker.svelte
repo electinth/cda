@@ -11,3 +11,11 @@
 >
   {data['number']}
 </div>
+
+<style>
+  div {
+    pointer-events: none;
+    user-select: none;
+    cursor: none;
+  }
+</style>
