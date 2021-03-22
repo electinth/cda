@@ -17,7 +17,7 @@
     "lint": "prettier --write --ignore-unknown ."
   },
   "dependencies": {
-    "@electinth/common": "^1.1.0",
+    "@electinth/common": "^1.2.0",
     "compression": "^1.7.1",
     "node-sass": "^5.0.0",
     "polka": "next",
