@@ -29,22 +29,22 @@ const scaleDownArrays = [
   getScaleArray(1 / SPHERE_DATA_HALO_HOVER_SCALE),
 ];
 
-export interface SphereConstructorProps {
+export interface SphereConstructorProps<T> {
   primaryColor: Color;
   accentColor?: Color;
   group: string;
-  data?: unknown;
+  data?: T;
   isIndividual?: boolean;
 }
 
-export class Sphere extends Mesh<SphereGeometry, MeshBasicMaterial> {
+export class Sphere<T> extends Mesh<SphereGeometry, MeshBasicMaterial> {
   private primaryColor: Color;
   private accentColor: Color;
   private haloMesh: Mesh<SphereGeometry, MeshBasicMaterial>;
   private isActive: boolean;
   private isEnabled: boolean;
   public group: string;
-  public data: unknown;
+  public data: T;
   public isIndividual: boolean;
   public isSelectable: boolean;
 
@@ -54,7 +54,7 @@ export class Sphere extends Mesh<SphereGeometry, MeshBasicMaterial> {
     group,
     data = null,
     isIndividual = false,
-  }: SphereConstructorProps) {
+  }: SphereConstructorProps<T>) {
     const size = isIndividual ? SPHERE_DATA_SIZE : SPHERE_SIZE;
     const geometry = new SphereGeometry(size, SPHERE_TRIANGLE, SPHERE_TRIANGLE);
     const material = new MeshBasicMaterial();
@@ -88,7 +88,7 @@ export class Sphere extends Mesh<SphereGeometry, MeshBasicMaterial> {
     return this.uuid === object?.uuid;
   }
 
-  public isInTheSameGroupWith(otherSphere: Sphere | null) {
+  public isInTheSameGroupWith(otherSphere: Sphere<unknown> | null) {
     return this.group && otherSphere?.group && this.group === otherSphere.group;
   }
 

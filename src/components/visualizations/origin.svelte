@@ -6,6 +6,10 @@
   import YearGroupBox from '../cda-space/info-dialog/year-group-box.svelte';
   import type { Sphere } from '../../utils/three/sphere';
 
+  interface OriginNodeData {
+    groupIndex: number;
+  }
+
   const cdaYears = [...new Set(allMembers.map(({ year }) => year))].sort();
 
   const cdaCount = allMembers.reduce(
@@ -32,29 +36,37 @@
   ];
 
   const data = cdaYears.map((year) => {
-    const { name, color } = groups.find(({ years }) => years.includes(year));
+    const groupIndex = groups.findIndex(({ years }) => years.includes(year));
+    const { color } = groups[groupIndex];
 
     return new Array(cdaCount[year]).fill({
       primaryColor: color.clone().multiplyScalar(1.5),
       accentColor: color,
       group: year,
       data: {
-        origin: name,
+        groupIndex,
       },
     });
   });
 
-  let nodes: Sphere[];
-  let selectedNodes: Sphere[];
+  let nodes: Sphere<OriginNodeData>[];
+  let selectedNodes: Sphere<OriginNodeData>[];
 
   const onYearSelected = ({ detail }: CustomEvent) => {
     selectedNodes = nodes.filter(({ group }) => group === detail);
   };
+
+  $: selectedYear = selectedNodes && selectedNodes[0]?.group;
+  $: displayGroups =
+    selectedNodes && selectedNodes[0]
+      ? [groups[selectedNodes[0].data.groupIndex]]
+      : groups;
 </script>
 
 <CdaSpace {data} bind:selectedNodes bind:nodes>
   <InfoHead>ที่มาของ สสร.</InfoHead>
-  {#each groups as group}
+  {#each displayGroups as group}
     <YearGroupBox {...group} on:select={onYearSelected} />
   {/each}
+  <div>{selectedYear}</div>
 </CdaSpace>

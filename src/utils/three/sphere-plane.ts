@@ -5,7 +5,7 @@ const SPACE_BETWEEN_SPHERE = 4;
 const SPIN_FRAME_ROTATION = Math.PI / 2000;
 
 export class SpherePlane extends Group {
-  constructor(spheresData: SphereConstructorProps[]) {
+  constructor(spheresData: SphereConstructorProps<unknown>[]) {
     super();
 
     const radius =

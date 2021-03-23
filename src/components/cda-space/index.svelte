@@ -10,16 +10,16 @@
   import Marker from './marker.svelte';
   import Tooltip from './tooltip.svelte';
 
-  export let data: SphereConstructorProps[][];
+  export let data: SphereConstructorProps<unknown>[][];
 
   const PLANE_DISTANCE = 200;
 
-  export let nodes: Sphere[] = [];
-  export let selectedNodes: Sphere[] = [];
+  export let nodes: Sphere<unknown>[] = [];
+  export let selectedNodes: Sphere<unknown>[] = [];
 
   let container: HTMLElement,
     mouse = new Vector2(1, 1),
-    hoveredSphere: Sphere = null;
+    hoveredSphere: Sphere<unknown> = null;
 
   const {
     scene,
@@ -68,15 +68,15 @@
     updateSpheresAppearance(selectedNodes);
   }
 
-  const updateSpheresAppearance = (selectedNodes: Sphere[]) =>
+  const updateSpheresAppearance = (selectedNodes: Sphere<unknown>[]) =>
     spherePlanes.forEach(({ children }) => {
       const isChildrenEnabled =
         selectedNodes.length === 0 ||
-        children.some((sphere: Sphere) =>
+        children.some((sphere: Sphere<unknown>) =>
           selectedNodes.some((node) => sphere.is(node))
         );
 
-      children.forEach((sphere: Sphere) => {
+      children.forEach((sphere: Sphere<unknown>) => {
         if (
           sphere.is(hoveredSphere) ||
           (!sphere.isIndividual &&
@@ -114,7 +114,7 @@
         intersection &&
         intersection.object.type === 'SphereMesh'
       ) {
-        hoveredSphere = intersection.object as Sphere;
+        hoveredSphere = intersection.object as Sphere<unknown>;
         updateSpheresAppearance(selectedNodes);
       }
 
