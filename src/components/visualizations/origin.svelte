@@ -39,7 +39,7 @@
       accentColor: color,
       group: year,
       data: {
-        group: name,
+        origin: name,
       },
     });
   });
@@ -48,7 +48,6 @@
   let selectedNodes: Sphere[];
 
   const onYearSelected = ({ detail }: CustomEvent) => {
-    console.log(nodes.filter(({ group }) => group === detail));
     selectedNodes = nodes.filter(({ group }) => group === detail);
   };
 </script>

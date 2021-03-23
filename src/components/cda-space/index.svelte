@@ -62,10 +62,13 @@
     selectedNodes = hoveredSphere?.isSelectable
       ? getAllSphereInHoveredSphereGroup()
       : [];
-    updateSpheresAppearance();
   };
 
-  const updateSpheresAppearance = () =>
+  $: {
+    updateSpheresAppearance(selectedNodes);
+  }
+
+  const updateSpheresAppearance = (selectedNodes: Sphere[]) =>
     spherePlanes.forEach(({ children }) => {
       const isChildrenEnabled =
         selectedNodes.length === 0 ||
@@ -105,14 +108,14 @@
 
       if (hoveredSphere && !hoveredSphere.is(intersection?.object)) {
         hoveredSphere = null;
-        updateSpheresAppearance();
+        updateSpheresAppearance(selectedNodes);
       } else if (
         !hoveredSphere &&
         intersection &&
         intersection.object.type === 'SphereMesh'
       ) {
         hoveredSphere = intersection.object as Sphere;
-        updateSpheresAppearance();
+        updateSpheresAppearance(selectedNodes);
       }
 
       if (selectedNodes.length === 0 && !hoveredSphere) {
