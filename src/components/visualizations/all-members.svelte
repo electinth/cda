@@ -1,6 +1,7 @@
 <script>
   import { Color } from 'three';
   import CdaSpace from '../cda-space/index.svelte';
+  import allMembers from '../../data/all-members.csv';
 
   const CDA_IN_EACH_YEAR = [40, 240, 99, 100];
 
@@ -20,6 +21,8 @@
       },
     })
   );
+
+  console.log(allMembers);
 </script>
 
 <CdaSpace data={demoData} />

@@ -1,5 +1,5 @@
 <script>
-  import DemoGroup from '../components/visualizations/demo-group.svelte';
+  import AllMembers from '../components/visualizations/all-members.svelte';
   import DemoIndividual from '../components/visualizations/demo-individual.svelte';
 </script>
 
@@ -9,7 +9,7 @@
 
 <section>
   <h1>Demo Space Group</h1>
-  <DemoGroup />
+  <AllMembers />
 
   <h1>Demo Space Individual</h1>
   <DemoIndividual />
