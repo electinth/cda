@@ -8,7 +8,7 @@
 </svelte:head>
 
 <section>
-  <h1>All members</h1>
+  <h1 class="text-3xl font-bold text-center">ที่มาของสสร.</h1>
   <Origin />
 
   <h1>Demo Space Individual</h1>

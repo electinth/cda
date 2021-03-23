@@ -4,6 +4,8 @@
   import allMembers from '../../data/all-members.csv';
   import InfoHead from '../cda-space/info-dialog/info-head.svelte';
   import YearGroupBox from '../cda-space/info-dialog/year-group-box.svelte';
+  import GroupBox from '../cda-space/info-dialog/group-box.svelte';
+  import ColorDot from '../cda-space/info-dialog/color-dot.svelte';
   import type { Sphere } from '../../utils/three/sphere';
 
   interface OriginNodeData {
@@ -61,12 +63,34 @@
     selectedNodes && selectedNodes[0]
       ? [groups[selectedNodes[0].data.groupIndex]]
       : groups;
+  $: displayMembers = selectedYear
+    ? allMembers.filter(({ year }) => year === selectedYear)
+    : [];
 </script>
 
 <CdaSpace {data} bind:selectedNodes bind:nodes>
   <InfoHead>ที่มาของ สสร.</InfoHead>
   {#each displayGroups as group}
-    <YearGroupBox {...group} on:select={onYearSelected} />
+    <YearGroupBox {...group} {selectedYear} on:select={onYearSelected} />
   {/each}
-  <div>{selectedYear}</div>
+  {#if selectedYear}
+    <GroupBox>
+      <div class="flex flex-col">
+        <div>จำนวนสสร. {displayMembers.length} คน</div>
+        <div
+          class="rounded border border-gray-300 max-h-64 overflow-y-auto px-2 py-1 space-y-1"
+        >
+          {#each displayMembers as { name }, index}
+            <div class="flex flex-row space-x-2">
+              <ColorDot
+                color="#{displayGroups[0].color.getHexString()}"
+                number={index + 1}
+              />
+              <div class="flex-1">{name}</div>
+            </div>
+          {/each}
+        </div>
+      </div>
+    </GroupBox>
+  {/if}
 </CdaSpace>
