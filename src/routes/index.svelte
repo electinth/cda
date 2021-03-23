@@ -1,5 +1,5 @@
 <script>
-  import AllMembers from '../components/visualizations/all-members.svelte';
+  import Origin from '../components/visualizations/origin.svelte';
   import DemoIndividual from '../components/visualizations/demo-individual.svelte';
 </script>
 
@@ -8,8 +8,8 @@
 </svelte:head>
 
 <section>
-  <h1>Demo Space Group</h1>
-  <AllMembers />
+  <h1>All members</h1>
+  <Origin />
 
   <h1>Demo Space Individual</h1>
   <DemoIndividual />
