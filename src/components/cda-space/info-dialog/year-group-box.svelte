@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { createEventDispatcher } from 'svelte';
+
   import type { Color } from 'three';
   import ColorDot from './color-dot.svelte';
   import YearButton from './year-button.svelte';
@@ -6,6 +8,8 @@
   export let description: string;
   export let color: Color;
   export let years: string[];
+
+  const dispatch = createEventDispatcher();
 </script>
 
 <div
@@ -16,7 +20,8 @@
     <div>{description}</div>
     <div class="flex flex-row space-x-1">
       {#each years as year}
-        <YearButton>{year}</YearButton>
+        <YearButton on:click={() => dispatch('select', year)}>{year}</YearButton
+        >
       {/each}
     </div>
   </div>

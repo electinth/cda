@@ -4,6 +4,7 @@
   import allMembers from '../../data/all-members.csv';
   import InfoHead from '../cda-space/info-dialog/info-head.svelte';
   import YearGroupBox from '../cda-space/info-dialog/year-group-box.svelte';
+  import type { Sphere } from '../../utils/three/sphere';
 
   const cdaYears = [...new Set(allMembers.map(({ year }) => year))].sort();
 
@@ -42,11 +43,19 @@
       },
     });
   });
+
+  let nodes: Sphere[];
+  let selectedNodes: Sphere[];
+
+  const onYearSelected = ({ detail }: CustomEvent) => {
+    console.log(nodes.filter(({ group }) => group === detail));
+    selectedNodes = nodes.filter(({ group }) => group === detail);
+  };
 </script>
 
-<CdaSpace {data}>
+<CdaSpace {data} bind:selectedNodes bind:nodes>
   <InfoHead>ที่มาของ สสร.</InfoHead>
   {#each groups as group}
-    <YearGroupBox {...group} />
+    <YearGroupBox {...group} on:select={onYearSelected} />
   {/each}
 </CdaSpace>

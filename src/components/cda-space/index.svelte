@@ -14,10 +14,12 @@
 
   const PLANE_DISTANCE = 200;
 
+  export let nodes: Sphere[] = [];
+  export let selectedNodes: Sphere[] = [];
+
   let container: HTMLElement,
     mouse = new Vector2(1, 1),
-    hoveredSphere: Sphere = null,
-    selectedNodes: Sphere[] = [];
+    hoveredSphere: Sphere = null;
 
   const {
     scene,
@@ -37,7 +39,7 @@
 
   scene.add(...spherePlanes);
 
-  const spheres: Sphere[] = spherePlanes.reduce(
+  nodes = spherePlanes.reduce(
     (flatChildren, plane) => [...flatChildren, ...plane.children],
     []
   );
@@ -53,7 +55,7 @@
 
   const getAllSphereInHoveredSphereGroup = () =>
     hoveredSphere.group
-      ? spheres.filter((sphere) => sphere.isInTheSameGroupWith(hoveredSphere))
+      ? nodes.filter((sphere) => sphere.isInTheSameGroupWith(hoveredSphere))
       : [hoveredSphere];
 
   const onContainerClick = () => {
@@ -99,7 +101,7 @@
     const onEachFrame = () => {
       requestAnimationFrame(onEachFrame);
 
-      const [intersection] = getMouseIntersections(mouse, spheres);
+      const [intersection] = getMouseIntersections(mouse, nodes);
 
       if (hoveredSphere && !hoveredSphere.is(intersection?.object)) {
         hoveredSphere = null;
@@ -133,24 +135,29 @@
   );
 </script>
 
-<div
-  class="relative w-full h-screen flex-1"
-  bind:this={container}
-  on:mousemove={updateMousePosition}
-  on:click={onContainerClick}
->
-  {#if hoveredSphereIsIndividual}
-    <Tooltip
-      {...hoveredSphereOffset}
-      label={JSON.stringify(hoveredSphere.data)}
-    />
-    {#if hoveredSphereIsNotSelected}
-      <Marker {...hoveredSphereOffset} number={hoveredSphere.data['number']} />
+<div class="relative w-full h-screen flex-1">
+  <div
+    class="absolute inset-0"
+    bind:this={container}
+    on:mousemove={updateMousePosition}
+    on:click={onContainerClick}
+  >
+    {#if hoveredSphereIsIndividual}
+      <Tooltip
+        {...hoveredSphereOffset}
+        label={JSON.stringify(hoveredSphere.data)}
+      />
+      {#if hoveredSphereIsNotSelected}
+        <Marker
+          {...hoveredSphereOffset}
+          number={hoveredSphere.data['number']}
+        />
+      {/if}
     {/if}
-  {/if}
-  {#each individualSelectedNodes as node}
-    <Marker {...getObjectCanvasOffset(node)} number={node.data['number']} />
-  {/each}
+    {#each individualSelectedNodes as node}
+      <Marker {...getObjectCanvasOffset(node)} number={node.data['number']} />
+    {/each}
+  </div>
 
   <div
     class="absolute bottom-4 right-4 z-10 flex flex-col space-y-2 w-full max-w-md justify-end"
