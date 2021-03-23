@@ -151,4 +151,10 @@
   {#each individualSelectedNodes as node}
     <Marker {...getObjectCanvasOffset(node)} number={node.data['number']} />
   {/each}
+
+  <div
+    class="absolute bottom-4 right-4 z-10 flex flex-col space-y-2 w-full max-w-md justify-end"
+  >
+    <slot />
+  </div>
 </div>
