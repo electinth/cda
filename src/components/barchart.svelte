@@ -1,5 +1,6 @@
 <script lang="ts">
   import * as d3 from 'd3';
+  import Pin from './pin.svelte';
 
   interface IData {
     x: number;
@@ -26,14 +27,33 @@
 
 <div class="w-full h-full" bind:clientHeight={h} bind:clientWidth={w}>
   <svg class="w-full h-full">
+    <g transform={`translate(${margin.left * 0.5}, ${margin.top * 0.5})`}>
+      <Pin
+        radius={5}
+        height={h - margin.top - margin.bottom + margin.top * 0.5}
+        fill={'black'}
+      />
+    </g>
     {#each data.slice(1) as d, i}
       <rect
         x={X(data[i].x)}
+        y={margin.top}
         width={X(d.x) - X(data[i].x)}
-        height={20}
+        height={h - margin.top - margin.bottom}
         fill={d.fill}
       />
       <text>{d.x}</text>
     {/each}
+    <g
+      transform={`translate(${
+        X(data[data.length - 1].x) + margin.right * 0.5
+      }, ${margin.top * 0.5})`}
+    >
+      <Pin
+        radius={5}
+        height={h - margin.top - margin.bottom + margin.top * 0.5}
+        fill={'black'}
+      />
+    </g>
   </svg>
 </div>
