@@ -5,13 +5,58 @@
     fill: string;
   }
 
-  export enum State {
+  export enum Status {
     pre_start,
     start,
     drafted,
     done,
     post_done,
   }
+
+  export enum ElementAppearance {
+    hide,
+    fade,
+    show,
+  }
+  export interface IChartApperance {
+    firstPin: ElementAppearance;
+    draftPhase: ElementAppearance;
+    donePhase: ElementAppearance;
+    lastPin: ElementAppearance;
+  }
+
+  export const ChartAppearance: Record<Status, IChartApperance> = {
+    '0': {
+      firstPin: ElementAppearance.show,
+      draftPhase: ElementAppearance.fade,
+      donePhase: ElementAppearance.fade,
+      lastPin: ElementAppearance.fade,
+    },
+    '1': {
+      firstPin: ElementAppearance.show,
+      draftPhase: ElementAppearance.hide,
+      donePhase: ElementAppearance.hide,
+      lastPin: ElementAppearance.hide,
+    },
+    '2': {
+      firstPin: ElementAppearance.fade,
+      draftPhase: ElementAppearance.show,
+      donePhase: ElementAppearance.fade,
+      lastPin: ElementAppearance.fade,
+    },
+    '3': {
+      firstPin: ElementAppearance.show,
+      draftPhase: ElementAppearance.fade,
+      donePhase: ElementAppearance.fade,
+      lastPin: ElementAppearance.fade,
+    },
+    '4': {
+      firstPin: ElementAppearance.show,
+      draftPhase: ElementAppearance.fade,
+      donePhase: ElementAppearance.fade,
+      lastPin: ElementAppearance.fade,
+    },
+  };
 </script>
 
 <script lang="ts">
@@ -26,6 +71,13 @@
     right: 20,
     bottom: 20,
     left: 20,
+  };
+
+  export let appearance: IChartApperance = {
+    firstPin: ElementAppearance.show,
+    draftPhase: ElementAppearance.show,
+    donePhase: ElementAppearance.show,
+    lastPin: ElementAppearance.show,
   };
 
   export let data: IData[] = [{ x: 0, event: 'start', fill: 'black' }];
@@ -58,6 +110,7 @@
         radius={5}
         height={h - margin.top - margin.bottom + margin.top * 0.5}
         fill={'black'}
+        opacity={appearance.firstPin === ElementAppearance.show ? 1 : 0.5}
       />
     </g>
     {#each stackdata as d, i}
@@ -79,6 +132,7 @@
         radius={5}
         height={h - margin.top - margin.bottom + margin.top * 0.5}
         fill={'black'}
+        opacity={appearance.firstPin === ElementAppearance.show ? 1 : 0.5}
       />
     </g>
   </svg>
