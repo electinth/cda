@@ -1,12 +1,22 @@
-<script lang="ts">
-  import * as d3 from 'd3';
-  import Pin from './pin.svelte';
-
-  interface IData {
+<script context="module" lang="ts">
+  export interface IData {
     x: number;
     event: string;
     fill: string;
   }
+
+  export enum State {
+    pre_start,
+    start,
+    drafted,
+    done,
+    post_done,
+  }
+</script>
+
+<script lang="ts">
+  import * as d3 from 'd3';
+  import Pin from './pin.svelte';
 
   let w = 300,
     h = 150;
@@ -18,8 +28,24 @@
     left: 20,
   };
 
-  export let data: IData[] = [];
-  $: X = d3
+  export let data: IData[] = [{ x: 0, event: 'start', fill: 'black' }];
+
+  let accumulator = 0;
+  $: stackdata = data.reduce<IData[]>((acc, cur, idx) => {
+    if (idx === 0) {
+      return acc;
+    }
+
+    return [
+      ...acc,
+      {
+        ...cur,
+        x: (accumulator += cur.x),
+      },
+    ];
+  }, []);
+
+  export let X = d3
     .scaleLinear()
     .domain([0, d3.max(data, (d) => d.x)])
     .range([margin.left, w - margin.right]);
@@ -34,7 +60,7 @@
         fill={'black'}
       />
     </g>
-    {#each data.slice(1) as d, i}
+    {#each stackdata as d, i}
       <rect
         x={X(data[i].x)}
         y={margin.top}
@@ -46,7 +72,7 @@
     {/each}
     <g
       transform={`translate(${
-        X(data[data.length - 1].x) + margin.right * 0.5
+        X(data.reduce((acc, cur) => (acc += cur.x), 0)) + margin.right * 0.5
       }, ${margin.top * 0.5})`}
     >
       <Pin
