@@ -1,38 +1,55 @@
+<script context="module" lang="ts">
+  export interface ApperanceProps {
+    from: ElementAppearance;
+    to: ElementAppearance;
+  }
+</script>
+
 <script lang="ts">
-  import anime from 'animejs/lib/anime.es';
-  import { onMount } from 'svelte';
+  import anime from 'animejs';
+  import type { AnimeParams } from 'animejs';
+  import { ElementAppearance } from './barchart.svelte';
+
+  const animationConfig: Record<ElementAppearance, Partial<AnimeParams>> = {
+    [ElementAppearance.hide]: {
+      opacity: 0,
+    },
+    [ElementAppearance.fade]: {
+      opacity: 0.5,
+    },
+    [ElementAppearance.show]: {
+      opacity: 1,
+    },
+  };
 
   export let radius: number = 5,
     height = 20,
     fill = 'black',
-    opacity = 1;
+    opacity = 1,
+    appearance: ApperanceProps = {
+      from: ElementAppearance.show,
+      to: ElementAppearance.show,
+    };
 
   let ref = null;
 
   let animation;
-  onMount(() => {
-    if (typeof window !== undefined) {
+  $: {
+    if (typeof window !== 'undefined') {
       animation = anime({
         targets: ref,
-        opacity: 0.5,
+        ...animationConfig[appearance.to],
         duration: 800,
       });
     }
-  });
+  }
 
   function replay() {
     animation.restart();
   }
 </script>
 
-<rect
-  width={20}
-  height={20}
-  color="gainsboro"
-  cursor="pointer"
-  on:click={replay}
-/>
-<g bind:this={ref} {opacity}>
+<g bind:this={ref} opacity={animationConfig[appearance.from].opacity}>
   <circle r={radius} />
   <line y2={height} stroke={fill} />
 </g>
