@@ -28,31 +28,31 @@
   }
 
   export const ChartAppearance: Record<Status, IChartApperance> = {
-    '0': {
+    [Status.pre_start]: {
       firstPin: ElementAppearance.show,
       draftPhase: ElementAppearance.fade,
       donePhase: ElementAppearance.fade,
       lastPin: ElementAppearance.fade,
     },
-    '1': {
+    [Status.start]: {
       firstPin: ElementAppearance.show,
       draftPhase: ElementAppearance.hide,
       donePhase: ElementAppearance.hide,
       lastPin: ElementAppearance.hide,
     },
-    '2': {
+    [Status.drafted]: {
       firstPin: ElementAppearance.fade,
       draftPhase: ElementAppearance.show,
       donePhase: ElementAppearance.fade,
       lastPin: ElementAppearance.fade,
     },
-    '3': {
+    [Status.done]: {
       firstPin: ElementAppearance.show,
       draftPhase: ElementAppearance.fade,
       donePhase: ElementAppearance.fade,
       lastPin: ElementAppearance.fade,
     },
-    '4': {
+    [Status.post_done]: {
       firstPin: ElementAppearance.show,
       draftPhase: ElementAppearance.fade,
       donePhase: ElementAppearance.fade,
