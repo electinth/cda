@@ -71,6 +71,7 @@
 
 <script lang="ts">
   import * as d3 from 'd3';
+  import Bar from './bar.svelte';
 
   import Pin from './pin.svelte';
 
@@ -84,7 +85,7 @@
     left: 20,
   };
 
-  export let appearance: IChartApperance = {
+  export const appearance: IChartApperance = {
     firstPin: ElementAppearance.show,
     draftPhase: ElementAppearance.show,
     donePhase: ElementAppearance.show,
@@ -113,10 +114,13 @@
     .domain([0, d3.max(data, (d) => d.x)])
     .range([margin.left, w - margin.right]);
 
-  let firstPinRef: Pin, lastPinRef: Pin;
+  let firstPinRef: Pin,
+    lastPinRef: Pin,
+    BarRefs: Bar[] = [];
   export function replay() {
     firstPinRef.replay();
     lastPinRef.replay();
+    BarRefs.forEach((barRef) => barRef.replay());
   }
 </script>
 
@@ -131,7 +135,8 @@
       />
     </g>
     {#each stackdata as d, i}
-      <rect
+      <Bar
+        bind:this={BarRefs[i]}
         x={X(data[i].x)}
         y={margin.top}
         width={X(d.x) - X(data[i].x)}
