@@ -12,7 +12,9 @@
     appearance: ApperanceProps = {
       from: ElementAppearance.hide,
       to: ElementAppearance.show,
-    };
+    },
+    duration: number,
+    delay: number;
 
   let ref: SVGRectElement;
   let animation: AnimeInstance;
@@ -23,7 +25,8 @@
         targets: ref,
         easing: 'linear',
         ...animationConfig[appearance.to],
-        duration: 2000,
+        duration,
+        delay,
       });
     }
   }

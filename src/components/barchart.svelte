@@ -1,6 +1,7 @@
 <script context="module" lang="ts">
   import type { AnimeParams } from 'animejs';
 
+  export const DURATION = 500;
   export interface IData {
     x: number;
     event: string;
@@ -144,6 +145,8 @@
         width={X(d.x) - X(data[i].x)}
         height={h - margin.top - margin.bottom}
         fill={d.fill}
+        duration={DURATION}
+        delay={DURATION * i}
       />
     {/each}
     <g
