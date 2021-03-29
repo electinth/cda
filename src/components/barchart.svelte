@@ -61,6 +61,7 @@
 
 <script lang="ts">
   import * as d3 from 'd3';
+
   import Pin from './pin.svelte';
 
   let w = 300,
@@ -121,7 +122,6 @@
         height={h - margin.top - margin.bottom}
         fill={d.fill}
       />
-      <text>{d.x}</text>
     {/each}
     <g
       transform={`translate(${
