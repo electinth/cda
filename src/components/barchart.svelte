@@ -59,10 +59,12 @@
       lastPin: ElementAppearance.fade,
     },
   };
+
   export type TAnimationConfig = Record<
     ElementAppearance,
     Partial<AnimeParams>
   >;
+
   export interface ApperanceProps {
     from: ElementAppearance;
     to: ElementAppearance;

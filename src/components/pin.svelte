@@ -1,10 +1,7 @@
 <script lang="ts">
   import anime from 'animejs';
-  import {
-    ApperanceProps,
-    ElementAppearance,
-    TAnimationConfig,
-  } from './barchart.svelte';
+  import { ElementAppearance } from './barchart.svelte';
+  import type { ApperanceProps, TAnimationConfig } from './barchart.svelte';
 
   const animationConfig: TAnimationConfig = {
     [ElementAppearance.hide]: {
@@ -33,8 +30,9 @@
     if (typeof window !== 'undefined') {
       animation = anime({
         targets: ref,
+        ease: 'linear',
         ...animationConfig[appearance.to],
-        duration: 20000,
+        duration: 2000,
       });
     }
   }
