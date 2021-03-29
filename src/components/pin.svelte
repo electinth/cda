@@ -1,16 +1,12 @@
-<script context="module" lang="ts">
-  export interface ApperanceProps {
-    from: ElementAppearance;
-    to: ElementAppearance;
-  }
-</script>
-
 <script lang="ts">
   import anime from 'animejs';
-  import type { AnimeParams } from 'animejs';
-  import { ElementAppearance } from './barchart.svelte';
+  import {
+    ApperanceProps,
+    ElementAppearance,
+    TAnimationConfig,
+  } from './barchart.svelte';
 
-  const animationConfig: Record<ElementAppearance, Partial<AnimeParams>> = {
+  const animationConfig: TAnimationConfig = {
     [ElementAppearance.hide]: {
       opacity: 0,
     },
@@ -25,9 +21,8 @@
   export let radius: number = 5,
     height = 20,
     fill = 'black',
-    opacity = 1,
     appearance: ApperanceProps = {
-      from: ElementAppearance.show,
+      from: ElementAppearance.hide,
       to: ElementAppearance.show,
     };
 
@@ -39,12 +34,12 @@
       animation = anime({
         targets: ref,
         ...animationConfig[appearance.to],
-        duration: 800,
+        duration: 20000,
       });
     }
   }
 
-  function replay() {
+  export function replay() {
     animation.restart();
   }
 </script>

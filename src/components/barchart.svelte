@@ -1,4 +1,6 @@
 <script context="module" lang="ts">
+  import type { AnimeParams } from 'animejs';
+
   export interface IData {
     x: number;
     event: string;
@@ -57,6 +59,14 @@
       lastPin: ElementAppearance.fade,
     },
   };
+  export type TAnimationConfig = Record<
+    ElementAppearance,
+    Partial<AnimeParams>
+  >;
+  export interface ApperanceProps {
+    from: ElementAppearance;
+    to: ElementAppearance;
+  }
 </script>
 
 <script lang="ts">
@@ -102,16 +112,22 @@
     .scaleLinear()
     .domain([0, d3.max(data, (d) => d.x)])
     .range([margin.left, w - margin.right]);
+
+  let firstPinRef: Pin, lastPinRef: Pin;
+  export function replay() {
+    firstPinRef.replay();
+    lastPinRef.replay();
+  }
 </script>
 
 <div class="w-full h-full" bind:clientHeight={h} bind:clientWidth={w}>
   <svg class="w-full h-full">
     <g transform={`translate(${margin.left * 0.5}, ${margin.top * 0.5})`}>
       <Pin
+        bind:this={firstPinRef}
         radius={5}
         height={h - margin.top - margin.bottom + margin.top * 0.5}
         fill={'black'}
-        opacity={appearance.firstPin === ElementAppearance.show ? 1 : 0.5}
       />
     </g>
     {#each stackdata as d, i}
@@ -129,10 +145,10 @@
       }, ${margin.top * 0.5})`}
     >
       <Pin
+        bind:this={lastPinRef}
         radius={5}
         height={h - margin.top - margin.bottom + margin.top * 0.5}
         fill={'black'}
-        opacity={appearance.firstPin === ElementAppearance.show ? 1 : 0.5}
       />
     </g>
   </svg>
