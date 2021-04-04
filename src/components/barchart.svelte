@@ -28,6 +28,11 @@
     lastPin: ElementAppearance;
   }
 
+  export interface ChartApperanceProps {
+    from: IChartApperance;
+    to: IChartApperance;
+  }
+
   export const ChartAppearance: Record<Status, IChartApperance> = {
     [Status.pre_start]: {
       firstPin: ElementAppearance.show,
@@ -88,11 +93,19 @@
     left: 20,
   };
 
-  export const appearance: IChartApperance = {
-    firstPin: ElementAppearance.show,
-    draftPhase: ElementAppearance.show,
-    donePhase: ElementAppearance.show,
-    lastPin: ElementAppearance.show,
+  export const appearance: ChartApperanceProps = {
+    from: {
+      firstPin: ElementAppearance.show,
+      draftPhase: ElementAppearance.show,
+      donePhase: ElementAppearance.show,
+      lastPin: ElementAppearance.show,
+    },
+    to: {
+      firstPin: ElementAppearance.show,
+      draftPhase: ElementAppearance.show,
+      donePhase: ElementAppearance.show,
+      lastPin: ElementAppearance.show,
+    },
   };
 
   export let data: IData[] = [{ x: 0, event: 'start', fill: 'black' }];
@@ -135,6 +148,10 @@
         radius={5}
         height={h - margin.top - margin.bottom + margin.top * 0.5}
         fill={'black'}
+        appearance={{
+          from: appearance.from.firstPin,
+          to: appearance.to.firstPin,
+        }}
       />
     </g>
     {#each stackdata as d, i}
@@ -147,6 +164,10 @@
         fill={d.fill}
         duration={DURATION}
         delay={DURATION * i}
+        appearance={{
+          from: i ? appearance.from.donePhase : appearance.from.draftPhase,
+          to: i ? appearance.to.donePhase : appearance.to.draftPhase,
+        }}
       />
     {/each}
     <g
@@ -159,6 +180,10 @@
         radius={5}
         height={h - margin.top - margin.bottom + margin.top * 0.5}
         fill={'black'}
+        appearance={{
+          from: appearance.from.lastPin,
+          to: appearance.to.lastPin,
+        }}
       />
     </g>
   </svg>
