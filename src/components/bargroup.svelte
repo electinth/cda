@@ -4,7 +4,7 @@
 
   import Barchart from './barchart.svelte';
 
-  export let name, appearance: ChartApperanceProps;
+  export let appearance: ChartApperanceProps;
 
   export let X: d3.ScaleLinear<number, number, never>,
     data2491,
@@ -34,13 +34,6 @@
 </script>
 
 <IntersectionObserver element={ref} bind:intersecting>
-  <h1>{name}</h1>
-  <h2>
-    from: {JSON.stringify(appearance.from)}
-  </h2>
-  <h2>
-    to: {JSON.stringify(appearance.to)}
-  </h2>
   <div bind:this={ref} class="w-full flex flex-row justify-end">
     <button class="mr-10 border-black border-2" on:click={replay}>replay</button
     >

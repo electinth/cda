@@ -58,12 +58,6 @@
   }
 </script>
 
-<g transform={`translate(${x}, ${y})`}>
-  <text>
-    from: {animationConfig[appearance.from].width}
-    to: {animationConfig[appearance.to].width}
-  </text>
-</g>
 <rect
   bind:this={ref}
   {x}
