@@ -62,6 +62,7 @@
     "sapper": "^0.28.0",
     "svelte": "^3.17.3",
     "svelte-check": "^1.0.46",
+    "svelte-intersection-observer": "^0.6.1",
     "svelte-preprocess": "^4.3.0",
     "tailwindcss": "^2.0.3",
     "tslib": "^2.0.1",

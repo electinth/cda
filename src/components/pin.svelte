@@ -39,7 +39,7 @@
   let ref = null;
 
   $: t = tweened(
-    { ...animationConfig[appearance.to] },
+    { ...animationConfig[appearance.from] },
     {
       delay,
       duration,
