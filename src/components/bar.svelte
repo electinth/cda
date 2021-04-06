@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { ElementAppearance } from './barchart.svelte';
-  import type { ApperanceProps, TAnimationConfig } from './barchart.svelte';
+  import { ElementAppearance } from './animationConfig';
+  import type { ApperanceProps, TAnimationConfig } from './animationConfig';
   import anime from 'animejs';
   import type { AnimeInstance } from 'animejs';
 
@@ -36,21 +36,33 @@
 
   $: animationConfig = {
     [ElementAppearance.hide]: {
+      opacity: 0,
       width: 0,
     },
     [ElementAppearance.fade]: {
+      opacity: 0.5,
       width,
     },
     [ElementAppearance.show]: {
+      opacity: 1,
       width,
     },
   };
 </script>
 
+<g transform={`translate(${x}, ${y})`}>
+  <text>
+    from: {animationConfig[appearance.from].opacity}
+    {appearance.from}
+    to: {animationConfig[appearance.to].opacity}
+    {appearance.to}
+  </text>
+</g>
 <rect
   bind:this={ref}
   {x}
   {y}
+  opacity={animationConfig[appearance.from].opacity}
   width={animationConfig[appearance.from].width}
   {height}
   {fill}

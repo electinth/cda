@@ -1,7 +1,7 @@
 <script lang="ts">
   import anime from 'animejs';
-  import { ElementAppearance } from './barchart.svelte';
-  import type { ApperanceProps, TAnimationConfig } from './barchart.svelte';
+  import { ElementAppearance } from './animationConfig';
+  import type { ApperanceProps, TAnimationConfig } from './animationConfig';
 
   const animationConfig: TAnimationConfig = {
     [ElementAppearance.hide]: {
