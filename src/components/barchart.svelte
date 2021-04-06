@@ -6,8 +6,8 @@
 
   import Pin from './pin.svelte';
 
-  let w = 300,
-    h = 150;
+  let w = 700,
+    h = 80;
 
   export const margin = {
     top: 20,
