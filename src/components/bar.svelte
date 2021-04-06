@@ -1,8 +1,8 @@
 <script lang="ts">
   import { ElementAppearance } from './animationConfig';
   import type { ApperanceProps, TAnimationConfig } from './animationConfig';
-  import anime from 'animejs';
   import type { AnimeInstance } from 'animejs';
+  import { tweened } from 'svelte/motion';
 
   export let x: number,
     y: number,
@@ -17,49 +17,45 @@
     delay: number;
 
   let ref: SVGRectElement;
-  let animation: AnimeInstance;
-  let animationConfig: TAnimationConfig;
-  export function replay() {
-    animation.play();
-  }
+  let animationConfig: TAnimationConfig = {
+    [ElementAppearance.hide]: {
+      opacity: 0,
+      width: 0,
+    },
+    [ElementAppearance.fade]: {
+      opacity: 0.5,
+      width,
+    },
+    [ElementAppearance.show]: {
+      opacity: 1,
+      width,
+    },
+  };
+  $: animationConfig = {
+    [ElementAppearance.hide]: {
+      opacity: 0,
+      width: 0,
+    },
+    [ElementAppearance.fade]: {
+      opacity: 0.5,
+      width,
+    },
+    [ElementAppearance.show]: {
+      opacity: 1,
+      width,
+    },
+  };
 
-  $: {
-    console.log('width: ', width);
-    animationConfig = {
-      [ElementAppearance.hide]: {
-        opacity: 0,
-        width: 0,
-      },
-      [ElementAppearance.fade]: {
-        opacity: 0.5,
-        width,
-      },
-      [ElementAppearance.show]: {
-        opacity: 1,
-        width,
-      },
-    };
-
-    if (typeof window !== 'undefined') {
-      console.log(
-        '-------------',
-        appearance.from,
-        appearance.to,
-        '---------------'
-      );
-      console.log('from', animationConfig[appearance.from]);
-      console.log('to  ', animationConfig[appearance.to]);
-      console.log('-----------------------------');
-      if (animation) anime.remove(ref);
-      animation = anime({
-        targets: ref,
-        easing: 'linear',
-        ...animationConfig[appearance.to],
-        duration,
-        delay,
-        // loop: true,
-      });
+  $: t = tweened(
+    { ...animationConfig[appearance.from] },
+    {
+      delay,
+      duration,
     }
+  );
+  export function replay() {
+    t.set({ ...animationConfig[appearance.from] }, { duration: 0 });
+    $t = { ...animationConfig[appearance.to] };
   }
 </script>
 
@@ -73,8 +69,8 @@
   bind:this={ref}
   {x}
   {y}
-  opacity={animationConfig[appearance.from].opacity}
-  width={animationConfig[appearance.from].width}
+  opacity={$t.opacity}
+  width={$t.width}
   {height}
   {fill}
 />
