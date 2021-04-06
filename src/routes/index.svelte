@@ -1,6 +1,7 @@
 <script>
   import Origin from '../components/visualizations/origin.svelte';
   import DemoIndividual from '../components/visualizations/demo-individual.svelte';
+  import BarSection from '../components/bar-section.svelte';
 </script>
 
 <svelte:head>
@@ -13,4 +14,7 @@
 
   <h1>Demo Space Individual</h1>
   <DemoIndividual />
+</section>
+<section>
+  <BarSection />
 </section>
