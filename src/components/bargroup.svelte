@@ -25,9 +25,8 @@
   let ref;
   let intersecting;
 
-  let played = false;
   $: {
-    if (intersecting && !played) {
+    if (intersecting) {
       replay();
     }
   }
