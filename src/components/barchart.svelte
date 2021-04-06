@@ -16,7 +16,7 @@
     left: 20,
   };
 
-  export const appearance: ChartApperanceProps = {
+  export let appearance: ChartApperanceProps = {
     from: {
       firstPin: ElementAppearance.show,
       draftPhase: ElementAppearance.show,
