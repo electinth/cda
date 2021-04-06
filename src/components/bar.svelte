@@ -46,7 +46,7 @@
   };
 
   $: t = tweened(
-    { ...animationConfig[appearance.from] },
+    { ...animationConfig[appearance.to] },
     {
       delay,
       duration,

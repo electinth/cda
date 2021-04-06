@@ -1,6 +1,6 @@
 import type { AnimeParams } from 'animejs';
 
-export const DURATION = 2000;
+export const DURATION = 500;
 export interface IData {
   x: number;
   event: string;
@@ -37,7 +37,7 @@ export const ChartAppearance: Record<Status, IChartApperance> = {
     firstPin: ElementAppearance.show,
     draftPhase: ElementAppearance.fade,
     donePhase: ElementAppearance.fade,
-    lastPin: ElementAppearance.show,
+    lastPin: ElementAppearance.fade,
   },
   [Status.start]: {
     firstPin: ElementAppearance.show,
@@ -48,14 +48,14 @@ export const ChartAppearance: Record<Status, IChartApperance> = {
   [Status.drafted]: {
     firstPin: ElementAppearance.fade,
     draftPhase: ElementAppearance.show,
-    donePhase: ElementAppearance.fade,
-    lastPin: ElementAppearance.fade,
+    donePhase: ElementAppearance.hide,
+    lastPin: ElementAppearance.hide,
   },
   [Status.done]: {
-    firstPin: ElementAppearance.show,
+    firstPin: ElementAppearance.fade,
     draftPhase: ElementAppearance.fade,
-    donePhase: ElementAppearance.fade,
-    lastPin: ElementAppearance.fade,
+    donePhase: ElementAppearance.show,
+    lastPin: ElementAppearance.show,
   },
   [Status.post_done]: {
     firstPin: ElementAppearance.show,
