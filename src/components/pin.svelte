@@ -1,9 +1,20 @@
 <script lang="ts">
-  import anime from 'animejs';
   import { ElementAppearance } from './animationConfig';
   import type { ApperanceProps, TAnimationConfig } from './animationConfig';
+  import { tweened } from 'svelte/motion';
 
-  const animationConfig: TAnimationConfig = {
+  let animationConfig: TAnimationConfig = {
+    [ElementAppearance.hide]: {
+      opacity: 0,
+    },
+    [ElementAppearance.fade]: {
+      opacity: 0.5,
+    },
+    [ElementAppearance.show]: {
+      opacity: 1,
+    },
+  };
+  $: animationConfig = {
     [ElementAppearance.hide]: {
       opacity: 0,
     },
@@ -21,28 +32,26 @@
     appearance: ApperanceProps = {
       from: ElementAppearance.hide,
       to: ElementAppearance.show,
-    };
+    },
+    delay: number,
+    duration: number;
 
   let ref = null;
 
-  let animation;
-  $: {
-    if (typeof window !== 'undefined') {
-      animation = anime({
-        targets: ref,
-        ease: 'linear',
-        ...animationConfig[appearance.to],
-        duration: 2000,
-      });
+  $: t = tweened(
+    { ...animationConfig[appearance.from] },
+    {
+      delay,
+      duration,
     }
-  }
-
+  );
   export function replay() {
-    animation.restart();
+    t.set({ ...animationConfig[appearance.from] }, { duration: 0 });
+    $t = { ...animationConfig[appearance.to] };
   }
 </script>
 
-<g bind:this={ref} opacity={animationConfig[appearance.from].opacity}>
+<g bind:this={ref} opacity={$t.opacity}>
   <circle r={radius} />
   <line y2={height} stroke={fill} />
 </g>

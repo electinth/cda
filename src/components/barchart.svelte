@@ -75,6 +75,8 @@
           from: appearance.from.firstPin,
           to: appearance.to.firstPin,
         }}
+        duration={DURATION}
+        delay={0}
       />
     </g>
     {#each stackdata as d, i}
@@ -86,7 +88,7 @@
         height={h - margin.top - margin.bottom}
         fill={d.fill}
         duration={DURATION}
-        delay={DURATION * i}
+        delay={DURATION * (i + 1)}
         appearance={{
           from: i ? appearance.from.donePhase : appearance.from.draftPhase,
           to: i ? appearance.to.donePhase : appearance.to.draftPhase,
@@ -107,6 +109,8 @@
           from: appearance.from.lastPin,
           to: appearance.to.lastPin,
         }}
+        duration={DURATION}
+        delay={DURATION * 3}
       />
     </g>
   </svg>

@@ -1,7 +1,6 @@
 <script lang="ts">
   import { ElementAppearance } from './animationConfig';
   import type { ApperanceProps, TAnimationConfig } from './animationConfig';
-  import type { AnimeInstance } from 'animejs';
   import { tweened } from 'svelte/motion';
 
   export let x: number,
