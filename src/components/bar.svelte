@@ -19,9 +19,34 @@
   let ref: SVGRectElement;
   let animation: AnimeInstance;
   let animationConfig: TAnimationConfig;
+  export function replay() {
+    animation.play();
+  }
+
   $: {
+    console.log('width: ', width);
+    animationConfig = {
+      [ElementAppearance.hide]: {
+        opacity: 0,
+        width: 0,
+      },
+      [ElementAppearance.fade]: {
+        opacity: 0.5,
+        width,
+      },
+      [ElementAppearance.show]: {
+        opacity: 1,
+        width,
+      },
+    };
+
     if (typeof window !== 'undefined') {
-      console.log('-----------------------------');
+      console.log(
+        '-------------',
+        appearance.from,
+        appearance.to,
+        '---------------'
+      );
       console.log('from', animationConfig[appearance.from]);
       console.log('to  ', animationConfig[appearance.to]);
       console.log('-----------------------------');
@@ -36,24 +61,6 @@
       });
     }
   }
-  export function replay() {
-    animation.restart();
-  }
-
-  $: animationConfig = {
-    [ElementAppearance.hide]: {
-      opacity: 0,
-      width: 0,
-    },
-    [ElementAppearance.fade]: {
-      opacity: 0.5,
-      width,
-    },
-    [ElementAppearance.show]: {
-      opacity: 1,
-      width,
-    },
-  };
 </script>
 
 <g transform={`translate(${x}, ${y})`}>
