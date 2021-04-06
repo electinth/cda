@@ -21,12 +21,18 @@
   let animationConfig: TAnimationConfig;
   $: {
     if (typeof window !== 'undefined') {
+      console.log('-----------------------------');
+      console.log('from', animationConfig[appearance.from]);
+      console.log('to  ', animationConfig[appearance.to]);
+      console.log('-----------------------------');
+      if (animation) anime.remove(ref);
       animation = anime({
         targets: ref,
         easing: 'linear',
         ...animationConfig[appearance.to],
         duration,
         delay,
+        // loop: true,
       });
     }
   }
@@ -52,10 +58,8 @@
 
 <g transform={`translate(${x}, ${y})`}>
   <text>
-    from: {animationConfig[appearance.from].opacity}
-    {appearance.from}
-    to: {animationConfig[appearance.to].opacity}
-    {appearance.to}
+    from: {animationConfig[appearance.from].width}
+    to: {animationConfig[appearance.to].width}
   </text>
 </g>
 <rect

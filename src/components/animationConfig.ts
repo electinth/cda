@@ -1,6 +1,6 @@
 import type { AnimeParams } from 'animejs';
 
-export const DURATION = 500;
+export const DURATION = 2000;
 export interface IData {
   x: number;
   event: string;
