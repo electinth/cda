@@ -2,6 +2,7 @@
   import Origin from '../components/visualizations/origin.svelte';
   import DemoIndividual from '../components/visualizations/demo-individual.svelte';
   import BarSection from '../components/bar-section.svelte';
+  import Variety from '../components/visualizations/variety.svelte';
 </script>
 
 <svelte:head>
@@ -12,7 +13,10 @@
   <h1 class="text-h3 font-bold text-center">ที่มาของสสร.</h1>
   <Origin />
 
-  <h1>Demo Space Individual</h1>
+  <h1 class="text-h3 font-bold text-center">ความหลากหลายของ สสร.</h1>
+  <Variety />
+
+  <h2>Demo Space Individual</h2>
   <DemoIndividual />
 </section>
 <section>
