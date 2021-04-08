@@ -9,13 +9,14 @@
   import { createStage } from '../../utils/three/stage';
   import Marker from './marker.svelte';
   import Tooltip from './tooltip.svelte';
-
-  export let data: SphereConstructorProps<unknown>[][];
+  import YearAxis, { YEARS } from './year-axis.svelte';
 
   const PLANE_DISTANCE = 200;
 
+  export let data: SphereConstructorProps<unknown>[][];
   export let nodes: Sphere<unknown>[] = [];
   export let selectedNodes: Sphere<unknown>[] = [];
+  export let selectedYears: string[] = [];
 
   let container: HTMLElement,
     mouse = new Vector2(1, 1),
@@ -68,13 +69,26 @@
     updateSpheresAppearance(selectedNodes);
   }
 
-  const updateSpheresAppearance = (selectedNodes: Sphere<unknown>[]) =>
-    spherePlanes.forEach(({ children }) => {
+  const updateSpheresAppearance = (selectedNodes: Sphere<unknown>[]) => {
+    const selectedYearIndexes =
+      selectedNodes.length === 0
+        ? []
+        : spherePlanes.reduce(
+            (list, { children }, planeIndex) =>
+              children.some((sphere: Sphere<unknown>) =>
+                selectedNodes.some((node) => sphere.is(node))
+              )
+                ? [...list, planeIndex]
+                : list,
+
+            []
+          );
+
+    selectedYears = selectedYearIndexes.map((yearIndex) => YEARS[yearIndex]);
+
+    spherePlanes.forEach(({ children }, planeIndex) => {
       const isChildrenEnabled =
-        selectedNodes.length === 0 ||
-        children.some((sphere: Sphere<unknown>) =>
-          selectedNodes.some((node) => sphere.is(node))
-        );
+        selectedNodes.length === 0 || selectedYearIndexes.includes[planeIndex];
 
       children.forEach((sphere: Sphere<unknown>) => {
         if (
@@ -95,6 +109,7 @@
         }
       });
     });
+  };
 
   onMount(() => {
     initRenderer(container);
@@ -138,7 +153,10 @@
   );
 </script>
 
-<div class="relative w-full h-screen flex-1">
+<div class="relative w-full h-screen">
+  <div class="absolute left-8 top-0 bottom-0 z-10 flex">
+    <YearAxis {selectedYears} />
+  </div>
   <div
     class="absolute inset-0"
     bind:this={container}
@@ -163,7 +181,7 @@
   </div>
 
   <div
-    class="absolute bottom-4 right-4 z-10 flex flex-col space-y-2 w-full max-w-md justify-end"
+    class="absolute bottom-8 right-8 z-10 flex flex-col space-y-2 w-full max-w-md justify-end"
   >
     <slot />
   </div>

@@ -53,27 +53,27 @@
 
   let nodes: Sphere<OriginNodeData>[];
   let selectedNodes: Sphere<OriginNodeData>[];
+  let selectedYears: string[];
 
   const onYearSelected = ({ detail }: CustomEvent) => {
     selectedNodes = nodes.filter(({ group }) => group === detail);
   };
 
-  $: selectedYear = selectedNodes && selectedNodes[0]?.group;
   $: displayGroups =
     selectedNodes && selectedNodes[0]
       ? [groups[selectedNodes[0].data.groupIndex]]
       : groups;
-  $: displayMembers = selectedYear
-    ? allMembers.filter(({ year }) => year === selectedYear)
+  $: displayMembers = selectedYears
+    ? allMembers.filter(({ year }) => selectedYears.includes(year))
     : [];
 </script>
 
-<CdaSpace {data} bind:selectedNodes bind:nodes>
+<CdaSpace {data} bind:nodes bind:selectedNodes bind:selectedYears>
   <InfoHead>ที่มาของ สสร.</InfoHead>
   {#each displayGroups as group}
-    <YearGroupBox {...group} {selectedYear} on:select={onYearSelected} />
+    <YearGroupBox {...group} {selectedYears} on:select={onYearSelected} />
   {/each}
-  {#if selectedYear}
+  {#if selectedYears && selectedYears.length > 0}
     <GroupBox>
       <div class="flex flex-col">
         <div>จำนวนสสร. {displayMembers.length} คน</div>

@@ -9,7 +9,7 @@
   export let description: string;
   export let color: Color;
   export let years: string[];
-  export let selectedYear: string;
+  export let selectedYears: string[];
 
   const dispatch = createEventDispatcher();
 </script>
@@ -23,7 +23,8 @@
         {#each years as year}
           <YearButton
             on:click={() => dispatch('select', year)}
-            isActive={year === selectedYear}>{year}</YearButton
+            isActive={selectedYears && selectedYears.includes(year)}
+            >{year}</YearButton
           >
         {/each}
       </div>
