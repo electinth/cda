@@ -1,8 +1,6 @@
-<script lang="ts" context="module">
-  export const YEARS = ['2491', '2502', '2539', '2550'];
-</script>
-
 <script lang="ts">
+  import { YEARS } from '../../utils/stats';
+
   export let selectedYears: string[] = [];
 </script>
 

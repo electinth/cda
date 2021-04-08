@@ -1,6 +1,7 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { Vector2 } from 'three';
+  import { YEARS } from '../../utils/stats';
   import type {
     Sphere,
     SphereConstructorProps,
@@ -9,7 +10,7 @@
   import { createStage } from '../../utils/three/stage';
   import Marker from './marker.svelte';
   import Tooltip from './tooltip.svelte';
-  import YearAxis, { YEARS } from './year-axis.svelte';
+  import YearAxis from './year-axis.svelte';
 
   const PLANE_DISTANCE = 200;
 

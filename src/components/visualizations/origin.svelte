@@ -7,20 +7,12 @@
   import GroupBox from '../cda-space/info-dialog/group-box.svelte';
   import ColorDot from '../cda-space/info-dialog/color-dot.svelte';
   import type { Sphere } from '../../utils/three/sphere';
+  import SubgroupBox from '../cda-space/info-dialog/subgroup-box.svelte';
+  import { CDA_COUNTS, YEARS } from '../../utils/stats';
 
   interface OriginNodeData {
     groupIndex: number;
   }
-
-  const cdaYears = [...new Set(allMembers.map(({ year }) => year))].sort();
-
-  const cdaCount = allMembers.reduce(
-    (obj, { year }) => {
-      obj[year]++;
-      return obj;
-    },
-    cdaYears.reduce((obj, year) => ({ ...obj, [year]: 0 }), {})
-  );
 
   const groups = [
     {
@@ -37,11 +29,11 @@
     },
   ];
 
-  const data = cdaYears.map((year) => {
+  const data = YEARS.map((year) => {
     const groupIndex = groups.findIndex(({ years }) => years.includes(year));
     const { color } = groups[groupIndex];
 
-    return new Array(cdaCount[year]).fill({
+    return new Array(CDA_COUNTS[year]).fill({
       primaryColor: color.clone().multiplyScalar(1.5),
       accentColor: color,
       group: year,
@@ -83,9 +75,7 @@
           </div>
           <div>คน</div>
         </div>
-        <div
-          class="rounded border border-gray-300 max-h-64 overflow-y-auto px-2 py-1 space-y-1"
-        >
+        <SubgroupBox class="max-h-64 overflow-y-auto">
           {#each displayMembers as { name }, index}
             <div class="flex flex-row space-x-2">
               <ColorDot
@@ -95,7 +85,7 @@
               <div class="flex-1">{name}</div>
             </div>
           {/each}
-        </div>
+        </SubgroupBox>
       </div>
     </GroupBox>
   {/if}
