@@ -14,10 +14,11 @@ const SPHERE_DATA_HALO_HOVER_SCALE = 2.5;
 const HALO_OPACITY = 0.2;
 const DISABLED_COLOR = new Color('#f6f6f6');
 
-type scaleArray = [number, number, number];
+type SphereState = 'normal' | 'hovered' | 'selected';
+type ScaleArray = [number, number, number];
 
 const getScaleArray = (scaleValue: number) =>
-  new Array(3).fill(scaleValue) as scaleArray;
+  new Array(3).fill(scaleValue) as ScaleArray;
 
 const scaleUpArrays = [
   getScaleArray(SPHERE_DATA_HOVER_SCALE),
@@ -31,17 +32,17 @@ const scaleDownArrays = [
 
 export interface SphereConstructorProps<T> {
   primaryColor: Color;
-  accentColor?: Color;
+  hoveredColor?: Color;
+  selectedColor?: Color;
   group: string;
   data?: T;
   isIndividual?: boolean;
 }
 
 export class Sphere<T> extends Mesh<SphereGeometry, MeshBasicMaterial> {
-  private primaryColor: Color;
-  private accentColor: Color;
+  private colorMap: Map<SphereState, Color>;
   private haloMesh: Mesh<SphereGeometry, MeshBasicMaterial>;
-  private isActive: boolean;
+  private state: SphereState;
   private isEnabled: boolean;
   public group: string;
   public data: T;
@@ -50,7 +51,8 @@ export class Sphere<T> extends Mesh<SphereGeometry, MeshBasicMaterial> {
 
   constructor({
     primaryColor,
-    accentColor,
+    hoveredColor,
+    selectedColor,
     group,
     data = null,
     isIndividual = false,
@@ -61,21 +63,24 @@ export class Sphere<T> extends Mesh<SphereGeometry, MeshBasicMaterial> {
     super(geometry, material);
 
     this.type = 'SphereMesh';
-    this.primaryColor = primaryColor;
-    this.accentColor = accentColor || primaryColor;
+    this.colorMap = new Map([
+      ['normal', primaryColor],
+      ['hovered', hoveredColor || primaryColor],
+      ['selected', selectedColor || hoveredColor || primaryColor],
+    ]);
     this.group = group;
     this.isIndividual = isIndividual;
-    this.isActive = false;
+    this.state = 'normal';
     this.isEnabled = true;
     this.data = data;
     this.isSelectable = data !== null;
 
-    this.material.color = this.primaryColor;
+    this.material.color = this.colorMap.get('normal');
 
     if (isIndividual) {
       this.haloMesh = new Mesh(
         new SphereGeometry(size, SPHERE_TRIANGLE, SPHERE_TRIANGLE),
-        new MeshBasicMaterial({ color: this.accentColor })
+        new MeshBasicMaterial({ color: this.colorMap.get('hovered') })
       );
       this.haloMesh.material.transparent = true;
       this.haloMesh.material.opacity = HALO_OPACITY;
@@ -92,26 +97,21 @@ export class Sphere<T> extends Mesh<SphereGeometry, MeshBasicMaterial> {
     return this.group && otherSphere?.group && this.group === otherSphere.group;
   }
 
-  public toActiveState() {
-    if (!this.isSelectable || this.isActive) return;
+  public toState(newState: SphereState) {
+    if (!this.isSelectable || this.state === newState) return;
 
     if (this.isIndividual) {
-      this.scaleMesh('up');
+      switch (newState) {
+        case 'normal':
+          this.scaleMesh('down');
+          break;
+        case 'hovered':
+          this.scaleMesh('up');
+          break;
+      }
     }
 
-    this.isActive = true;
-
-    this.updateMeshColor();
-  }
-
-  public toNormalState() {
-    if (!this.isSelectable || !this.isActive) return;
-
-    if (this.isIndividual) {
-      this.scaleMesh('down');
-    }
-
-    this.isActive = false;
+    this.state = newState;
 
     this.updateMeshColor();
   }
@@ -127,20 +127,16 @@ export class Sphere<T> extends Mesh<SphereGeometry, MeshBasicMaterial> {
   }
 
   private updateMeshColor() {
-    const color = this.getColorFromCurrentState();
+    const color =
+      this.isEnabled || this.state === 'hovered'
+        ? this.colorMap.get(this.state)
+        : DISABLED_COLOR;
+
     this.material.color = color;
 
     if (this.isIndividual) {
       this.haloMesh.material.color = color;
     }
-  }
-
-  private getColorFromCurrentState(): Color {
-    return this.isActive
-      ? this.accentColor
-      : this.isEnabled
-      ? this.primaryColor
-      : DISABLED_COLOR;
   }
 
   private scaleMesh(direction: 'up' | 'down') {

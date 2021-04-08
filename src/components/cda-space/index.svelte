@@ -89,18 +89,18 @@
 
     spherePlanes.forEach(({ children }, planeIndex) => {
       const isChildrenEnabled =
-        selectedNodes.length === 0 || selectedYearIndexes.includes[planeIndex];
+        selectedNodes.length === 0 || selectedYearIndexes.includes(planeIndex);
 
       children.forEach((sphere: Sphere<unknown>) => {
-        if (
+        if (selectedNodes.some((node) => sphere.is(node))) {
+          sphere.toState('selected');
+        } else if (
           sphere.is(hoveredSphere) ||
-          (!sphere.isIndividual &&
-            sphere.isInTheSameGroupWith(hoveredSphere)) ||
-          selectedNodes.some((node) => sphere.is(node))
+          (!sphere.isIndividual && sphere.isInTheSameGroupWith(hoveredSphere))
         ) {
-          sphere.toActiveState();
+          sphere.toState('hovered');
         } else {
-          sphere.toNormalState();
+          sphere.toState('normal');
         }
 
         if (isChildrenEnabled) {

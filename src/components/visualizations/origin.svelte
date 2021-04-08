@@ -35,7 +35,7 @@
 
     return new Array(CDA_COUNTS[year]).fill({
       primaryColor: color.clone().multiplyScalar(1.5),
-      accentColor: color,
+      hoveredColor: color,
       group: year,
       data: {
         groupIndex,
