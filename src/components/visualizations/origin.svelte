@@ -75,8 +75,14 @@
   {/each}
   {#if selectedYears && selectedYears.length > 0}
     <GroupBox>
-      <div class="flex flex-col">
-        <div>จำนวนสสร. {displayMembers.length} คน</div>
+      <div class="flex flex-col space-y-1">
+        <div class="flex flex-row space-x-1 font-semibold mx-2">
+          <div>จำนวนสสร.</div>
+          <div class="flex-1 text-h6 text-right">
+            {displayMembers.length}
+          </div>
+          <div>คน</div>
+        </div>
         <div
           class="rounded border border-gray-300 max-h-64 overflow-y-auto px-2 py-1 space-y-1"
         >

@@ -4,8 +4,8 @@
 </script>
 
 <div
-  class="flex justify-center text-center w-5 h-5 rounded-full text-white text-xs"
+  class="flex justify-center text-center w-4 h-4 rounded-full text-white text-xs"
   style="background-color: {color};"
 >
-  <span class="m-auto">{number}</span>
+  <span class="m-auto text-body2">{number}</span>
 </div>

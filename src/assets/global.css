@@ -3,5 +3,5 @@
 @tailwind utilities;
 
 body {
-  @apply font-body;
+  @apply font-body text-body1;
 }
