@@ -9,6 +9,7 @@
   import type { Sphere } from '../../utils/three/sphere';
   import SubgroupBox from '../cda-space/info-dialog/subgroup-box.svelte';
   import { CDA_COUNTS, YEARS } from '../../utils/stats';
+  import PopulationRow from '../cda-space/info-dialog/population-row.svelte';
 
   interface OriginNodeData {
     groupIndex: number;
@@ -68,20 +69,15 @@
   {#if selectedYears && selectedYears.length > 0}
     <GroupBox>
       <div class="flex flex-col space-y-1">
-        <div class="flex flex-row space-x-1 font-semibold mx-2">
-          <div>จำนวนสสร.</div>
-          <div class="flex-1 text-h6 text-right">
-            {displayMembers.length}
-          </div>
-          <div>คน</div>
-        </div>
+        <PopulationRow
+          isLarge
+          label="จำนวนสสร."
+          amount={displayMembers.length}
+        />
         <SubgroupBox class="max-h-64 overflow-y-auto">
           {#each displayMembers as { name }, index}
-            <div class="flex flex-row space-x-2">
-              <ColorDot
-                color="#{displayGroups[0].color.getHexString()}"
-                number={index + 1}
-              />
+            <div class="flex flex-row space-x-1">
+              <ColorDot color={displayGroups[0].color} number={index + 1} />
               <div class="flex-1">{name}</div>
             </div>
           {/each}

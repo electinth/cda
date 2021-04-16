@@ -15,8 +15,8 @@
 </script>
 
 <GroupBox>
-  <div class="flex flex-row space-x-2">
-    <ColorDot color="#{color.getHexString()}" />
+  <div class="flex flex-row space-x-1">
+    <ColorDot {color} />
     <div class="flex flex-col space-y-1">
       <div>{description}</div>
       <div class="flex flex-row space-x-1">
