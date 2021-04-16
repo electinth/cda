@@ -1,6 +1,6 @@
 <script>
   import Origin from '../components/visualizations/origin.svelte';
-  import DemoIndividual from '../components/visualizations/demo-individual.svelte';
+  import Multipleyear from '../components/visualizations/multipleyear.svelte';
   import BarSection from '../components/bar-section.svelte';
   import Variety from '../components/visualizations/variety.svelte';
   import Sexuality from '../components/visualizations/sexuality.svelte';
@@ -20,8 +20,8 @@
   <h1 class="text-h3 font-bold text-center">เพศสภาพกับ สสร.</h1>
   <Sexuality />
 
-  <h2>Demo Space Individual</h2>
-  <DemoIndividual />
+  <h1 class="text-h3 font-bold text-center">สสร. มากกว่า 1 ครั้ง</h1>
+  <Multipleyear />
 </section>
 <section>
   <BarSection />
