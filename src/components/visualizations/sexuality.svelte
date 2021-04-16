@@ -77,8 +77,13 @@
 
 <CdaSpace {data} bind:nodes bind:selectedNodes bind:selectedYears>
   <InfoHead>เพศสภาพกับ สสร.</InfoHead>
-  {#each displayGroups as group}
-    <YearGroupBox {...group} {selectedYears} on:select={onYearSelected} />
+  {#each displayGroups as { color, ...restProps }}
+    <YearGroupBox
+      {...restProps}
+      {selectedYears}
+      color={selectedYears && selectedYears.length > 0 ? null : color}
+      on:select={onYearSelected}
+    />
   {/each}
   {#if selectedYears && selectedYears.length > 0}
     <GroupBox>

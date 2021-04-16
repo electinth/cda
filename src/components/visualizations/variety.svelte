@@ -212,7 +212,7 @@
     <YearGroupBox
       {...restProps}
       {selectedYears}
-      color={displaySubgroup ? whiteColor : color}
+      color={displaySubgroup ? null : color}
       on:select={onYearSelected}
     />
   {/each}
