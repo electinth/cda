@@ -5,11 +5,11 @@
   import InfoHead from '../cda-space/info-dialog/info-head.svelte';
   import YearGroupBox from '../cda-space/info-dialog/year-group-box.svelte';
   import GroupBox from '../cda-space/info-dialog/group-box.svelte';
-  import ColorDot from '../cda-space/info-dialog/color-dot.svelte';
   import type { Sphere } from '../../utils/three/sphere';
   import SubgroupBox from '../cda-space/info-dialog/subgroup-box.svelte';
   import { CDA_COUNTS, YEARS } from '../../utils/stats';
   import PopulationRow from '../cda-space/info-dialog/population-row.svelte';
+  import MemberRow from '../cda-space/info-dialog/member-row.svelte';
 
   interface OriginNodeData {
     groupIndex: number;
@@ -68,7 +68,7 @@
   {/each}
   {#if selectedYears && selectedYears.length > 0}
     <GroupBox>
-      <div class="flex flex-col space-y-1">
+      <div class="flex flex-col space-y-2">
         <PopulationRow
           isLarge
           label="จำนวนสสร."
@@ -76,10 +76,11 @@
         />
         <SubgroupBox class="max-h-64 overflow-y-auto">
           {#each displayMembers as { name }, index}
-            <div class="flex flex-row space-x-1">
-              <ColorDot color={displayGroups[0].color} number={index + 1} />
-              <div class="flex-1">{name}</div>
-            </div>
+            <MemberRow
+              {name}
+              number={index + 1}
+              color={displayGroups[0].color}
+            />
           {/each}
         </SubgroupBox>
       </div>
