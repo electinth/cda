@@ -1,10 +1,13 @@
+interface Member {
+  year: string;
+  name: string;
+}
 declare module '*/all-members.csv' {
-  interface AllMembers {
-    year: string;
-    name: string;
-  }
-
-  declare const allMembers: AllMembers[];
-
+  declare const allMembers: Member[];
   export = allMembers;
+}
+
+declare module '*/female-members.csv' {
+  declare const femaleMembers: Member[];
+  export = femaleMembers;
 }

@@ -3,6 +3,7 @@
   import DemoIndividual from '../components/visualizations/demo-individual.svelte';
   import BarSection from '../components/bar-section.svelte';
   import Variety from '../components/visualizations/variety.svelte';
+  import Sexuality from '../components/visualizations/sexuality.svelte';
 </script>
 
 <svelte:head>
@@ -15,6 +16,9 @@
 
   <h1 class="text-h3 font-bold text-center">ความหลากหลายของ สสร.</h1>
   <Variety />
+
+  <h1 class="text-h3 font-bold text-center">เพศสภาพกับ สสร.</h1>
+  <Sexuality />
 
   <h2>Demo Space Individual</h2>
   <DemoIndividual />

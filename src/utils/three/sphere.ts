@@ -12,7 +12,7 @@ const SPHERE_DATA_SIZE = 8;
 const SPHERE_DATA_HOVER_SCALE = 1.5;
 const SPHERE_DATA_HALO_HOVER_SCALE = 2.5;
 const HALO_OPACITY = 0.2;
-const DISABLED_COLOR = new Color('#f6f6f6');
+export const DISABLED_COLOR = new Color('#f6f6f6');
 
 type SphereState = 'normal' | 'hovered' | 'selected';
 type ScaleArray = [number, number, number];
