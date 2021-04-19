@@ -103,11 +103,7 @@
           sphere.toState('normal');
         }
 
-        if (isChildrenEnabled) {
-          sphere.enable();
-        } else {
-          sphere.disable();
-        }
+        sphere.setIsEnabled(isChildrenEnabled);
       });
     });
   };

@@ -105,6 +105,8 @@ export class Sphere<T> extends Mesh<SphereGeometry, MeshBasicMaterial> {
         case 'normal':
           this.scaleMesh('down');
           break;
+        case 'selected':
+          if (this.state === 'hovered') break;
         case 'hovered':
           this.scaleMesh('up');
           break;
@@ -116,13 +118,8 @@ export class Sphere<T> extends Mesh<SphereGeometry, MeshBasicMaterial> {
     this.updateMeshColor();
   }
 
-  public disable() {
-    this.isEnabled = false;
-    this.updateMeshColor();
-  }
-
-  public enable() {
-    this.isEnabled = true;
+  public setIsEnabled(isEnabled: boolean) {
+    this.isEnabled = isEnabled;
     this.updateMeshColor();
   }
 
