@@ -9,6 +9,8 @@
   import GroupBox from '../cda-space/info-dialog/group-box.svelte';
   import MemberRow from '../cda-space/info-dialog/member-row.svelte';
   import SubgroupBox from '../cda-space/info-dialog/subgroup-box.svelte';
+  import ControlButton from '../cda-space/info-dialog/control-button.svelte';
+  import type { ControlState } from '../cda-space/info-dialog/control-button.svelte';
 
   interface MultipleyearNodeData {
     index: number;
@@ -67,13 +69,25 @@
     selectedNodes = nodes.filter(({ data }) => data?.index === index);
   };
 
-  const onInfoHeadClicked = () => {
-    isGroupBoxOpened = !isGroupBoxOpened;
-
-    if (!isGroupBoxOpened) {
-      selectedNodes = [];
+  const onControlTriggered = () => {
+    switch (state) {
+      case 'hidden':
+        isGroupBoxOpened = true;
+        break;
+      case 'expanded':
+        isGroupBoxOpened = false;
+        break;
+      case 'selected':
+        selectedNodes = [];
+        break;
     }
   };
+
+  $: state = isGroupBoxOpened
+    ? selectedNodes?.length > 0
+      ? 'selected'
+      : 'expanded'
+    : ('hidden' as ControlState);
 
   $: displayMembers = isGroupBoxOpened
     ? selectedNodes && selectedNodes.length > 0
@@ -89,28 +103,33 @@
 </script>
 
 <CdaSpace {data} bind:nodes bind:selectedNodes isFreeze={isGroupBoxOpened}>
-  <InfoHead
-    class="flex flex-row space-x-2 z-20"
-    on:click={() => onInfoHeadClicked()}
-  >
-    <div class="flex-1 my-auto">สสร. มากกว่า 1 ครั้ง</div>
-    <div class="text-h4 font-bold">{membersData.length}</div>
-    <div class="my-auto">คน</div>
-  </InfoHead>
-  <GroupBox
-    class="space-y-2 {isGroupBoxOpened
-      ? ''
-      : 'absolute inset-0 transform translate-x-2 translate-y-2'}"
-  >
-    {#each displayMembers as { name, color, index, year }}
-      <SubgroupBox on:click={() => onMemberSelected(index)}>
-        <MemberRow
-          {name}
-          {color}
-          number={index + 1}
-          description="เป็นสมาชิกของสภาร่างรัฐธรรมนูญ พ.ศ. {year[0]} และสภาร่างรัฐธรรมนูญ พ.ศ. {year[1]}"
-        />
-      </SubgroupBox>
-    {/each}
-  </GroupBox>
+  <div class="flex justify-end">
+    <ControlButton {state} on:click={() => onControlTriggered()} />
+  </div>
+  <div class="relative flex flex-col" class:space-y-2={isGroupBoxOpened}>
+    <InfoHead
+      class="flex flex-row space-x-2 z-20"
+      on:click={() => onControlTriggered()}
+    >
+      <div class="flex-1 my-auto">สสร. มากกว่า 1 ครั้ง</div>
+      <div class="text-h4 font-bold">{membersData.length}</div>
+      <div class="my-auto">คน</div>
+    </InfoHead>
+    <GroupBox
+      class="space-y-2 {isGroupBoxOpened
+        ? ''
+        : 'absolute inset-0 transform translate-x-2 translate-y-2'}"
+    >
+      {#each displayMembers as { name, color, index, year }}
+        <SubgroupBox on:click={() => onMemberSelected(index)}>
+          <MemberRow
+            {name}
+            {color}
+            number={index + 1}
+            description="เป็นสมาชิกของสภาร่างรัฐธรรมนูญ พ.ศ. {year[0]} และสภาร่างรัฐธรรมนูญ พ.ศ. {year[1]}"
+          />
+        </SubgroupBox>
+      {/each}
+    </GroupBox>
+  </div>
 </CdaSpace>
