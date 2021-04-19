@@ -4,6 +4,17 @@
   import multipleyearMembers from '../../data/multipleyear-members.csv';
   import { pickNumbersBetween } from '../../utils/gaussian';
   import CdaSpace from '../cda-space/index.svelte';
+  import type { Sphere } from '../../utils/three/sphere';
+  import InfoHead from '../cda-space/info-dialog/info-head.svelte';
+  import GroupBox from '../cda-space/info-dialog/group-box.svelte';
+  import MemberRow from '../cda-space/info-dialog/member-row.svelte';
+  import SubgroupBox from '../cda-space/info-dialog/subgroup-box.svelte';
+
+  interface MultipleyearNodeData {
+    name: string;
+    index: number;
+    number: number;
+  }
 
   const dataSphereColors = [
     new Color('#0066FF'),
@@ -13,10 +24,11 @@
     new Color('#C86FFF'),
   ];
 
-  const membersData = multipleyearMembers.map((data, index) => ({
+  const membersData = multipleyearMembers.map(({ year, ...rest }, index) => ({
     index,
-    ...data,
+    year: year.split(' '),
     color: dataSphereColors[index],
+    ...rest,
   }));
 
   const data = YEARS.map((year) => {
@@ -35,6 +47,7 @@
       nodes[membersPosition[indexInThisYear]] = {
         primaryColor: color,
         data: {
+          index,
           name,
           number: index + 1,
         },
@@ -45,6 +58,32 @@
 
     return nodes;
   });
+
+  let nodes: Sphere<MultipleyearNodeData>[];
+  let selectedNodes: Sphere<MultipleyearNodeData>[];
+
+  const onMemberSelected = (index: number) => {
+    selectedNodes = nodes.filter(({ data }) => data?.index === index);
+  };
+
+  $: displayMembers =
+    selectedNodes && selectedNodes.length > 0
+      ? [membersData.find(({ index }) => selectedNodes[0].data.index == index)]
+      : membersData;
 </script>
 
-<CdaSpace {data} />
+<CdaSpace {data} bind:nodes bind:selectedNodes>
+  <InfoHead>สสร. มากกว่า 1 ครั้ง</InfoHead>
+  <GroupBox class="space-y-2">
+    {#each displayMembers as { name, color, index, year }}
+      <SubgroupBox on:click={() => onMemberSelected(index)}>
+        <MemberRow
+          {name}
+          {color}
+          number={index + 1}
+          description="เป็นสมาชิกของสภาร่างรัฐธรรมนูญ พ.ศ. {year[0]} และสภาร่างรัฐธรรมนูญ พ.ศ. {year[1]}"
+        />
+      </SubgroupBox>
+    {/each}
+  </GroupBox>
+</CdaSpace>
