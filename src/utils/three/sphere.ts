@@ -12,6 +12,7 @@ const SPHERE_DATA_SIZE = 8;
 const SPHERE_DATA_HOVER_SCALE = 1.5;
 const SPHERE_DATA_HALO_HOVER_SCALE = 2.5;
 const HALO_OPACITY = 0.2;
+export const DEFAULT_COLOR = new Color('#b3b3b3');
 export const DISABLED_COLOR = new Color('#f6f6f6');
 
 type SphereState = 'normal' | 'hovered' | 'selected';
@@ -31,10 +32,10 @@ const scaleDownArrays = [
 ];
 
 export interface SphereConstructorProps<T> {
-  primaryColor: Color;
+  primaryColor?: Color;
   hoveredColor?: Color;
   selectedColor?: Color;
-  group: string;
+  group?: string;
   data?: T;
   isIndividual?: boolean;
 }
@@ -64,9 +65,12 @@ export class Sphere<T> extends Mesh<SphereGeometry, MeshBasicMaterial> {
 
     this.type = 'SphereMesh';
     this.colorMap = new Map([
-      ['normal', primaryColor],
-      ['hovered', hoveredColor || primaryColor],
-      ['selected', selectedColor || hoveredColor || primaryColor],
+      ['normal', primaryColor || DEFAULT_COLOR],
+      ['hovered', hoveredColor || primaryColor || DEFAULT_COLOR],
+      [
+        'selected',
+        selectedColor || hoveredColor || primaryColor || DEFAULT_COLOR,
+      ],
     ]);
     this.group = group;
     this.isIndividual = isIndividual;

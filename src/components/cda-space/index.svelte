@@ -88,8 +88,7 @@
     selectedYears = selectedYearIndexes.map((yearIndex) => YEARS[yearIndex]);
 
     spherePlanes.forEach(({ children }, planeIndex) => {
-      const isChildrenEnabled =
-        selectedNodes.length === 0 || selectedYearIndexes.includes(planeIndex);
+      const isThisYearSelected = selectedYearIndexes.includes(planeIndex);
 
       children.forEach((sphere: Sphere<unknown>) => {
         if (selectedNodes.some((node) => sphere.is(node))) {
@@ -103,7 +102,12 @@
           sphere.toState('normal');
         }
 
-        sphere.setIsEnabled(isChildrenEnabled);
+        sphere.setIsEnabled(
+          selectedNodes.length === 0 ||
+            (sphere.isIndividual
+              ? sphere.isInTheSameGroupWith(selectedNodes[0])
+              : isThisYearSelected)
+        );
       });
     });
   };

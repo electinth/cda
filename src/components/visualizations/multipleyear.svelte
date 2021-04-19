@@ -4,7 +4,6 @@
   import multipleyearMembers from '../../data/multipleyear-members.csv';
   import { pickNumbersBetween } from '../../utils/gaussian';
   import CdaSpace from '../cda-space/index.svelte';
-  import { DISABLED_COLOR } from '../../utils/three/sphere';
 
   const dataSphereColors = [
     new Color('#0066FF'),
@@ -30,9 +29,7 @@
       membersInThisYear.length
     );
 
-    const nodes = new Array(CDA_COUNTS[year]).fill({
-      primaryColor: DISABLED_COLOR,
-    });
+    const nodes = new Array(CDA_COUNTS[year]).fill({});
 
     membersInThisYear.forEach(({ color, name, index }, indexInThisYear) => {
       nodes[membersPosition[indexInThisYear]] = {
