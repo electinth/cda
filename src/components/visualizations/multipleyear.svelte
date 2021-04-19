@@ -88,7 +88,7 @@
   }
 </script>
 
-<CdaSpace {data} bind:nodes bind:selectedNodes>
+<CdaSpace {data} bind:nodes bind:selectedNodes isFreeze={isGroupBoxOpened}>
   <InfoHead
     class="flex flex-row space-x-2 z-20"
     on:click={() => onInfoHeadClicked()}

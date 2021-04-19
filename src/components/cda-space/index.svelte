@@ -18,6 +18,7 @@
   export let nodes: Sphere<unknown>[] = [];
   export let selectedNodes: Sphere<unknown>[] = [];
   export let selectedYears: string[] = [];
+  export let isFreeze: boolean = false;
 
   let container: HTMLElement,
     mouse = new Vector2(1, 1),
@@ -134,7 +135,7 @@
         updateSpheresAppearance(selectedNodes);
       }
 
-      if (selectedNodes.length === 0 && !hoveredSphere) {
+      if (!isFreeze && selectedNodes.length === 0 && !hoveredSphere) {
         spherePlanes.forEach((plane) => plane.spin());
       }
 
