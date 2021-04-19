@@ -61,20 +61,47 @@
 
   let nodes: Sphere<MultipleyearNodeData>[];
   let selectedNodes: Sphere<MultipleyearNodeData>[];
+  let isGroupBoxOpened = false;
 
   const onMemberSelected = (index: number) => {
     selectedNodes = nodes.filter(({ data }) => data?.index === index);
   };
 
-  $: displayMembers =
-    selectedNodes && selectedNodes.length > 0
+  const onInfoHeadClicked = () => {
+    isGroupBoxOpened = !isGroupBoxOpened;
+
+    if (!isGroupBoxOpened) {
+      selectedNodes = [];
+    }
+  };
+
+  $: displayMembers = isGroupBoxOpened
+    ? selectedNodes && selectedNodes.length > 0
       ? [membersData.find(({ index }) => selectedNodes[0].data.index == index)]
-      : membersData;
+      : membersData
+    : [];
+
+  $: {
+    if (selectedNodes && selectedNodes.length > 0) {
+      isGroupBoxOpened = true;
+    }
+  }
 </script>
 
 <CdaSpace {data} bind:nodes bind:selectedNodes>
-  <InfoHead>สสร. มากกว่า 1 ครั้ง</InfoHead>
-  <GroupBox class="space-y-2">
+  <InfoHead
+    class="flex flex-row space-x-2 z-20"
+    on:click={() => onInfoHeadClicked()}
+  >
+    <div class="flex-1 my-auto">สสร. มากกว่า 1 ครั้ง</div>
+    <div class="text-h4 font-bold">{membersData.length}</div>
+    <div class="my-auto">คน</div>
+  </InfoHead>
+  <GroupBox
+    class="space-y-2 {isGroupBoxOpened
+      ? ''
+      : 'absolute inset-0 transform translate-x-2 translate-y-2'}"
+  >
     {#each displayMembers as { name, color, index, year }}
       <SubgroupBox on:click={() => onMemberSelected(index)}>
         <MemberRow
