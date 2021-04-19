@@ -11,9 +11,9 @@
   import SubgroupBox from '../cda-space/info-dialog/subgroup-box.svelte';
 
   interface MultipleyearNodeData {
-    name: string;
     index: number;
     number: number;
+    image: string;
   }
 
   const dataSphereColors = [
@@ -43,13 +43,13 @@
 
     const nodes = new Array(CDA_COUNTS[year]).fill({});
 
-    membersInThisYear.forEach(({ color, name, index }, indexInThisYear) => {
+    membersInThisYear.forEach(({ color, index }, indexInThisYear) => {
       nodes[membersPosition[indexInThisYear]] = {
         primaryColor: color,
         data: {
           index,
-          name,
           number: index + 1,
+          image: 'https://place-hold.it/70',
         },
         group: `${index}`,
         isIndividual: true,

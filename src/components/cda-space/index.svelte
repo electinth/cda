@@ -165,10 +165,9 @@
     on:click={onContainerClick}
   >
     {#if hoveredSphereIsIndividual}
-      <Tooltip
-        {...hoveredSphereOffset}
-        label={JSON.stringify(hoveredSphere.data)}
-      />
+      {#if hoveredSphere.data['image']}
+        <Tooltip {...hoveredSphereOffset} image={hoveredSphere.data['image']} />
+      {/if}
       {#if hoveredSphereIsNotSelected}
         <Marker
           {...hoveredSphereOffset}

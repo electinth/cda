@@ -3,12 +3,13 @@
 
   export let x: number;
   export let y: number;
-  export let label: string;
+  export let alt: string;
+  export let image: string;
 </script>
 
-<div
-  class="absolute transform -translate-x-1/2 -translate-y-full p-2 rounded shadow bg-white"
+<img
+  class="absolute transform -translate-x-1/2 -translate-y-full p-1 rounded-full shadow object-cover bg-white"
   style="top: {y - TOP_OFFSET}px; left: {x}px;"
->
-  {label}
-</div>
+  src={image}
+  {alt}
+/>
