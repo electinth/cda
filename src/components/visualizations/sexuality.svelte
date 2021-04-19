@@ -86,35 +86,33 @@
     />
   {/each}
   {#if selectedYears && selectedYears.length > 0}
-    <GroupBox>
-      <div class="flex flex-col space-y-2">
-        {#if displayFemaleMembers.length > 0}
-          <SubgroupBox>
-            <PopulationRow
-              isLarge
-              label="สมาชิกที่เป็นเพศหญิง"
-              amount={displayFemaleMembers.length}
-              color={femaleColor}
-            />
-            <p>จากจำนวนสมาชิกทั้งหมด {selectedYearPopulation} คน</p>
-          </SubgroupBox>
-          <SubgroupBox class="max-h-64 overflow-y-auto">
-            {#each displayFemaleMembers as { name }, index}
-              <MemberRow {name} number={index + 1} color={femaleColor} />
-            {/each}
-          </SubgroupBox>
-        {:else}
-          <SubgroupBox>
-            <PopulationRow
-              isLarge
-              label="สมาชิกที่เป็นเพศชาย"
-              amount={selectedYearPopulation}
-              color={maleColor}
-            />
-            <p>จากจำนวนสมาชิกทั้งหมด {selectedYearPopulation} คน</p>
-          </SubgroupBox>
-        {/if}
-      </div>
+    <GroupBox class="flex flex-col space-y-2">
+      {#if displayFemaleMembers.length > 0}
+        <SubgroupBox>
+          <PopulationRow
+            isLarge
+            label="สมาชิกที่เป็นเพศหญิง"
+            amount={displayFemaleMembers.length}
+            color={femaleColor}
+          />
+          <p>จากจำนวนสมาชิกทั้งหมด {selectedYearPopulation} คน</p>
+        </SubgroupBox>
+        <SubgroupBox class="max-h-64 overflow-y-auto">
+          {#each displayFemaleMembers as { name }, index}
+            <MemberRow {name} number={index + 1} color={femaleColor} />
+          {/each}
+        </SubgroupBox>
+      {:else}
+        <SubgroupBox>
+          <PopulationRow
+            isLarge
+            label="สมาชิกที่เป็นเพศชาย"
+            amount={selectedYearPopulation}
+            color={maleColor}
+          />
+          <p>จากจำนวนสมาชิกทั้งหมด {selectedYearPopulation} คน</p>
+        </SubgroupBox>
+      {/if}
     </GroupBox>
   {/if}
 </CdaSpace>
