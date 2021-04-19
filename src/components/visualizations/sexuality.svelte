@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Color } from 'three';
-  import CdaSpace from '../cda-space/index.svelte';
+  import CdaSpace from '../cda-space/cda-space.svelte';
   import femaleMembers from '../../data/female-members.csv';
   import InfoHead from '../cda-space/info-dialog/info-head.svelte';
   import YearGroupBox from '../cda-space/info-dialog/year-group-box.svelte';

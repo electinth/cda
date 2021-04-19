@@ -3,7 +3,7 @@
   import { CDA_COUNTS, YEARS } from '../../utils/stats';
   import multipleyearMembers from '../../data/multipleyear-members.csv';
   import { pickNumbersBetween } from '../../utils/gaussian';
-  import CdaSpace from '../cda-space/index.svelte';
+  import CdaSpace from '../cda-space/cda-space.svelte';
   import type { Sphere } from '../../utils/three/sphere';
   import InfoHead from '../cda-space/info-dialog/info-head.svelte';
   import GroupBox from '../cda-space/info-dialog/group-box.svelte';
