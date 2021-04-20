@@ -2,6 +2,9 @@
   export interface IBargroupProps {
     appearance: ChartApperanceProps;
     description: {
+      topicNumber: number;
+      topic: string;
+      description: string;
       text2491: string;
       text2502: string;
       text2539: string;
@@ -15,6 +18,7 @@
   import type { ChartApperanceProps } from './animationConfig';
 
   import Barchart from './barchart.svelte';
+  import Header from './Header.svelte';
 
   export let props: IBargroupProps;
 
@@ -47,6 +51,10 @@
   }
 </script>
 
+<Header number={props.description.topicNumber}>
+  <span slot="topic">{props.description.topic}</span>
+  <span slot="description">{props.description.description}</span>
+</Header>
 <IntersectionObserver element={ref} bind:intersecting>
   <div class="w-full flex flex-row justify-end">
     <button class="mr-10 border-black border-2" on:click={replay}>replay</button
