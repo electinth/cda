@@ -10,5 +10,5 @@
     'border-black border'}"
   style="background-color: #{color ? color.getHexString() : 'ffffff'};"
 >
-  <span class="m-auto text-body2">{number}</span>
+  <span class="m-auto text-body2 leading-none">{number}</span>
 </div>

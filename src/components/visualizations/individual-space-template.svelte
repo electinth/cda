@@ -130,12 +130,12 @@
         ? ''
         : 'absolute inset-0 transform translate-x-2 translate-y-2'}"
     >
-      {#each displayMembers as { index, color, name, description, number, category }, displayIndex}
+      {#each displayMembers as { index, category, group, years, ...memberData }, displayIndex}
         {#if category && (displayIndex === 0 || category !== displayMembers[displayIndex - 1].category)}
           <div class="font-semibold">{categoriesLabel.get(category)}</div>
         {/if}
         <SubgroupBox on:click={() => onMemberSelected(index)}>
-          <MemberRow {color} {name} {description} {number} />
+          <MemberRow {...memberData} />
         </SubgroupBox>
       {/each}
     </GroupBox>
