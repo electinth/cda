@@ -4,6 +4,7 @@
   import BarSection from '../components/bar-section.svelte';
   import Variety from '../components/visualizations/variety.svelte';
   import Sexuality from '../components/visualizations/sexuality.svelte';
+  import Leftearly from '../components/visualizations/leftearly.svelte';
 </script>
 
 <svelte:head>
@@ -22,6 +23,9 @@
 
   <h1 class="text-h3 font-bold text-center">สสร. มากกว่า 1 ครั้ง</h1>
   <Multipleyear />
+
+  <h1 class="text-h3 font-bold text-center">สสร. ไม่ครบวาระ</h1>
+  <Leftearly />
 </section>
 <section>
   <BarSection />

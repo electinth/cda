@@ -16,3 +16,12 @@ declare module '*/multipleyear-members.csv' {
   declare const multipleyearMembers: Member[];
   export = multipleyearMembers;
 }
+
+declare module '*/leftearly-members.csv' {
+  interface LeftearlyMember extends Member {
+    category: 'death' | 'resigned';
+  }
+
+  declare const leftearlyMembers: LeftearlyMember[];
+  export = leftearlyMembers;
+}

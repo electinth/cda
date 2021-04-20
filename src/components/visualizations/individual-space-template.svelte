@@ -1,12 +1,16 @@
 <script lang="ts" context="module">
-  export interface MembersData {
+  export interface MembersData<T = unknown> {
     index: number;
     years: string[];
+    number: number;
     name: string;
     description: string;
     image: string;
     color: Color;
+    category?: T;
   }
+
+  export type CategoryLabelMap<T = unknown> = Map<T, string>;
 </script>
 
 <script lang="ts">
@@ -29,7 +33,9 @@
     image: string;
   }
 
+  export let title: string;
   export let membersData: MembersData[];
+  export let categoriesLabel: CategoryLabelMap = null;
 
   const data = YEARS.map((year) => {
     const membersInThisYear = membersData.filter((member) =>
@@ -43,18 +49,21 @@
 
     const nodes = new Array(CDA_COUNTS[year]).fill({});
 
-    membersInThisYear.forEach(({ color, index, name }, indexInThisYear) => {
-      nodes[membersPosition[indexInThisYear]] = {
-        primaryColor: color,
-        data: {
-          index,
-          number: index + 1,
-          name: name,
-        } as IndividualMemberNodeData,
-        group: `${index}`,
-        isIndividual: true,
-      };
-    });
+    membersInThisYear.forEach(
+      ({ color, index, name, number, image }, indexInThisYear) => {
+        nodes[membersPosition[indexInThisYear]] = {
+          primaryColor: color,
+          data: {
+            index,
+            number,
+            name,
+            image,
+          } as IndividualMemberNodeData,
+          group: `${index}`,
+          isIndividual: true,
+        };
+      }
+    );
 
     return nodes;
   });
@@ -109,7 +118,7 @@
       class="flex flex-row space-x-2 z-20"
       on:click={() => onControlTriggered()}
     >
-      <div class="flex-1 my-auto">สสร. มากกว่า 1 ครั้ง</div>
+      <div class="flex-1 my-auto">{title}</div>
       <div class="text-h4 font-bold">{membersData.length}</div>
       <div class="my-auto">คน</div>
     </InfoHead>
@@ -118,9 +127,12 @@
         ? ''
         : 'absolute inset-0 transform translate-x-2 translate-y-2'}"
     >
-      {#each displayMembers as { index, color, name, description }}
+      {#each displayMembers as { index, color, name, description, number, category }, displayIndex}
+        {#if category && (displayIndex === 0 || category !== displayMembers[displayIndex - 1].category)}
+          <div class="font-semibold">{categoriesLabel.get(category)}</div>
+        {/if}
         <SubgroupBox on:click={() => onMemberSelected(index)}>
-          <MemberRow {color} {name} {description} number={index + 1} />
+          <MemberRow {color} {name} {description} {number} />
         </SubgroupBox>
       {/each}
     </GroupBox>

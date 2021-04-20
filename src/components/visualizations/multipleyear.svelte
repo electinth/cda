@@ -19,6 +19,7 @@
       return {
         index,
         years,
+        number: index + 1,
         color: dataSphereColors[index],
         description: `เป็นสมาชิกของสภาร่างรัฐธรรมนูญ พ.ศ. ${year[0]} และสภาร่างรัฐธรรมนูญ พ.ศ. ${year[1]}`,
         image: 'https://place-hold.it/70',
@@ -28,4 +29,4 @@
   );
 </script>
 
-<IndividualSpaceTemplate {membersData} />
+<IndividualSpaceTemplate title="สสร. มากกว่า 1 ครั้ง" {membersData} />
