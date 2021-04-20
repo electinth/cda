@@ -2,10 +2,10 @@
   import type { Color } from 'three';
   import ColorDot from './color-dot.svelte';
 
-  export let color: Color;
+  export let color: Color | null = null;
   export let number: number;
   export let name: string;
-  export let description: string;
+  export let description: string | null = null;
 </script>
 
 <div class="flex flex-col space-y-1">

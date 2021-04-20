@@ -16,6 +16,7 @@
     index: number;
     number: number;
     image: string;
+    name: string;
   }
 
   const dataSphereColors = [
@@ -45,14 +46,15 @@
 
     const nodes = new Array(CDA_COUNTS[year]).fill({});
 
-    membersInThisYear.forEach(({ color, index }, indexInThisYear) => {
+    membersInThisYear.forEach(({ color, index, name }, indexInThisYear) => {
       nodes[membersPosition[indexInThisYear]] = {
         primaryColor: color,
         data: {
           index,
           number: index + 1,
           image: 'https://place-hold.it/70',
-        },
+          name: name,
+        } as MultipleyearNodeData,
         group: `${index}`,
         isIndividual: true,
       };

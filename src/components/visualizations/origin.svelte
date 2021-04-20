@@ -63,8 +63,8 @@
 
 <CdaSpace {data} bind:nodes bind:selectedNodes bind:selectedYears>
   <InfoHead>ที่มาของ สสร.</InfoHead>
-  {#each displayGroups as group}
-    <YearGroupBox {...group} {selectedYears} on:select={onYearSelected} />
+  {#each displayGroups as { name, ...rest }}
+    <YearGroupBox {...rest} {selectedYears} on:select={onYearSelected} />
   {/each}
   {#if selectedYears && selectedYears.length > 0}
     <GroupBox class="flex flex-col space-y-2">

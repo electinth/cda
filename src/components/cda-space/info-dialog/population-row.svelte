@@ -4,7 +4,7 @@
 
   export let label: string;
   export let amount: number;
-  export let color: Color;
+  export let color: Color | null = null;
   export let isLarge: boolean = false;
 </script>
 

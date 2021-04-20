@@ -167,7 +167,11 @@
   >
     {#if hoveredSphereIsIndividual}
       {#if hoveredSphere.data['image']}
-        <Tooltip {...hoveredSphereOffset} image={hoveredSphere.data['image']} />
+        <Tooltip
+          {...hoveredSphereOffset}
+          image={hoveredSphere.data['image']}
+          alt={hoveredSphere.data['name']}
+        />
       {/if}
       {#if hoveredSphereIsNotSelected}
         <Marker
