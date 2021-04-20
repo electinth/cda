@@ -23,7 +23,7 @@ export const createStage = () => {
   scene.add(axesHelper);
 
   const camera = new OrthographicCamera(0, 0, 0, 0, 0, 10000);
-  camera.position.set(1000, -2000, 0);
+  camera.position.set(800, -2000, 0);
   camera.lookAt(scene.position);
 
   const raycaster = new Raycaster();
@@ -36,6 +36,7 @@ export const createStage = () => {
     camera.right = (FRUSTUM_SIZE * aspect) / 2;
     camera.top = FRUSTUM_SIZE / 2;
     camera.bottom = FRUSTUM_SIZE / -2;
+    camera.zoom = 1.2;
     camera.updateProjectionMatrix();
 
     renderer.setSize(clientWidth, clientHeight);

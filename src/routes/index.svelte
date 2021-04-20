@@ -13,7 +13,7 @@
   <title>ELECT - CDA</title>
 </svelte:head>
 
-<section>
+<section class="max-w-screen-2xl w-full mx-auto">
   <h1 class="text-h3 font-bold text-center">ที่มาของสสร.</h1>
   <Origin />
 

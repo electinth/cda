@@ -155,7 +155,7 @@
   );
 </script>
 
-<div class="relative w-full h-screen">
+<div class="relative w-full" style="height: 720px;">
   <div class="absolute left-8 top-0 bottom-0 z-10 flex">
     <YearAxis {selectedYears} />
   </div>
