@@ -35,3 +35,12 @@ declare module '*/family-members.csv' {
   declare const members: FamilyMember[];
   export = members;
 }
+
+declare module '*/famous-members.csv' {
+  interface FamousMember extends Member {
+    description: string;
+  }
+
+  declare const members: FamousMember[];
+  export = members;
+}

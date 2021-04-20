@@ -6,6 +6,7 @@
   import Sexuality from '../components/visualizations/sexuality.svelte';
   import Leftearly from '../components/visualizations/leftearly.svelte';
   import Family from '../components/visualizations/family.svelte';
+  import Famous from '../components/visualizations/famous.svelte';
 </script>
 
 <svelte:head>
@@ -30,6 +31,9 @@
 
   <h1 class="text-h3 font-bold text-center">สสร. กับนามสกุล</h1>
   <Family />
+
+  <h1 class="text-h3 font-bold text-center">สสร. คนดัง</h1>
+  <Famous />
 </section>
 <section>
   <BarSection />
