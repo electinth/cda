@@ -2,11 +2,9 @@
   import * as d3 from 'd3';
 
   import { ChartAppearance, Status } from '../components/animationConfig';
-  import type {
-    IData,
-    ChartApperanceProps,
-  } from '../components/animationConfig';
+  import type { IData } from '../components/animationConfig';
   import Bargroup from '../components/bargroup.svelte';
+  import type { IBargroupProps } from '../components/bargroup.svelte';
 
   const margin = {
     top: 20,
@@ -48,27 +46,67 @@
     .domain([0, globalMax])
     .range([margin.left, w - margin.right]);
 
-  const ChartsProps: Partial<Record<Status, ChartApperanceProps>> = {
+  const ChartsProps: Partial<Record<Status, IBargroupProps>> = {
     [Status.pre_start]: {
-      from: ChartAppearance[Status.start],
-      to: ChartAppearance[Status.start],
+      appearance: {
+        from: ChartAppearance[Status.start],
+        to: ChartAppearance[Status.start],
+      },
+      description: {
+        text2491: `
+          <p>
+            <b>167 วัน</b> นับตั้งแต่วันประชุมครั้งแรก (12 กรกฎาคม 2491) จนถึงวันประชุมครั้งสุดท้าย
+            (25 ธันวาคม 2491)
+          </p>`,
+        text2502: `
+          <p>
+            <b>6 ปี 10 เดือน 10 วัน</b> นับตั้งแต่วันประชุมครั้งแรก (12 กรกฎาคม 2491)
+            จนถึงวันประชุมครั้งสุดท้าย (25 ธันวาคม 2491)
+          </p>`,
+        text2539: `
+          <p>
+            <b>221 วัน</b> นับตั้งแต่วันประชุมครั้งแรก (7 มกราคม 2540) จนถึงวันประชุมครั้งรองสุดท้าย
+            (15 สิงหาคม 2540)
+          </p>`,
+        text2550: `
+          <p>
+            <b>180 วัน</b> นับตั้งแต่วันประชุมครั้งแรก (8 มกราคม 2550) จนถึงวันประชุมครั้งที่
+            40 (6 กรกฎาคม 2550)
+          </p>`,
+      },
     },
     [Status.start]: {
-      from: ChartAppearance[Status.start],
-      to: ChartAppearance[Status.drafted],
+      appearance: {
+        from: ChartAppearance[Status.start],
+        to: ChartAppearance[Status.drafted],
+      },
+      description: {
+        text2491: '',
+        text2502: '',
+        text2539: '',
+        text2550: '',
+      },
     },
     [Status.drafted]: {
-      from: ChartAppearance[Status.drafted],
-      to: ChartAppearance[Status.done],
+      appearance: {
+        from: ChartAppearance[Status.drafted],
+        to: ChartAppearance[Status.done],
+      },
+      description: {
+        text2491: '',
+        text2502: '',
+        text2539: '',
+        text2550: '',
+      },
     },
   };
 </script>
 
-{#each Object.entries(ChartsProps) as [, appearance]}
-  <div class="w-full min-h-screen p-28">
+{#each Object.entries(ChartsProps) as [, props]}
+  <div class="w-full h-screen p-28">
     <Bargroup
       bind:barWidth={w}
-      {appearance}
+      {props}
       {X}
       {data2491}
       {data2502}

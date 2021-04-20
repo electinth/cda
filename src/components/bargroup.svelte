@@ -1,10 +1,24 @@
+<script context="module" lang="ts">
+  export interface IBargroupProps {
+    appearance: ChartApperanceProps;
+    description: {
+      text2491: string;
+      text2502: string;
+      text2539: string;
+      text2550: string;
+    };
+  }
+</script>
+
 <script lang="ts">
   import IntersectionObserver from 'svelte-intersection-observer';
   import type { ChartApperanceProps } from './animationConfig';
 
   import Barchart from './barchart.svelte';
 
-  export let appearance: ChartApperanceProps;
+  export let props: IBargroupProps;
+
+  let { appearance } = props;
 
   export let X: d3.ScaleLinear<number, number, never>,
     data2491,
@@ -49,10 +63,7 @@
           <div bind:clientWidth={barWidth} class="w-full h-20">
             <Barchart bind:this={bar2491} {X} data={data2491} {appearance} />
           </div>
-          <p>
-            <b>167 วัน</b> นับตั้งแต่วันประชุมครั้งแรก (12 กรกฎาคม 2491) จนถึงวันประชุมครั้งสุดท้าย
-            (25 ธันวาคม 2491)
-          </p>
+          {@html props.description.text2491}
         </div>
       </div>
     </div>
@@ -63,10 +74,7 @@
           <div class="w-full h-20">
             <Barchart bind:this={bar2502} {X} data={data2502} {appearance} />
           </div>
-          <p>
-            <b>6 ปี 10 เดือน 10 วัน</b> นับตั้งแต่วันประชุมครั้งแรก (12 กรกฎาคม 2491)
-            จนถึงวันประชุมครั้งสุดท้าย (25 ธันวาคม 2491)
-          </p>
+          {@html props.description.text2502}
         </div>
       </div>
     </div>
@@ -77,10 +85,7 @@
           <div class="w-full h-20">
             <Barchart bind:this={bar2539} {X} data={data2539} {appearance} />
           </div>
-          <p>
-            <b>221 วัน</b> นับตั้งแต่วันประชุมครั้งแรก (7 มกราคม 2540) จนถึงวันประชุมครั้งรองสุดท้าย
-            (15 สิงหาคม 2540)
-          </p>
+          {@html props.description.text2539}
         </div>
       </div>
     </div>
@@ -91,10 +96,7 @@
           <div class="w-full h-20">
             <Barchart bind:this={bar2550} {X} data={data2550} {appearance} />
           </div>
-          <p>
-            <b>180 วัน</b> นับตั้งแต่วันประชุมครั้งแรก (8 มกราคม 2550) จนถึงวันประชุมครั้งที่
-            40 (6 กรกฎาคม 2550)
-          </p>
+          {@html props.description.text2550}
         </div>
       </div>
     </div>
