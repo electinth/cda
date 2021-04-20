@@ -50,7 +50,7 @@
 
   const ChartsProps: Partial<Record<Status, ChartApperanceProps>> = {
     [Status.pre_start]: {
-      from: ChartAppearance[Status.pre_start],
+      from: ChartAppearance[Status.start],
       to: ChartAppearance[Status.start],
     },
     [Status.start]: {
@@ -61,15 +61,11 @@
       from: ChartAppearance[Status.drafted],
       to: ChartAppearance[Status.done],
     },
-    [Status.done]: {
-      from: ChartAppearance[Status.done],
-      to: ChartAppearance[Status.post_done],
-    },
   };
 </script>
 
 {#each Object.entries(ChartsProps) as [, appearance]}
-  <div class="w-screen h-screen p-28">
+  <div class="w-full min-h-screen p-28">
     <Bargroup
       bind:barWidth={w}
       {appearance}
