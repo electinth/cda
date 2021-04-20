@@ -73,8 +73,8 @@
   let selectedNodes: Sphere<IndividualMemberNodeData>[];
   let isGroupBoxOpened = false;
 
-  const onMemberSelected = (index: number) => {
-    selectedNodes = nodes.filter(({ data }) => data?.index === index);
+  const onMemberSelected = (selectedGroup: number | string) => {
+    selectedNodes = nodes.filter(({ group }) => group === selectedGroup);
   };
 
   const onControlTriggered = () => {
@@ -99,9 +99,13 @@
 
   $: displayMembers = isGroupBoxOpened
     ? selectedNodes && selectedNodes.length > 0
-      ? selectedNodes.map(({ data }) =>
-          membersData.find(({ index }) => data.index === index)
-        )
+      ? [
+          ...new Set(
+            selectedNodes.map(({ data }) =>
+              membersData.find(({ index }) => data.index === index)
+            )
+          ),
+        ]
       : membersData
     : [];
 
@@ -134,7 +138,7 @@
         {#if category && (displayIndex === 0 || category !== displayMembers[displayIndex - 1].category)}
           <div class="font-semibold">{categoriesLabel.get(category)}</div>
         {/if}
-        <SubgroupBox on:click={() => onMemberSelected(index)}>
+        <SubgroupBox on:click={() => onMemberSelected(group)}>
           <MemberRow {...memberData} />
         </SubgroupBox>
       {/each}

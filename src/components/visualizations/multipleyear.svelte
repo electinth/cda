@@ -23,7 +23,7 @@
         color: dataSphereColors[index],
         description: `เป็นสมาชิกของสภาร่างรัฐธรรมนูญ พ.ศ. ${year[0]} และสภาร่างรัฐธรรมนูญ พ.ศ. ${year[1]}`,
         image: 'https://place-hold.it/70',
-        group: index,
+        group: index + 1,
         ...rest,
       };
     }
