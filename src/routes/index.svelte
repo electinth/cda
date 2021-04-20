@@ -7,6 +7,7 @@
   import Leftearly from '../components/visualizations/leftearly.svelte';
   import Family from '../components/visualizations/family.svelte';
   import Famous from '../components/visualizations/famous.svelte';
+  import Header from '../components/Header.svelte';
 </script>
 
 <svelte:head>
@@ -45,37 +46,82 @@
   </section>
 
   <section>
-    <h2 class="text-h3 font-bold text-center">ที่มาของสสร.</h2>
+    <Header number={1}>
+      <span slot="topic">ที่มาของสสร.</span>
+      <span slot="description">
+        ที่มาของสมาชิกสภาร่างรัฐธรรมนูญ (สสร.) 4 ชุด ของประเทศไทย
+        มาจากเลือกตั้งโดยรัฐสภา 2 ชุด และการแต่งตั้งโดยพระมหากษัตริย์ 2 ชุด
+        ซึ่งยังไม่เคยมีสมาชิกสภาร่างรัฐธรรมนูญชุดใดที่มาจากการเลือกตั้งโดยตรงของประชาชน
+      </span>
+    </Header>
     <Origin />
   </section>
 
   <section>
-    <h2 class="text-h3 font-bold text-center">ความหลากหลายของ สสร.</h2>
+    <Header number={2}>
+      <span slot="topic">ความหลากหลายของ สสร.</span>
+      <span slot="description">
+        โครงสร้างของสมาชิกสภาร่างรัฐธรรมนูญ (สสร.) 4 ชุด ของประเทศไทย
+        มีการแบ่งประเภทสมาชิกอย่างชัดเจน 2 ชุด และไม่มีการแบ่งประเภทสมาชิก 2 ชุด
+        ซึ่งยังไม่เคยมีสภาร่างรัฐธรรมนูญชุดใดที่มีสมาชิกครอบคลุมคนทุกกลุ่มในประเทศไทย
+      </span>
+    </Header>
     <Variety />
   </section>
 
   <section>
-    <h2 class="text-h3 font-bold text-center">เพศสภาพกับ สสร.</h2>
+    <Header number={3}>
+      <span slot="topic">เพศสภาพกับ สสร.</span>
+      <span slot="description">
+        โครงสร้างของสมาชิกสภาร่างรัฐธรรมนูญ (สสร.) 4 ชุด ของประเทศไทย
+        มีสมาชิกที่มีเพศสภาพเป็นชายล้วน 2 ชุด
+        และมีสมาชิกที่มีเพศสภาพเป็นชายและหญิง 2 ชุด
+        แต่สมาชิกที่มีเพศสภาพเป็นหญิงนั้นมีในอัตราส่วนที่น้อยมาก
+      </span>
+    </Header>
     <Sexuality />
   </section>
 
   <section>
-    <h2 class="text-h3 font-bold text-center">สสร. มากกว่า 1 ครั้ง</h2>
+    <Header number={4}>
+      <span slot="topic">สสร. มากกว่า 1 ครั้ง</span>
+      <span slot="description">
+        สมาชิกสภาร่างรัฐธรรมนูญ (สสร.) หลายคน ได้เป็น สสร. มากกว่า 1 ครั้ง
+      </span>
+    </Header>
     <Multipleyear />
   </section>
 
   <section>
-    <h2 class="text-h3 font-bold text-center">สสร. ไม่ครบวาระ</h2>
+    <Header number={5}>
+      <span slot="topic">สสร. ไม่ครบวาระ</span>
+      <span slot="description">
+        สมาชิกสภาร่างรัฐธรรมนูญ (สสร.) หลายคน อยู่ไม่ครบวาระด้วยสาเหตุหลัก 2
+        ประการ คือ เสียชีวิต และลาออก
+      </span>
+    </Header>
     <Leftearly />
   </section>
 
   <section>
-    <h2 class="text-h3 font-bold text-center">สสร. กับนามสกุล</h2>
+    <Header number={6}>
+      <span slot="topic">สสร. กับนามสกุล</span>
+      <span slot="description">
+        สมาชิกสภาร่างรัฐธรรมนูญ (สสร.) หลายคน มีนามสกุลเดียวกัน
+        ทั้งที่อยู่ในสภาร่างรัฐธรรมนูญชุดเดียวกันและสภาร่างรัฐธรรมนูญต่างชุดกัน
+      </span>
+    </Header>
     <Family />
   </section>
 
   <section>
-    <h2 class="text-h3 font-bold text-center">สสร. คนดัง</h2>
+    <Header number={7}>
+      <span slot="topic">สสร. คนดัง</span>
+      <span slot="description">
+        สมาชิกสภาร่างรัฐธรรมนูญ (สสร.) หลายคนเป็นที่รู้จักของสังคม
+        เนื่องจากดำรงตำแหน่งสำคัญทางการเมือง หรือมีชื่อเสียงในสังคม
+      </span>
+    </Header>
     <Famous />
   </section>
 
