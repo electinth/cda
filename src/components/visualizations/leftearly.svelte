@@ -35,6 +35,7 @@
           : `ลาออกระหว่างเป็นสมาชิกของสภาร่างรัฐธรรมนูญ พ.ศ. ${year}`,
       image: 'https://place-hold.it/70',
       category,
+      group: index,
       ...rest,
     })
   );

@@ -7,6 +7,7 @@
     description: string;
     image: string;
     color: Color;
+    group: string | number;
     category?: T;
   }
 
@@ -50,7 +51,7 @@
     const nodes = new Array(CDA_COUNTS[year]).fill({});
 
     membersInThisYear.forEach(
-      ({ color, index, name, number, image }, indexInThisYear) => {
+      ({ color, index, name, number, image, group }, indexInThisYear) => {
         nodes[membersPosition[indexInThisYear]] = {
           primaryColor: color,
           data: {
@@ -59,7 +60,7 @@
             name,
             image,
           } as IndividualMemberNodeData,
-          group: `${index}`,
+          group,
           isIndividual: true,
         };
       }
@@ -98,7 +99,9 @@
 
   $: displayMembers = isGroupBoxOpened
     ? selectedNodes && selectedNodes.length > 0
-      ? [membersData.find(({ index }) => selectedNodes[0].data.index == index)]
+      ? selectedNodes.map(({ data }) =>
+          membersData.find(({ index }) => data.index === index)
+        )
       : membersData
     : [];
 

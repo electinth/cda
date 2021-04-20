@@ -5,6 +5,7 @@
   import Variety from '../components/visualizations/variety.svelte';
   import Sexuality from '../components/visualizations/sexuality.svelte';
   import Leftearly from '../components/visualizations/leftearly.svelte';
+  import Family from '../components/visualizations/family.svelte';
 </script>
 
 <svelte:head>
@@ -26,6 +27,9 @@
 
   <h1 class="text-h3 font-bold text-center">สสร. ไม่ครบวาระ</h1>
   <Leftearly />
+
+  <h1 class="text-h3 font-bold text-center">สสร. กับนามสกุล</h1>
+  <Family />
 </section>
 <section>
   <BarSection />

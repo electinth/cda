@@ -3,18 +3,18 @@ interface Member {
   name: string;
 }
 declare module '*/all-members.csv' {
-  declare const allMembers: Member[];
-  export = allMembers;
+  declare const members: Member[];
+  export = members;
 }
 
 declare module '*/female-members.csv' {
-  declare const femaleMembers: Member[];
-  export = femaleMembers;
+  declare const members: Member[];
+  export = members;
 }
 
 declare module '*/multipleyear-members.csv' {
-  declare const multipleyearMembers: Member[];
-  export = multipleyearMembers;
+  declare const members: Member[];
+  export = members;
 }
 
 declare module '*/leftearly-members.csv' {
@@ -22,6 +22,16 @@ declare module '*/leftearly-members.csv' {
     category: 'death' | 'resigned';
   }
 
-  declare const leftearlyMembers: LeftearlyMember[];
-  export = leftearlyMembers;
+  declare const members: LeftearlyMember[];
+  export = members;
+}
+
+declare module '*/family-members.csv' {
+  interface FamilyMember extends Member {
+    category: 'same_year' | 'different_year';
+    group: string;
+  }
+
+  declare const members: FamilyMember[];
+  export = members;
 }
