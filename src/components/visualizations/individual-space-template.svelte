@@ -126,7 +126,7 @@
       <div class="my-auto">คน</div>
     </InfoHead>
     <GroupBox
-      class="space-y-2 {isGroupBoxOpened
+      class="space-y-2 max-h-72 overflow-y-auto {isGroupBoxOpened
         ? ''
         : 'absolute inset-0 transform translate-x-2 translate-y-2'}"
     >

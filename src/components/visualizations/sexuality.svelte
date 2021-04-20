@@ -98,7 +98,7 @@
           />
           <p>จากจำนวนสมาชิกทั้งหมด {selectedYearPopulation} คน</p>
         </SubgroupBox>
-        <SubgroupBox class="max-h-64 overflow-y-auto">
+        <SubgroupBox class="max-h-72 overflow-y-auto">
           {#each displayFemaleMembers as { name }, index}
             <MemberRow {name} number={index + 1} color={femaleColor} />
           {/each}
