@@ -4,7 +4,6 @@ import {
   Color,
   OrthographicCamera,
   WebGLRenderer,
-  AxesHelper,
   Vector2,
   Object3D,
   Vector3,
@@ -18,9 +17,6 @@ export const createStage = () => {
 
   const scene = new Scene();
   scene.background = new Color('#ffffff');
-
-  const axesHelper = new AxesHelper(500);
-  scene.add(axesHelper);
 
   const camera = new OrthographicCamera(0, 0, 0, 0, 0, 10000);
   camera.position.set(800, -2000, 0);

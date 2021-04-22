@@ -18,7 +18,9 @@
   export let nodes: Sphere<unknown>[] = [];
   export let selectedNodes: Sphere<unknown>[] = [];
   export let selectedYears: string[] = [];
+  export let spherePlanes: SpherePlane[];
   export let isFreeze: boolean = false;
+  export let viewOnly: boolean = false;
 
   let container: HTMLElement,
     mouse = new Vector2(1, 1),
@@ -33,7 +35,7 @@
     getObjectCanvasOffset,
   } = createStage();
 
-  const spherePlanes = data.map((planeData) => new SpherePlane(planeData));
+  spherePlanes = data.map((planeData) => new SpherePlane(planeData));
 
   spherePlanes.forEach((spherePlane, yearIndex) => {
     spherePlane.position.x =
@@ -48,6 +50,8 @@
   );
 
   const updateMousePosition = (event: MouseEvent) => {
+    if (viewOnly) return;
+
     event.preventDefault();
 
     const { offsetX, offsetY } = event;
@@ -62,6 +66,8 @@
       : [hoveredSphere];
 
   const onContainerClick = () => {
+    if (viewOnly) return;
+
     selectedNodes = hoveredSphere?.isSelectable
       ? getAllSphereInHoveredSphereGroup()
       : [];

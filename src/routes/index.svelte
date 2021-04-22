@@ -8,6 +8,7 @@
   import Family from '../components/visualizations/family.svelte';
   import Famous from '../components/visualizations/famous.svelte';
   import Header from '../components/Header.svelte';
+  import Intro from '../components/visualizations/intro.svelte';
 </script>
 
 <svelte:head>
@@ -43,6 +44,7 @@
       ELECT จะพาทุกคนทำความรู้จักสมาชิกสภาร่างรัฐธรรมนูญ (สสร.) ทั้ง 4 ชุด
       ในประเทศไทย ผ่านการนำเสนอด้วย 10 หัวข้อที่น่าสนใจเกี่ยวกับ สสร. แต่ละชุด
     </p>
+    <Intro />
   </section>
 
   <section>
