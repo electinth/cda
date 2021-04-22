@@ -125,9 +125,7 @@
     <Famous />
   </section>
 
-  <section>
-    <BarSection />
-  </section>
+  <BarSection />
 </div>
 
 <style>

@@ -62,11 +62,11 @@
   </div>
   <div
     bind:this={ref}
-    class="w-full h-full flex flex-col justify-evenly items-center"
+    class="flex-1 w-full flex flex-col justify-evenly items-center"
   >
     <div class="w-full h-20">
       <div class="w-full flex flex-row items-center">
-        <h3 class="font-bold mr-8">พ.ศ. 2491</h3>
+        <h3 class="font-bold px-2 mr-8">พ.ศ. 2491</h3>
         <div class="flex-1">
           <div bind:clientWidth={barWidth} class="w-full h-20">
             <Barchart bind:this={bar2491} {X} data={data2491} {appearance} />
@@ -77,7 +77,7 @@
     </div>
     <div class="w-full h-20">
       <div class="w-full flex flex-row items-center">
-        <h3 class="font-bold mr-8">พ.ศ. 2502</h3>
+        <h3 class="font-bold px-2 mr-8">พ.ศ. 2502</h3>
         <div class="flex-1">
           <div class="w-full h-20">
             <Barchart bind:this={bar2502} {X} data={data2502} {appearance} />
@@ -88,7 +88,7 @@
     </div>
     <div class="w-full h-20">
       <div class="w-full flex flex-row items-center">
-        <h3 class="font-bold mr-8">พ.ศ. 2539</h3>
+        <h3 class="font-bold px-2 mr-8">พ.ศ. 2539</h3>
         <div class="flex-1">
           <div class="w-full h-20">
             <Barchart bind:this={bar2539} {X} data={data2539} {appearance} />
@@ -99,7 +99,7 @@
     </div>
     <div class="w-full h-20">
       <div class="w-full flex flex-row items-center">
-        <h3 class="font-bold mr-8">พ.ศ. 2550</h3>
+        <h3 class="font-bold px-2 mr-8">พ.ศ. 2550</h3>
         <div class="flex-1">
           <div class="w-full h-20">
             <Barchart bind:this={bar2550} {X} data={data2550} {appearance} />

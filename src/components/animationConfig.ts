@@ -34,10 +34,10 @@ export interface ChartApperanceProps {
 
 export const ChartAppearance: Record<Status, IChartApperance> = {
   [Status.pre_start]: {
-    firstPin: ElementAppearance.show,
-    draftPhase: ElementAppearance.fade,
-    donePhase: ElementAppearance.fade,
-    lastPin: ElementAppearance.fade,
+    firstPin: ElementAppearance.hide,
+    draftPhase: ElementAppearance.hide,
+    donePhase: ElementAppearance.hide,
+    lastPin: ElementAppearance.hide,
   },
   [Status.start]: {
     firstPin: ElementAppearance.show,
