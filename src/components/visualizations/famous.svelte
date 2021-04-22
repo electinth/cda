@@ -38,7 +38,7 @@
       description: `สภาร่างรัฐธรรมนูญ พ.ศ. ${year}`,
       image: 'https://place-hold.it/70',
       category: year,
-      group: index,
+      group: index + 1,
       ...rest,
     })
   );
