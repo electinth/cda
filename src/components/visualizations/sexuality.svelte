@@ -87,38 +87,40 @@
     />
   {/each}
   {#if selectedYears && selectedYears.length > 0}
-    <GroupBox class="flex flex-col space-y-2 max-h-72 overflow-y-auto">
-      {#if displayFemaleMembers.length > 0}
-        <SubgroupBox>
-          <PopulationRow
-            isLarge
-            label="สมาชิกที่เป็นเพศหญิง"
-            amount={displayFemaleMembers.length}
-            color={femaleColor}
-          />
-          <p>จากจำนวนสมาชิกทั้งหมด {selectedYearPopulation} คน</p>
-        </SubgroupBox>
-        {#each displayFemaleMembers as { name }, index}
+    {#key selectedYears[0]}
+      <GroupBox class="flex flex-col space-y-2 max-h-72 overflow-y-auto">
+        {#if displayFemaleMembers.length > 0}
           <SubgroupBox>
-            <MemberRow
-              {name}
-              number={index + 1}
+            <PopulationRow
+              isLarge
+              label="สมาชิกที่เป็นเพศหญิง"
+              amount={displayFemaleMembers.length}
               color={femaleColor}
-              image="https://place-hold.it/70"
             />
+            <p>จากจำนวนสมาชิกทั้งหมด {selectedYearPopulation} คน</p>
           </SubgroupBox>
-        {/each}
-      {:else}
-        <SubgroupBox>
-          <PopulationRow
-            isLarge
-            label="สมาชิกที่เป็นเพศชาย"
-            amount={selectedYearPopulation}
-            color={maleColor}
-          />
-          <p>จากจำนวนสมาชิกทั้งหมด {selectedYearPopulation} คน</p>
-        </SubgroupBox>
-      {/if}
-    </GroupBox>
+          {#each displayFemaleMembers as { name }, index}
+            <SubgroupBox>
+              <MemberRow
+                {name}
+                number={index + 1}
+                color={femaleColor}
+                image="https://place-hold.it/70"
+              />
+            </SubgroupBox>
+          {/each}
+        {:else}
+          <SubgroupBox>
+            <PopulationRow
+              isLarge
+              label="สมาชิกที่เป็นเพศชาย"
+              amount={selectedYearPopulation}
+              color={maleColor}
+            />
+            <p>จากจำนวนสมาชิกทั้งหมด {selectedYearPopulation} คน</p>
+          </SubgroupBox>
+        {/if}
+      </GroupBox>
+    {/key}
   {/if}
 </CdaSpace>

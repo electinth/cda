@@ -217,29 +217,31 @@
     />
   {/each}
   {#if displaySubgroup}
-    <GroupBox class="space-y-2">
-      {#each displaySubgroup as { description, subsets, ...populationProps }}
-        <SubgroupBox class="flex flex-col">
-          <PopulationRow {...populationProps} isLarge />
-          <div
-            class="flex flex-col ml-8 divide-y divide-black divide-opacity-20"
-          >
-            {#if description}
-              <p>{description}</p>
-            {/if}
-            {#if subsets}
-              {#each subsets as { subsets, ...population }}
-                <PopulationRow {...population} class="py-2" />
-                {#if subsets}
-                  {#each subsets as { subsets, ...population }}
-                    <PopulationRow {...population} class="ml-6 py-2" />
-                  {/each}
-                {/if}
-              {/each}
-            {/if}
-          </div>
-        </SubgroupBox>
-      {/each}
-    </GroupBox>
+    {#key selectedYears[0]}
+      <GroupBox class="space-y-2">
+        {#each displaySubgroup as { description, subsets, ...populationProps }}
+          <SubgroupBox class="flex flex-col">
+            <PopulationRow {...populationProps} isLarge />
+            <div
+              class="flex flex-col ml-8 divide-y divide-black divide-opacity-20"
+            >
+              {#if description}
+                <p>{description}</p>
+              {/if}
+              {#if subsets}
+                {#each subsets as { subsets, ...population }}
+                  <PopulationRow {...population} class="py-2" />
+                  {#if subsets}
+                    {#each subsets as { subsets, ...population }}
+                      <PopulationRow {...population} class="ml-6 py-2" />
+                    {/each}
+                  {/if}
+                {/each}
+              {/if}
+            </div>
+          </SubgroupBox>
+        {/each}
+      </GroupBox>
+    {/key}
   {/if}
 </CdaSpace>

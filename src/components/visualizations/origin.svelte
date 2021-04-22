@@ -67,13 +67,23 @@
     <YearGroupBox {...rest} {selectedYears} on:select={onYearSelected} />
   {/each}
   {#if selectedYears && selectedYears.length > 0}
-    <GroupBox class="flex flex-col space-y-2">
-      <PopulationRow isLarge label="จำนวนสสร." amount={displayMembers.length} />
-      <SubgroupBox class="max-h-72 overflow-y-auto">
-        {#each displayMembers as { name }, index}
-          <MemberRow {name} number={index + 1} color={displayGroups[0].color} />
-        {/each}
-      </SubgroupBox>
-    </GroupBox>
+    {#key selectedYears[0]}
+      <GroupBox class="flex flex-col space-y-2">
+        <PopulationRow
+          isLarge
+          label="จำนวนสสร."
+          amount={displayMembers.length}
+        />
+        <SubgroupBox class="max-h-72 overflow-y-auto">
+          {#each displayMembers as { name }, index}
+            <MemberRow
+              {name}
+              number={index + 1}
+              color={displayGroups[0].color}
+            />
+          {/each}
+        </SubgroupBox>
+      </GroupBox>
+    {/key}
   {/if}
 </CdaSpace>

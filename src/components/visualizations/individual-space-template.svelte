@@ -15,6 +15,7 @@
 </script>
 
 <script lang="ts">
+  import { slide } from 'svelte/transition';
   import type { Color } from 'three';
   import { CDA_COUNTS, YEARS } from '../../utils/stats';
   import { pickNumbersBetween } from '../../utils/gaussian';
@@ -130,18 +131,22 @@
       <div class="my-auto">คน</div>
     </InfoHead>
     <GroupBox
-      class="space-y-2 max-h-72 overflow-y-auto {isGroupBoxOpened
+      class="max-h-72 overflow-y-auto transition-transform duration-200 ease-in-out {isGroupBoxOpened
         ? ''
         : 'absolute inset-0 transform translate-x-2 translate-y-2'}"
     >
-      {#each displayMembers as { index, category, group, years, ...memberData }, displayIndex}
-        {#if category && (displayIndex === 0 || category !== displayMembers[displayIndex - 1].category)}
-          <div class="font-semibold">{categoriesLabel.get(category)}</div>
-        {/if}
-        <SubgroupBox on:click={() => onMemberSelected(group)}>
-          <MemberRow {...memberData} />
-        </SubgroupBox>
-      {/each}
+      {#key displayMembers.length > 0 ? displayMembers[0].group : ''}
+        <div class="space-y-2" transition:slide>
+          {#each displayMembers as { index, category, group, years, ...memberData }, displayIndex}
+            {#if category && (displayIndex === 0 || category !== displayMembers[displayIndex - 1].category)}
+              <div class="font-semibold">{categoriesLabel.get(category)}</div>
+            {/if}
+            <SubgroupBox on:click={() => onMemberSelected(group)}>
+              <MemberRow {...memberData} />
+            </SubgroupBox>
+          {/each}
+        </div>
+      {/key}
     </GroupBox>
   </div>
 </CdaSpace>
