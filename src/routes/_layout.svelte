@@ -19,5 +19,8 @@
   {/if}
   <Nav {activePath} />
   <slot />
+  <div class="flex justify-center py-24">
+    <social-sharer url="https://elect.in.th/cda" />
+  </div>
   <elect-footer />
 </div>
