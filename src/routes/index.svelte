@@ -9,6 +9,13 @@
   import Famous from '../components/visualizations/famous.svelte';
   import Header from '../components/Header.svelte';
   import Intro from '../components/visualizations/intro.svelte';
+
+  const scrollToContent = () => {
+    window.scroll({
+      top: window.screenY,
+      behavior: 'smooth',
+    });
+  };
 </script>
 
 <svelte:head>
@@ -22,12 +29,15 @@
         ทำความรู้จักสมาชิกสภาร่างรัฐธรรมนูญ (สสร.)<br />
         แต่ละชุดในประวัติศาสตร์การเมืองไทย
       </h1>
-      <button class="bg-black rounded p-2 text-white text-body2 mx-auto"
-        >เริ่มอ่านเนื้อหา</button
+      <button
+        class="bg-black rounded p-2 text-white text-body2 mx-auto"
+        on:click={scrollToContent}
       >
+        เริ่มอ่านเนื้อหา
+      </button>
     </div>
 
-    <div class="flex h-screen">
+    <div id="intro" class="flex h-screen">
       <p class="text-h6 text-center w-full max-w-screen-lg m-auto">
         นับตั้งแต่การเปลี่ยนแปลงการปกครองจากระบอบสมบูรณาญาสิทธิราชย์เป็นระบอบประชาธิปไตยอันมีพระมหากษัตริย์ทรงเป็นพระประมุข
         เมื่อวันที่ 24 มิถุนายน พ.ศ. 2475
