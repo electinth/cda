@@ -20,7 +20,6 @@
   export let selectedYears: string[] = [];
   export let spherePlanes: SpherePlane[];
   export let isFreeze: boolean = false;
-  export let viewOnly: boolean = false;
 
   let container: HTMLElement,
     mouse = new Vector2(1, 1),
@@ -50,8 +49,6 @@
   );
 
   const updateMousePosition = (event: MouseEvent) => {
-    if (viewOnly) return;
-
     event.preventDefault();
 
     const { offsetX, offsetY } = event;
@@ -66,8 +63,6 @@
       : [hoveredSphere];
 
   const onContainerClick = () => {
-    if (viewOnly) return;
-
     selectedNodes = hoveredSphere?.isSelectable
       ? getAllSphereInHoveredSphereGroup()
       : [];
@@ -135,7 +130,8 @@
       } else if (
         !hoveredSphere &&
         intersection &&
-        intersection.object.type === 'SphereMesh'
+        intersection.object.type === 'SphereMesh' &&
+        intersection.object['isSelectable']
       ) {
         hoveredSphere = intersection.object as Sphere<unknown>;
         updateSpheresAppearance(selectedNodes);
@@ -167,6 +163,7 @@
   </div>
   <div
     class="absolute inset-0"
+    class:cursor-pointer={hoveredSphere && hoveredSphere.isSelectable}
     bind:this={container}
     on:mousemove={updateMousePosition}
     on:click={onContainerClick}

@@ -66,6 +66,6 @@
 
 <IntersectionObserver element={container} bind:intersecting>
   <div bind:this={container}>
-    <CdaSpace viewOnly {data} bind:nodes bind:spherePlanes />
+    <CdaSpace {data} bind:nodes bind:spherePlanes />
   </div>
 </IntersectionObserver>
