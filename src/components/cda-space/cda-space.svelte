@@ -1,5 +1,9 @@
+<script context="module">
+  export const TRANSITION_DELAY = 500;
+</script>
+
 <script lang="ts">
-  import { onMount } from 'svelte';
+  import { createEventDispatcher, onMount } from 'svelte';
   import { Vector2 } from 'three';
   import IntersectionObserver from 'svelte-intersection-observer';
   import anime from 'animejs/lib/anime.es.js';
@@ -35,8 +39,10 @@
     isTransitionPlayed = false,
     labelElements: NodeListOf<HTMLDivElement>;
 
+  const dispatch = createEventDispatcher();
+
   const getAnimationStep = (index: number) => ({
-    delay: 500 + index * transitionConfig.delay,
+    delay: TRANSITION_DELAY + index * transitionConfig.delay,
     duration: transitionConfig.duration,
   });
 
@@ -193,6 +199,8 @@
 
   $: {
     if (intersecting && !isTransitionPlayed) {
+      dispatch('transitionstart');
+
       spherePlanes.forEach(({ children }, index) => {
         anime({
           targets: [
