@@ -10,6 +10,7 @@ import {
 } from 'three';
 
 const FRUSTUM_SIZE = 1000;
+const CANVAS_ASPECT = 1.37;
 
 export const createStage = () => {
   let container: HTMLElement;
@@ -25,17 +26,16 @@ export const createStage = () => {
   const raycaster = new Raycaster();
 
   const updateCanvasSize = () => {
-    const { clientWidth, clientHeight } = container;
-    const aspect = clientWidth / clientHeight;
+    const { clientWidth } = container;
 
-    camera.left = (FRUSTUM_SIZE * aspect) / -2;
-    camera.right = (FRUSTUM_SIZE * aspect) / 2;
+    camera.left = (FRUSTUM_SIZE * CANVAS_ASPECT) / -2;
+    camera.right = (FRUSTUM_SIZE * CANVAS_ASPECT) / 2;
     camera.top = FRUSTUM_SIZE / 2;
     camera.bottom = FRUSTUM_SIZE / -2;
-    camera.zoom = 1.2;
+    camera.zoom = clientWidth > 768 ? 1.2 : 1.4;
     camera.updateProjectionMatrix();
 
-    renderer.setSize(clientWidth, clientHeight);
+    renderer.setSize(clientWidth, clientWidth / CANVAS_ASPECT);
   };
 
   const initRenderer = (htmlContainer: HTMLElement) => {

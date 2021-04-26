@@ -157,12 +157,11 @@
   );
 </script>
 
-<div class="relative w-full" style="height: 720px;">
-  <div class="absolute left-8 top-0 bottom-0 z-10 flex">
+<div class="relative mx-auto w-full">
+  <div class="hidden md:flex absolute left-8 top-0 bottom-0 z-10">
     <YearAxis {selectedYears} />
   </div>
   <div
-    class="absolute inset-0"
     class:cursor-pointer={hoveredSphere && hoveredSphere.isSelectable}
     bind:this={container}
     on:mousemove={updateMousePosition}
@@ -189,7 +188,7 @@
   </div>
 
   <div
-    class="absolute bottom-8 right-8 z-10 flex flex-col space-y-2 w-full max-w-md justify-end"
+    class="md:absolute md:bottom-0 md:right-0 z-10 flex flex-col space-y-2 w-full max-w-md justify-end mt-8 md:mx-8"
   >
     <slot />
   </div>

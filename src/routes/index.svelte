@@ -22,7 +22,7 @@
   <title>ELECT - CDA</title>
 </svelte:head>
 
-<div class="max-w-screen-2xl w-full mx-auto space-y-32">
+<div class="max-w-screen-2xl w-full mx-auto space-y-32 px-2 md:px-0">
   <section>
     <div class="flex flex-col justify-center h-screen space-y-8">
       <h1 class="text-h4 font-semibold text-center">
