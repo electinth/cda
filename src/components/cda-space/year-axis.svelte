@@ -2,9 +2,13 @@
   import { YEARS } from '../../utils/stats';
 
   export let selectedYears: string[] = [];
+  export let labelElements: NodeListOf<HTMLDivElement>;
+  let element: HTMLElement;
+
+  $: labelElements = element ? element.querySelectorAll('div') : null;
 </script>
 
-<div class="flex flex-col justify-around py-10">
+<div class="flex flex-col justify-around py-10" bind:this={element}>
   {#each YEARS as year}
     <div
       class="year-axis-label font-bold rounded px-2 py-1 text-center {selectedYears.length ===

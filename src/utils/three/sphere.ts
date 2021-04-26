@@ -87,7 +87,7 @@ export class Sphere<T> extends Mesh<SphereGeometry, MeshBasicMaterial> {
         new MeshBasicMaterial({ color: this.colorMap.get('hovered') })
       );
       this.haloMesh.material.transparent = true;
-      this.haloMesh.material.opacity = HALO_OPACITY;
+      this.haloMesh.material.opacity = 0;
 
       this.add(this.haloMesh);
     }
@@ -112,6 +112,7 @@ export class Sphere<T> extends Mesh<SphereGeometry, MeshBasicMaterial> {
         case 'selected':
           if (this.state === 'hovered') break;
         case 'hovered':
+          this.haloMesh.material.opacity = HALO_OPACITY;
           this.scaleMesh('up');
           break;
       }

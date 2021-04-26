@@ -1,6 +1,8 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { Vector2 } from 'three';
+  import IntersectionObserver from 'svelte-intersection-observer';
+  import anime from 'animejs/lib/anime.es.js';
   import { YEARS } from '../../utils/stats';
   import type {
     Sphere,
@@ -18,13 +20,25 @@
   export let nodes: Sphere<unknown>[] = [];
   export let selectedNodes: Sphere<unknown>[] = [];
   export let selectedYears: string[] = [];
-  export let spherePlanes: SpherePlane[];
   export let isFreeze: boolean = false;
+  export let transitionConfig = {
+    delay: 500,
+    duration: 1000,
+  };
 
   let container: HTMLElement,
     mouse = new Vector2(1, 1),
     hoveredSphere: Sphere<unknown> = null,
-    isMobile: boolean = false;
+    spherePlanes: SpherePlane[],
+    isMobile: boolean = false,
+    intersecting: boolean = false,
+    isTransitionPlayed = false,
+    labelElements: NodeListOf<HTMLDivElement>;
+
+  const getAnimationStep = (index: number) => ({
+    delay: 500 + index * transitionConfig.delay,
+    duration: transitionConfig.duration,
+  });
 
   const {
     scene,
@@ -48,6 +62,11 @@
     (flatChildren, plane) => [...flatChildren, ...plane.children],
     []
   );
+
+  nodes.forEach((node: Sphere<{}>) => {
+    node.material.transparent = true;
+    node.material.opacity = 0;
+  });
 
   const updateMousePosition = (event: MouseEvent) => {
     event.preventDefault();
@@ -163,43 +182,78 @@
   $: individualSelectedNodes = selectedNodes.filter(
     ({ isIndividual }) => isIndividual
   );
+
+  $: {
+    if (labelElements) {
+      labelElements.forEach((label) => {
+        label.style.opacity = '0';
+      });
+    }
+  }
+
+  $: {
+    if (intersecting && !isTransitionPlayed) {
+      spherePlanes.forEach(({ children }, index) => {
+        anime({
+          targets: [
+            ...children.map(({ material }: Sphere<{}>) => material),
+            labelElements[index],
+          ],
+          opacity: [0, 1],
+          easing: 'linear',
+          ...getAnimationStep(index),
+        });
+
+        anime({
+          targets: children.map(({ position }: Sphere<{}>) => position),
+          x: [-100, 0],
+          easing: 'easeOutCubic',
+          ...getAnimationStep(index),
+        });
+      });
+
+      isTransitionPlayed = true;
+    }
+  }
 </script>
 
 <svelte:window on:resize={onResize} />
 
-<div class="relative mx-auto w-full">
-  <div class="hidden md:flex absolute left-0 top-0 bottom-0 z-10">
-    <YearAxis {selectedYears} />
-  </div>
-  <div
-    class:cursor-pointer={hoveredSphere && hoveredSphere.isSelectable}
-    bind:this={container}
-    on:mousemove={updateMousePosition}
-    on:click={onContainerClick}
-  >
-    {#if hoveredSphereIsIndividual}
-      {#if hoveredSphere.data['image']}
-        <Tooltip
-          {...hoveredSphereOffset}
-          image={hoveredSphere.data['image']}
-          alt={hoveredSphere.data['name']}
-        />
+<IntersectionObserver element={container} bind:intersecting>
+  <div class="relative mx-auto w-full">
+    <div class="hidden md:flex absolute left-0 top-0 bottom-0 z-10">
+      <YearAxis bind:labelElements {selectedYears} />
+    </div>
+    <div
+      class:cursor-pointer={hoveredSphere && hoveredSphere.isSelectable}
+      bind:this={container}
+      on:mousemove={updateMousePosition}
+      on:click={onContainerClick}
+    >
+      {#if hoveredSphereIsIndividual}
+        {#if hoveredSphere.data['image']}
+          <Tooltip
+            {...hoveredSphereOffset}
+            image={hoveredSphere.data['image']}
+            alt={hoveredSphere.data['name']}
+          />
+        {/if}
+        {#if hoveredSphereIsNotSelected}
+          <Marker
+            {...hoveredSphereOffset}
+            number={hoveredSphere.data['number']}
+          />
+        {/if}
       {/if}
-      {#if hoveredSphereIsNotSelected}
-        <Marker
-          {...hoveredSphereOffset}
-          number={hoveredSphere.data['number']}
-        />
-      {/if}
-    {/if}
-    {#each individualSelectedNodes as node}
-      <Marker {...getObjectCanvasOffset(node)} number={node.data['number']} />
-    {/each}
-  </div>
+      {#each individualSelectedNodes as node}
+        <Marker {...getObjectCanvasOffset(node)} number={node.data['number']} />
+      {/each}
+    </div>
 
-  <div
-    class="md:absolute md:bottom-0 md:right-0 z-10 flex flex-col space-y-2 w-full max-w-md justify-end mt-8"
-  >
-    <slot />
+    <div
+      class="md:absolute md:bottom-0 md:right-0 z-10 flex flex-col space-y-2 w-full max-w-md justify-end mt-8"
+    >
+      <slot />
+    </div>
   </div>
-</div>
+</IntersectionObserver>
