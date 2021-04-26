@@ -55,7 +55,7 @@
   >
     {#each dataList as data, index}
       <div class="w-full flex flex-row items-center">
-        <h3 class="hidden md:block font-bold px-2 mr-8">
+        <h3 class="hidden md:block font-bold px-2 w-28">
           พ.ศ. {YEARS[index]}
         </h3>
         <div class="flex-1 flex flex-col">
