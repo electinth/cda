@@ -1,5 +1,5 @@
 <script lang="ts">
-  import * as d3 from 'd3';
+  import { scaleLinear } from 'd3';
 
   import { ChartAppearance, Status } from '../timeline-bar/animationConfig';
   import type { IData } from '../timeline-bar/animationConfig';
@@ -39,11 +39,10 @@
   function accumulateMax(data: IData[]) {
     return data.reduce((acc, cur) => (acc += cur.x), 0);
   }
-  const globalMax = d3.max(dataList.map(accumulateMax));
+  const globalMax = Math.max(...dataList.map(accumulateMax));
 
   let w = 300;
-  $: X = d3
-    .scaleLinear()
+  $: X = scaleLinear()
     .domain([0, globalMax])
     .range([margin.left, w - margin.right]);
 

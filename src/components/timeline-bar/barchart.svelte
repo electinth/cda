@@ -1,5 +1,5 @@
 <script lang="ts">
-  import * as d3 from 'd3';
+  import { scaleLinear } from 'd3';
   import { DURATION, ElementAppearance } from './animationConfig';
   import type { ChartApperanceProps, IData } from './animationConfig';
   import Bar from './bar.svelte';
@@ -48,9 +48,8 @@
     ];
   }, []);
 
-  export let X = d3
-    .scaleLinear()
-    .domain([0, d3.max(data, (d) => d.x)])
+  export let X = scaleLinear()
+    .domain([0, Math.max(...data.map(({ x }) => x))])
     .range([margin.left, w - margin.right]);
 
   let firstPinRef: Pin,
