@@ -73,6 +73,7 @@
   let nodes: Sphere<IndividualMemberNodeData>[];
   let selectedNodes: Sphere<IndividualMemberNodeData>[];
   let isGroupBoxOpened = false;
+  let infoHeadHeight: number = 0;
 
   const onMemberSelected = (selectedGroup: number | string) => {
     selectedNodes = nodes.filter(({ group }) => group === selectedGroup);
@@ -121,32 +122,35 @@
   <div class="flex justify-end">
     <ControlButton {state} on:click={() => onControlTriggered()} />
   </div>
-  <div class="relative flex flex-col" class:space-y-2={isGroupBoxOpened}>
-    <InfoHead
-      class="flex flex-row space-x-2 z-20"
-      on:click={() => onControlTriggered()}
-    >
-      <div class="flex-1 my-auto">{title}</div>
-      <div class="text-h4 font-bold">{membersData.length}</div>
-      <div class="my-auto">คน</div>
-    </InfoHead>
+  <div class="relative flex flex-col space-y-2">
+    <div bind:clientHeight={infoHeadHeight} class="z-20">
+      <InfoHead
+        bind:clientHeight={infoHeadHeight}
+        class="flex-1 flex flex-row space-x-2"
+        on:click={() => onControlTriggered()}
+      >
+        <div class="flex-1 my-auto">{title}</div>
+        <div class="text-h4 font-bold">{membersData.length}</div>
+        <div class="my-auto">คน</div>
+      </InfoHead>
+    </div>
+
     <GroupBox
-      class="max-h-72 overflow-y-auto transition-transform duration-200 ease-in-out {isGroupBoxOpened
+      style="min-height: {infoHeadHeight}px;"
+      class="flex-1 max-h-72 min-w-full overflow-y-auto space-y-2 transition-transform duration-200 ease-in-out {isGroupBoxOpened
         ? ''
-        : 'absolute inset-0 transform translate-x-2 translate-y-2'}"
+        : 'delay-200 transform translate-x-2 -translate-y-full'}"
     >
-      {#key displayMembers.length > 0 ? displayMembers[0].group : ''}
-        <div class="space-y-2" transition:slide>
-          {#each displayMembers as { index, category, group, years, ...memberData }, displayIndex}
-            {#if category && (displayIndex === 0 || category !== displayMembers[displayIndex - 1].category)}
-              <div class="font-semibold">{categoriesLabel.get(category)}</div>
-            {/if}
-            <SubgroupBox on:click={() => onMemberSelected(group)}>
-              <MemberRow {...memberData} />
-            </SubgroupBox>
-          {/each}
+      {#each displayMembers as { index, category, group, years, ...memberData }, displayIndex}
+        <div transition:slide>
+          {#if category && (displayIndex === 0 || category !== displayMembers[displayIndex - 1].category)}
+            <div class="font-semibold">{categoriesLabel.get(category)}</div>
+          {/if}
+          <SubgroupBox on:click={() => onMemberSelected(group)}>
+            <MemberRow {...memberData} />
+          </SubgroupBox>
         </div>
-      {/key}
+      {/each}
     </GroupBox>
   </div>
 </CdaSpace>
