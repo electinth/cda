@@ -12,7 +12,7 @@
 
   const scrollToContent = () => {
     window.scroll({
-      top: window.screenY,
+      top: window.innerHeight,
       behavior: 'smooth',
     });
   };
