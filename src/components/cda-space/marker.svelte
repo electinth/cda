@@ -5,7 +5,7 @@
 </script>
 
 <div
-  class="absolute transform -translate-x-1/2 -translate-y-1/2 text-white"
+  class="absolute transform -translate-x-1/2 md:-translate-y-1/2 md:text-white"
   style="top: {y}px; left: {x}px;"
 >
   {number}
