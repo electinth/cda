@@ -158,7 +158,7 @@
 </script>
 
 <div class="relative mx-auto w-full">
-  <div class="hidden md:flex absolute left-8 top-0 bottom-0 z-10">
+  <div class="hidden md:flex absolute left-0 top-0 bottom-0 z-10">
     <YearAxis {selectedYears} />
   </div>
   <div
@@ -188,7 +188,7 @@
   </div>
 
   <div
-    class="md:absolute md:bottom-0 md:right-0 z-10 flex flex-col space-y-2 w-full max-w-md justify-end mt-8 md:mx-8"
+    class="md:absolute md:bottom-0 md:right-0 z-10 flex flex-col space-y-2 w-full max-w-md justify-end mt-8"
   >
     <slot />
   </div>

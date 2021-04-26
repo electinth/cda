@@ -5,18 +5,15 @@
       topicNumber: number;
       topic: string;
       description: string;
-      text2491: string;
-      text2502: string;
-      text2539: string;
-      text2550: string;
+      texts: string[];
     };
   }
 </script>
 
 <script lang="ts">
   import IntersectionObserver from 'svelte-intersection-observer';
-  import type { ChartApperanceProps } from './animationConfig';
-
+  import { YEARS } from '../utils/stats';
+  import type { ChartApperanceProps, IData } from './animationConfig';
   import Barchart from './barchart.svelte';
   import Header from './Header.svelte';
 
@@ -24,25 +21,17 @@
 
   let { appearance } = props;
 
-  export let X: d3.ScaleLinear<number, number, never>,
-    data2491,
-    data2502,
-    data2539,
-    data2550;
+  export let X: d3.ScaleLinear<number, number, never>, dataList: IData[][];
   export let barWidth: number = 500;
 
-  let bar2491: Barchart,
-    bar2502: Barchart,
-    bar2539: Barchart,
-    bar2550: Barchart;
+  let barcharts: Barchart[] = dataList.map(() => null);
+
   function replay() {
-    bar2491.replay();
-    bar2502.replay();
-    bar2539.replay();
-    bar2550.replay();
+    barcharts.forEach((barchart) => barchart.replay());
   }
-  let ref;
-  let intersecting;
+
+  let ref: HTMLElement;
+  let intersecting: boolean = false;
 
   $: {
     if (intersecting) {
@@ -62,51 +51,28 @@
   </div>
   <div
     bind:this={ref}
-    class="flex-1 w-full flex flex-col justify-evenly items-center"
+    class="flex-1 w-full flex flex-col items-center space-y-8"
   >
-    <div class="w-full h-20">
+    {#each dataList as data, index}
       <div class="w-full flex flex-row items-center">
-        <h3 class="font-bold px-2 mr-8">พ.ศ. 2491</h3>
-        <div class="flex-1">
+        <h3 class="hidden md:block font-bold px-2 mr-8">
+          พ.ศ. {YEARS[index]}
+        </h3>
+        <div class="flex-1 flex flex-col">
           <div bind:clientWidth={barWidth} class="w-full h-20">
-            <Barchart bind:this={bar2491} {X} data={data2491} {appearance} />
+            <Barchart bind:this={barcharts[index]} {X} {data} {appearance} />
           </div>
-          {@html props.description.text2491}
+          <h3
+            class="md:hidden font-bold text-white bg-black rounded px-1 mr-auto mb-2"
+          >
+            พ.ศ. {YEARS[index]}
+          </h3>
+
+          <div>
+            {@html props.description.texts[index]}
+          </div>
         </div>
       </div>
-    </div>
-    <div class="w-full h-20">
-      <div class="w-full flex flex-row items-center">
-        <h3 class="font-bold px-2 mr-8">พ.ศ. 2502</h3>
-        <div class="flex-1">
-          <div class="w-full h-20">
-            <Barchart bind:this={bar2502} {X} data={data2502} {appearance} />
-          </div>
-          {@html props.description.text2502}
-        </div>
-      </div>
-    </div>
-    <div class="w-full h-20">
-      <div class="w-full flex flex-row items-center">
-        <h3 class="font-bold px-2 mr-8">พ.ศ. 2539</h3>
-        <div class="flex-1">
-          <div class="w-full h-20">
-            <Barchart bind:this={bar2539} {X} data={data2539} {appearance} />
-          </div>
-          {@html props.description.text2539}
-        </div>
-      </div>
-    </div>
-    <div class="w-full h-20">
-      <div class="w-full flex flex-row items-center">
-        <h3 class="font-bold px-2 mr-8">พ.ศ. 2550</h3>
-        <div class="flex-1">
-          <div class="w-full h-20">
-            <Barchart bind:this={bar2550} {X} data={data2550} {appearance} />
-          </div>
-          {@html props.description.text2550}
-        </div>
-      </div>
-    </div>
+    {/each}
   </div>
 </IntersectionObserver>
