@@ -12,10 +12,10 @@
 
 <script lang="ts">
   import IntersectionObserver from 'svelte-intersection-observer';
-  import { YEARS } from '../utils/stats';
+  import { YEARS } from '../../utils/stats';
   import type { ChartApperanceProps, IData } from './animationConfig';
   import Barchart from './barchart.svelte';
-  import Header from './Header.svelte';
+  import Header from '../header.svelte';
 
   export let props: IBargroupProps;
 

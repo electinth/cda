@@ -1,10 +1,10 @@
 <script lang="ts">
   import * as d3 from 'd3';
 
-  import { ChartAppearance, Status } from '../components/animationConfig';
-  import type { IData } from '../components/animationConfig';
-  import Bargroup from '../components/bargroup.svelte';
-  import type { IBargroupProps } from '../components/bargroup.svelte';
+  import { ChartAppearance, Status } from '../timeline-bar/animationConfig';
+  import type { IData } from '../timeline-bar/animationConfig';
+  import Bargroup from '../timeline-bar/bargroup.svelte';
+  import type { IBargroupProps } from '../timeline-bar/bargroup.svelte';
 
   const margin = {
     top: 20,

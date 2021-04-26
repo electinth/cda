@@ -1,13 +1,13 @@
 <script>
   import Origin from '../components/visualizations/origin.svelte';
   import Multipleyear from '../components/visualizations/multipleyear.svelte';
-  import BarSection from '../components/bar-section.svelte';
+  import BarSection from '../components/visualizations/bar-section.svelte';
   import Variety from '../components/visualizations/variety.svelte';
   import Sexuality from '../components/visualizations/sexuality.svelte';
   import Leftearly from '../components/visualizations/leftearly.svelte';
   import Family from '../components/visualizations/family.svelte';
   import Famous from '../components/visualizations/famous.svelte';
-  import Header from '../components/Header.svelte';
+  import Header from '../components/header.svelte';
   import Intro from '../components/visualizations/intro.svelte';
 
   const scrollToContent = () => {
