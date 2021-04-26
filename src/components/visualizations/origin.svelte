@@ -74,7 +74,7 @@
           label="จำนวนสสร."
           amount={displayMembers.length}
         />
-        <SubgroupBox class="max-h-72 overflow-y-auto">
+        <SubgroupBox class="max-h-64 md:max-h-96 overflow-y-auto">
           {#each displayMembers as { name }, index}
             <MemberRow
               {name}

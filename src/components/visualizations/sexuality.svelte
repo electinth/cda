@@ -88,7 +88,7 @@
   {/each}
   {#if selectedYears && selectedYears.length > 0}
     {#key selectedYears[0]}
-      <GroupBox class="flex flex-col space-y-2 max-h-72 overflow-y-auto">
+      <GroupBox class="flex flex-col space-y-2 max-h-64 md:max-h-96 overflow-y-auto">
         {#if displayFemaleMembers.length > 0}
           <SubgroupBox>
             <PopulationRow

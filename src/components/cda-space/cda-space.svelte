@@ -117,8 +117,6 @@
   onMount(() => {
     initRenderer(container);
 
-    window.addEventListener('resize', updateCanvasSize);
-
     const onEachFrame = () => {
       requestAnimationFrame(onEachFrame);
 
@@ -156,6 +154,8 @@
     ({ isIndividual }) => isIndividual
   );
 </script>
+
+<svelte:window on:resize={updateCanvasSize} />
 
 <div class="relative mx-auto w-full">
   <div class="hidden md:flex absolute left-0 top-0 bottom-0 z-10">

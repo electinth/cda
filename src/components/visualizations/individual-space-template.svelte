@@ -122,35 +122,33 @@
   <div class="flex justify-end">
     <ControlButton {state} on:click={() => onControlTriggered()} />
   </div>
-  <div class="relative flex flex-col space-y-2">
-    <div bind:clientHeight={infoHeadHeight} class="z-20">
-      <InfoHead
-        bind:clientHeight={infoHeadHeight}
-        class="flex-1 flex flex-row space-x-2"
-        on:click={() => onControlTriggered()}
-      >
-        <div class="flex-1 my-auto">{title}</div>
-        <div class="text-h4 font-bold">{membersData.length}</div>
-        <div class="my-auto">คน</div>
-      </InfoHead>
-    </div>
-
-    <GroupBox
-      style="min-height: {infoHeadHeight}px;"
-      class="flex-1 max-h-72 min-w-full overflow-y-auto space-y-2 transition-transform duration-200 ease-in-out {isGroupBoxOpened
-        ? ''
-        : 'delay-200 transform translate-x-2 -translate-y-full'}"
+  <div bind:clientHeight={infoHeadHeight} class="z-20">
+    <InfoHead
+      bind:clientHeight={infoHeadHeight}
+      class="flex flex-row space-x-2"
+      on:click={() => onControlTriggered()}
     >
-      {#each displayMembers as { index, category, group, years, ...memberData }, displayIndex}
-        <div transition:slide>
-          {#if category && (displayIndex === 0 || category !== displayMembers[displayIndex - 1].category)}
-            <div class="font-semibold">{categoriesLabel.get(category)}</div>
-          {/if}
-          <SubgroupBox on:click={() => onMemberSelected(group)}>
-            <MemberRow {...memberData} />
-          </SubgroupBox>
-        </div>
-      {/each}
-    </GroupBox>
+      <div class="flex-1 my-auto">{title}</div>
+      <div class="text-h4 font-bold">{membersData.length}</div>
+      <div class="my-auto">คน</div>
+    </InfoHead>
   </div>
+
+  <GroupBox
+    style="min-height: {infoHeadHeight}px;"
+    class="flex-1 overflow-y-auto space-y-2 max-h-64 md:max-h-96 transition-transform duration-200 ease-in-out {isGroupBoxOpened
+      ? ''
+      : 'delay-200 transform translate-x-2 md:translate-x-2 -translate-y-full'}"
+  >
+    {#each displayMembers as { index, category, group, years, ...memberData }, displayIndex}
+      <div transition:slide>
+        {#if category && (displayIndex === 0 || category !== displayMembers[displayIndex - 1].category)}
+          <div class="font-semibold">{categoriesLabel.get(category)}</div>
+        {/if}
+        <SubgroupBox on:click={() => onMemberSelected(group)}>
+          <MemberRow {...memberData} />
+        </SubgroupBox>
+      </div>
+    {/each}
+  </GroupBox>
 </CdaSpace>
