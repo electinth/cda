@@ -4,7 +4,7 @@
   export let selectedYears: string[] = [];
 </script>
 
-<div class="flex flex-col justify-around py-8">
+<div class="flex flex-col justify-around py-10">
   {#each YEARS as year}
     <div
       class="year-axis-label font-bold rounded px-2 py-1 text-center {selectedYears.length ===

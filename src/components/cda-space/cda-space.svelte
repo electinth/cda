@@ -12,7 +12,7 @@
   import Tooltip from './tooltip.svelte';
   import YearAxis from './year-axis.svelte';
 
-  const PLANE_DISTANCE = 200;
+  const PLANE_DISTANCE = 180;
 
   export let data: SphereConstructorProps<unknown>[][];
   export let nodes: Sphere<unknown>[] = [];
