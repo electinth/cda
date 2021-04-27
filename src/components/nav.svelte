@@ -7,7 +7,7 @@
   ];
 </script>
 
-<navigation-bar title-text="CDA">
+<navigation-bar title-text="Constitution Drafting Assembly of Thailand">
   <div class="flex-1 flex justify-end space-x-1 md:space-x-4">
     {#each routes as { path, label }}
       <a

@@ -12,10 +12,6 @@
   import Landing from '../components/landing.svelte';
 </script>
 
-<svelte:head>
-  <title>ELECT - CDA</title>
-</svelte:head>
-
 <Landing />
 
 <div
