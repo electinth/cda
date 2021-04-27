@@ -35,7 +35,6 @@
     mouse = new Vector2(1, 1),
     hoveredSphere: Sphere<unknown> = null,
     spherePlanes: SpherePlane[],
-    isMobile: boolean = false,
     intersecting: boolean = false,
     labelElements: NodeListOf<HTMLDivElement>;
 
@@ -89,8 +88,6 @@
       : [hoveredSphere];
 
   const onContainerClick = () => {
-    if (isMobile) return;
-
     selectedNodes = hoveredSphere?.isSelectable
       ? getAllSphereInHoveredSphereGroup()
       : [];
@@ -150,19 +147,17 @@
 
       const [intersection] = getMouseIntersections(mouse, nodes);
 
-      if (!isMobile) {
-        if (hoveredSphere && !hoveredSphere.is(intersection?.object)) {
-          hoveredSphere = null;
-          updateSpheresAppearance(selectedNodes);
-        } else if (
-          !hoveredSphere &&
-          intersection &&
-          intersection.object.type === 'SphereMesh' &&
-          intersection.object['isSelectable']
-        ) {
-          hoveredSphere = intersection.object as Sphere<unknown>;
-          updateSpheresAppearance(selectedNodes);
-        }
+      if (hoveredSphere && !hoveredSphere.is(intersection?.object)) {
+        hoveredSphere = null;
+        updateSpheresAppearance(selectedNodes);
+      } else if (
+        !hoveredSphere &&
+        intersection &&
+        intersection.object.type === 'SphereMesh' &&
+        intersection.object['isSelectable']
+      ) {
+        hoveredSphere = intersection.object as Sphere<unknown>;
+        updateSpheresAppearance(selectedNodes);
       }
 
       if (!isFreeze && selectedNodes.length === 0 && !hoveredSphere) {
@@ -174,11 +169,6 @@
 
     onEachFrame();
   });
-
-  const onResize = () => {
-    updateCanvasSize();
-    isMobile = window.innerWidth < 768;
-  };
 
   const playTransition = () => {
     dispatch('transitionstart');
@@ -230,7 +220,7 @@
   }
 </script>
 
-<svelte:window on:resize={onResize} />
+<svelte:window on:resize={updateCanvasSize} />
 
 <IntersectionObserver element={container} bind:intersecting threshold={0.3}>
   <div class="relative mx-auto w-full">
