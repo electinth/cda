@@ -5,4 +5,4 @@ yarn-error.log
 /__sapper__/
 
 pnpm-lock.yaml
-static/global.css
+/.temp/

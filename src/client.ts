@@ -6,6 +6,8 @@ import {
   SocialSharer,
 } from '@electinth/common/';
 
+import '../.temp/global.css';
+
 customElements.define('elect-footer', Footer);
 customElements.define('navigation-bar', NavigationBar);
 customElements.define('staging-banner', StagingBanner);
