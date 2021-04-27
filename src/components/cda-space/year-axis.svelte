@@ -10,15 +10,13 @@
 
 <div class="flex flex-col justify-around py-14" bind:this={element}>
   {#each YEARS as year}
-    <div
-      class="year-axis-label font-bold rounded px-2 py-1 text-center {selectedYears.length ===
-      0
-        ? ''
-        : selectedYears.includes(year)
-        ? ' bg-black text-white'
-        : 'opacity-20'}"
-    >
-      พ.ศ. {year}
+    <div class="year-axis-label font-bold rounded px-2 py-1 text-center">
+      <span
+        class:opacity-20={selectedYears.length > 0 &&
+          !selectedYears.includes(year)}
+      >
+        พ.ศ. {year}
+      </span>
     </div>
   {/each}
 </div>
