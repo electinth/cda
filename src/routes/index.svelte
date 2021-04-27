@@ -15,7 +15,7 @@
 <Landing />
 
 <div
-  class="max-w-screen-2xl w-full mx-auto space-y-36 md:space-y-52 px-2 md:px-8"
+  class="max-w-screen-2xl w-full mx-auto space-y-52 md:space-y-72 px-2 md:px-8"
 >
   <section class="space-y-8 px-2 md:px-8 text-center">
     <div class="text-center w-full max-w-screen-lg m-auto space-y-2">
