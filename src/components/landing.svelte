@@ -55,7 +55,7 @@
 
 <style>
   .landing-intro {
-    background-image: url('/images/landing-bg.jpg');
+    background-image: url('../images/landing-bg.jpg');
     height: 120vh;
     @apply bg-cover;
     @apply bg-top;
