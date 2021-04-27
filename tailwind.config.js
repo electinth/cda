@@ -33,7 +33,11 @@ module.exports = {
       body1: ['16px', '24px'],
       body2: ['13px', '20px'],
     },
-    extend: {},
+    extend: {
+      colors: {
+        gold: '#f1edd6',
+      },
+    },
   },
   variants: {},
   plugins: [],

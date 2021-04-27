@@ -72,7 +72,7 @@
       />
     </div>
   {/if}
-  <InfoHead>ที่มาของ สสร.</InfoHead>
+  <InfoHead dark>ที่มาของ สสร.</InfoHead>
   {#each displayGroups as { name, ...rest }}
     <YearGroupBox {...rest} {selectedYears} on:select={onYearSelected} />
   {/each}

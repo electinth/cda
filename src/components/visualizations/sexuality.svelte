@@ -87,7 +87,7 @@
       />
     </div>
   {/if}
-  <InfoHead>เพศสภาพกับ สสร.</InfoHead>
+  <InfoHead dark>เพศสภาพกับ สสร.</InfoHead>
   {#each displayGroups as { color, description, years }}
     <YearGroupBox
       {description}

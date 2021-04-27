@@ -18,7 +18,7 @@
   <div class="flex flex-row space-x-1">
     <ColorDot {color} />
     <div class="flex flex-col space-y-1">
-      <div>{description}</div>
+      <div class="font-semibold">{description}</div>
       <div class="flex flex-row space-x-1">
         {#each years as year}
           <YearButton

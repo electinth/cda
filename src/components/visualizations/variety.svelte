@@ -216,7 +216,7 @@
       />
     </div>
   {/if}
-  <InfoHead>ความหลากหลายของ สสร.</InfoHead>
+  <InfoHead dark>ความหลากหลายของ สสร.</InfoHead>
   {#each displayGroups as { name, color, ...restProps }}
     <YearGroupBox
       {...restProps}

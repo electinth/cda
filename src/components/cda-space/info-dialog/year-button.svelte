@@ -3,10 +3,10 @@
 </script>
 
 <button
-  class="rounded-full px-2 border border-black text-body2 {isActive
+  class="rounded-full px-2 border border-black font-semibold {isActive
     ? 'bg-black text-white'
-    : ''}"
+    : 'hover:bg-gold underline'}"
   on:click
 >
-  <slot />
+  พ.ศ. <slot />
 </button>
