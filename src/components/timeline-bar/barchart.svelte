@@ -6,6 +6,9 @@
 
   import Pin from './pin.svelte';
 
+  const BAR_HEIGHT = 12;
+  const PIN_RADIUS = 6;
+
   let w = 700,
     h = 80;
 
@@ -67,7 +70,7 @@
     <g transform={`translate(${margin.left * 0.5}, ${margin.top * 0.5})`}>
       <Pin
         bind:this={firstPinRef}
-        radius={5}
+        radius={PIN_RADIUS}
         height={h - margin.top - margin.bottom + margin.top * 0.5}
         fill={'black'}
         appearance={{
@@ -82,9 +85,9 @@
       <Bar
         bind:this={BarRefs[i]}
         x={X(data[i].x)}
-        y={margin.top}
+        y={h - BAR_HEIGHT - margin.bottom}
         width={X(d.x) - X(data[i].x)}
-        height={h - margin.top - margin.bottom}
+        height={BAR_HEIGHT}
         fill={d.fill}
         duration={DURATION}
         delay={DURATION * (i + 1)}
@@ -101,7 +104,7 @@
     >
       <Pin
         bind:this={lastPinRef}
-        radius={5}
+        radius={PIN_RADIUS}
         height={h - margin.top - margin.bottom + margin.top * 0.5}
         fill={'black'}
         appearance={{
