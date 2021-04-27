@@ -36,7 +36,6 @@
     spherePlanes: SpherePlane[],
     isMobile: boolean = false,
     intersecting: boolean = false,
-    isTransitionPlayed = false,
     labelElements: NodeListOf<HTMLDivElement>;
 
   const dispatch = createEventDispatcher();
@@ -226,16 +225,18 @@
   }
 
   $: {
-    if (intersecting && !isTransitionPlayed) {
-      playTransition();
-      isTransitionPlayed = true;
-    }
+    if (intersecting) playTransition();
   }
 </script>
 
 <svelte:window on:resize={onResize} />
 
-<IntersectionObserver element={container} bind:intersecting>
+<IntersectionObserver
+  element={container}
+  bind:intersecting
+  once
+  threshold={0.3}
+>
   <div class="relative mx-auto w-full">
     <button
       class="absolute top-0 right-0 rounded border border-black"
