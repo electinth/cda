@@ -19,7 +19,7 @@
   import YearAxis from './year-axis.svelte';
   import ReplayButton from '../replay-button.svelte';
 
-  const PLANE_DISTANCE = 180;
+  const PLANE_DISTANCE = 150;
 
   export let data: SphereConstructorProps<unknown>[][];
   export let nodes: Sphere<unknown>[] = [];
@@ -272,7 +272,7 @@
     </div>
 
     <div
-      class="md:absolute md:bottom-0 md:right-0 z-10 flex flex-col space-y-2 w-full max-w-md justify-end mt-8"
+      class="md:absolute md:bottom-12 md:right-0 z-10 flex flex-col space-y-2 w-full max-w-md justify-end mt-8"
     >
       <slot />
     </div>

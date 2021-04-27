@@ -8,7 +8,7 @@
   $: labelElements = element ? element.querySelectorAll('div') : null;
 </script>
 
-<div class="flex flex-col justify-around py-10" bind:this={element}>
+<div class="flex flex-col justify-around py-14" bind:this={element}>
   {#each YEARS as year}
     <div
       class="year-axis-label font-bold rounded px-2 py-1 text-center {selectedYears.length ===

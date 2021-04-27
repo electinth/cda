@@ -19,7 +19,7 @@
 
   let countLabelContainer: HTMLElement;
 
-  const countLabelOffset = [22, 63, 72, 94];
+  const countLabelOffset = [24, 64, 72, 93];
 
   const startCountTransition = () => {
     anime({

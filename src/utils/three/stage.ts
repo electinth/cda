@@ -10,7 +10,7 @@ import {
 } from 'three';
 
 const FRUSTUM_SIZE = 1000;
-const CANVAS_ASPECT = 1.47;
+const CANVAS_ASPECT = 1.75;
 
 export const createStage = () => {
   let container: HTMLElement;
@@ -20,7 +20,7 @@ export const createStage = () => {
   scene.background = new Color('#ffffff');
 
   const camera = new OrthographicCamera(0, 0, 0, 0, 0, 10000);
-  camera.position.set(800, -2000, 0);
+  camera.position.set(700, -2000, 0);
   camera.lookAt(scene.position);
 
   const raycaster = new Raycaster();
@@ -32,7 +32,7 @@ export const createStage = () => {
     camera.right = (FRUSTUM_SIZE * CANVAS_ASPECT) / 2;
     camera.top = FRUSTUM_SIZE / 2;
     camera.bottom = FRUSTUM_SIZE / -2;
-    camera.zoom = clientWidth > 768 ? 1.3 : 1.5;
+    camera.zoom = clientWidth > 768 ? 1.5 : 1.8;
     camera.updateProjectionMatrix();
 
     renderer.setSize(clientWidth, clientWidth / CANVAS_ASPECT);
