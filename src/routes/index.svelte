@@ -9,53 +9,27 @@
   import Famous from '../components/visualizations/famous.svelte';
   import Header from '../components/header.svelte';
   import Intro from '../components/visualizations/intro.svelte';
-
-  const scrollToContent = () => {
-    window.scroll({
-      top: window.innerHeight,
-      behavior: 'smooth',
-    });
-  };
+  import Landing from '../components/landing.svelte';
 </script>
 
 <svelte:head>
   <title>ELECT - CDA</title>
 </svelte:head>
 
+<Landing />
+
 <div
   class="max-w-screen-2xl w-full mx-auto space-y-16 md:space-y-32 px-2 md:px-8"
 >
-  <section>
-    <div class="flex flex-col justify-center h-screen space-y-8">
-      <h1 class="text-h4 font-semibold text-center">
-        ทำความรู้จักสมาชิกสภาร่างรัฐธรรมนูญ (สสร.)<br />
-        แต่ละชุดในประวัติศาสตร์การเมืองไทย
-      </h1>
-      <button
-        class="bg-black rounded p-2 text-white text-body2 mx-auto"
-        on:click={scrollToContent}
-      >
-        เริ่มอ่านเนื้อหา
-      </button>
-    </div>
-
-    <div id="intro" class="flex h-screen">
-      <p class="text-h6 text-center w-full max-w-screen-lg m-auto">
-        นับตั้งแต่การเปลี่ยนแปลงการปกครองจากระบอบสมบูรณาญาสิทธิราชย์เป็นระบอบประชาธิปไตยอันมีพระมหากษัตริย์ทรงเป็นพระประมุข
-        เมื่อวันที่ 24 มิถุนายน พ.ศ. 2475
-        ประเทศไทยได้มีสภาร่างรัฐธรรมนูญเกิดขึ้นเพื่อมาร่างรัฐธรรมนูญแล้วจำนวนทั้งสิ้น
-        4 ชุด ได้แก่ สภาร่างรัฐธรรมนูญ พ.ศ. 2491 สภาร่างรัฐธรรมนูญ พ.ศ. 2502
-        สภาร่างรัฐธรรมนูญ พ.ศ. 2539 และสภาร่างรัฐธรรมนูญ พ.ศ. 2550
-        โดยสมาชิกในสภาร่างรัฐธรรมนูญแต่ละชุดก็มีเรื่องราวที่น่าสนใจแตกต่างกันออกไป
+  <section class="space-y-8 px-2 md:px-8 text-center">
+    <div class="text-center w-full max-w-screen-lg m-auto space-y-2">
+      <p class="text-h4 font-semibold">ELECT</p>
+      <p class="text-h6">
+        จะพาทุกคนทำความรู้จักสมาชิกสภาร่างรัฐธรรมนูญ (สสร.) ทั้ง 4 ชุด
+        ในประเทศไทย ผ่านการนำเสนอด้วย 10 หัวข้อที่น่าสนใจเกี่ยวกับ สสร. แต่ละชุด
       </p>
     </div>
-  </section>
 
-  <section class="space-y-8">
-    <p class="text-h6 text-center w-full max-w-screen-lg m-auto">
-      ELECT จะพาทุกคนทำความรู้จักสมาชิกสภาร่างรัฐธรรมนูญ (สสร.) ทั้ง 4 ชุด
-      ในประเทศไทย ผ่านการนำเสนอด้วย 10 หัวข้อที่น่าสนใจเกี่ยวกับ สสร. แต่ละชุด
-    </p>
     <Intro />
   </section>
 
@@ -143,7 +117,7 @@
 </div>
 
 <style>
-  p {
+  :global(p) {
     @apply leading-normal;
   }
 </style>
