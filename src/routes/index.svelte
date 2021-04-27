@@ -10,6 +10,7 @@
   import Header from '../components/header.svelte';
   import Intro from '../components/visualizations/intro.svelte';
   import Landing from '../components/landing.svelte';
+  import Conclusion from '../components/conclusion.svelte';
 </script>
 
 <Landing />
@@ -20,7 +21,7 @@
   <section class="space-y-8 px-2 md:px-8 text-center">
     <div class="text-center w-full max-w-screen-lg m-auto space-y-2">
       <p class="text-h4 font-semibold">ELECT</p>
-      <p class="text-h6">
+      <p class="text-h6 leading-normal">
         จะพาทุกคนทำความรู้จักสมาชิกสภาร่างรัฐธรรมนูญ (สสร.) ทั้ง 4 ชุด
         ในประเทศไทย ผ่านการนำเสนอด้วย 10 หัวข้อที่น่าสนใจเกี่ยวกับ สสร. แต่ละชุด
       </p>
@@ -111,6 +112,8 @@
 
   <BarSection />
 </div>
+
+<Conclusion />
 
 <style>
   :global(p) {
