@@ -46,7 +46,7 @@
   <span slot="topic">{props.description.topic}</span>
   <span slot="description">{props.description.description}</span>
 </Header>
-<IntersectionObserver element={ref} bind:intersecting once threshold={0.3}>
+<IntersectionObserver element={ref} bind:intersecting threshold={0.3}>
   <div class="w-full flex flex-row justify-end">
     <ReplayButton on:click={replay} />
   </div>
