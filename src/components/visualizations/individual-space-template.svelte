@@ -119,31 +119,38 @@
 </script>
 
 <CdaSpace {data} bind:nodes bind:selectedNodes isFreeze={isGroupBoxOpened}>
-  <div class="flex justify-end">
-    <ControlButton {state} on:click={() => onControlTriggered()} />
-  </div>
-  <div bind:clientHeight={infoHeadHeight} class="z-20">
-    <InfoHead
-      bind:clientHeight={infoHeadHeight}
-      class="flex flex-row space-x-2"
-      on:click={() => onControlTriggered()}
-    >
-      <div class="flex-1 my-auto">{title}</div>
-      <div class="text-h4 font-bold">{membersData.length}</div>
-      <div class="my-auto">คน</div>
-    </InfoHead>
+  <div
+    class="space-y-2 transition-transform duration-200 ease-in-out z-20"
+    style={isGroupBoxOpened
+      ? ''
+      : `transform: translateY(${infoHeadHeight}px);`}
+  >
+    <div class="flex justify-end">
+      <ControlButton {state} on:click={() => onControlTriggered()} />
+    </div>
+    <div bind:clientHeight={infoHeadHeight}>
+      <InfoHead
+        bind:clientHeight={infoHeadHeight}
+        class="flex flex-row space-x-2"
+        on:click={() => onControlTriggered()}
+      >
+        <div class="flex-1 my-auto">{title}</div>
+        <div class="text-h4 font-bold">{membersData.length}</div>
+        <div class="my-auto">คน</div>
+      </InfoHead>
+    </div>
   </div>
 
   <GroupBox
     style="min-height: {infoHeadHeight}px;"
     class="flex-1 overflow-y-auto space-y-2 max-h-64 md:max-h-96 transition-transform duration-200 ease-in-out {isGroupBoxOpened
       ? ''
-      : 'delay-200 transform translate-x-2 md:translate-x-2 -translate-y-full'}"
+      : 'transform translate-x-2 md:translate-x-2'}"
   >
     {#each displayMembers as { index, category, group, years, ...memberData }, displayIndex}
       <div transition:slide>
         {#if category && (displayIndex === 0 || category !== displayMembers[displayIndex - 1].category)}
-          <div class="font-semibold">{categoriesLabel.get(category)}</div>
+          <div class="font-semibold mb-2">{categoriesLabel.get(category)}</div>
         {/if}
         <SubgroupBox on:click={() => onMemberSelected(group)}>
           <MemberRow {...memberData} />
