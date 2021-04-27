@@ -26,7 +26,7 @@
     ],
     [
       { x: 0, event: 'start', fill: 'black' },
-      { x: 221, event: 'drafted', fill: '#0066FF' },
+      { x: 222, event: 'drafted', fill: '#0066FF' },
       { x: 3266, event: 'done', fill: '#FF8A00' },
     ],
     [
@@ -84,7 +84,7 @@
         highlights: [
           '167 วัน',
           '2,507 วัน (ประมาณ 6 ปี 10 เดือน 10 วัน)',
-          '221 วัน',
+          '222 วัน',
           '180 วัน',
         ],
         texts: [
