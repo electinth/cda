@@ -112,7 +112,6 @@ export class Sphere<T> extends Mesh<SphereGeometry, MeshBasicMaterial> {
         case 'selected':
           if (this.state === 'hovered') break;
         case 'hovered':
-          this.haloMesh.material.opacity = HALO_OPACITY;
           this.scaleMesh('up');
           break;
       }
@@ -146,6 +145,10 @@ export class Sphere<T> extends Mesh<SphereGeometry, MeshBasicMaterial> {
       direction === 'up' ? scaleUpArrays : scaleDownArrays;
 
     this.geometry.scale(...mainMeshScale);
-    this.haloMesh.geometry.scale(...haloMeshScale);
+
+    if (this.isIndividual) {
+      this.haloMesh.material.opacity = direction === 'up' ? HALO_OPACITY : 0;
+      this.haloMesh.geometry.scale(...haloMeshScale);
+    }
   }
 }

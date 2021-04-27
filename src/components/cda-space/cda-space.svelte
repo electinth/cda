@@ -180,6 +180,34 @@
     isMobile = window.innerWidth < 768;
   };
 
+  const playTransition = () => {
+    dispatch('transitionstart');
+
+    spherePlanes.forEach(({ children }, index) => {
+      anime({
+        targets: [
+          ...children.map(({ material }: Sphere<{}>) => material),
+          labelElements[index],
+        ],
+        opacity: [0, 1],
+        easing: 'linear',
+        ...getAnimationStep(index),
+      });
+
+      anime({
+        targets: children.map(({ position }: Sphere<{}>) => position),
+        x: [-100, 0],
+        easing: 'easeOutCubic',
+        ...getAnimationStep(index),
+      });
+    });
+  };
+
+  const replayTransition = () => {
+    selectedNodes = [];
+    playTransition();
+  };
+
   $: hoveredSphereIsIndividual = hoveredSphere?.isIndividual;
   $: hoveredSphereIsNotSelected = !selectedNodes.some((node) =>
     node.is(hoveredSphere)
@@ -199,27 +227,7 @@
 
   $: {
     if (intersecting && !isTransitionPlayed) {
-      dispatch('transitionstart');
-
-      spherePlanes.forEach(({ children }, index) => {
-        anime({
-          targets: [
-            ...children.map(({ material }: Sphere<{}>) => material),
-            labelElements[index],
-          ],
-          opacity: [0, 1],
-          easing: 'linear',
-          ...getAnimationStep(index),
-        });
-
-        anime({
-          targets: children.map(({ position }: Sphere<{}>) => position),
-          x: [-100, 0],
-          easing: 'easeOutCubic',
-          ...getAnimationStep(index),
-        });
-      });
-
+      playTransition();
       isTransitionPlayed = true;
     }
   }
@@ -229,6 +237,12 @@
 
 <IntersectionObserver element={container} bind:intersecting>
   <div class="relative mx-auto w-full">
+    <button
+      class="absolute top-0 right-0 rounded border border-black"
+      on:click={replayTransition}
+    >
+      replay
+    </button>
     <div class="hidden md:flex absolute left-0 top-0 bottom-0 z-10">
       <YearAxis bind:labelElements {selectedYears} />
     </div>

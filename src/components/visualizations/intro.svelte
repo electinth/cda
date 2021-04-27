@@ -24,10 +24,16 @@
   const startCountTransition = () => {
     anime({
       targets: countLabelContainer.childNodes,
-      opacity: [{ value: 1 }, { value: 0, delay: TRANSITION_END_DELAY }],
+      opacity: [
+        { value: 0 },
+        {
+          value: 1,
+          delay: (_, index) => TRANSITION_DELAY + index * transitionDelay,
+        },
+        { value: 0, delay: TRANSITION_END_DELAY },
+      ],
       easing: 'linear',
       duration: TRANSITION_DURATION,
-      delay: (_, index) => TRANSITION_DELAY + index * transitionDelay,
     });
   };
 </script>
