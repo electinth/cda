@@ -16,7 +16,7 @@ module.exports = {
       keyframes: true,
     },
   },
-  darkMode: false, // or 'media' or 'class'
+  darkMode: false,
   theme: {
     fontFamily: {
       heading: ['Kondolar Thai', ...defaultTheme.fontFamily.serif],
@@ -24,6 +24,7 @@ module.exports = {
       body: ['Bai Jamjuri', ...defaultTheme.fontFamily.sans],
     },
     fontSize: {
+      h1: ['61px', '84px'],
       h2: ['49px', '64px'],
       h3: ['39px', '48px'],
       h4: ['31px', '40px'],

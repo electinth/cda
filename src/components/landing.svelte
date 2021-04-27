@@ -11,13 +11,13 @@
 
 <section class="mb-48">
   <div class="landing-intro">
-    <div class="flex flex-col justify-center h-screen space-y-8">
-      <h1 class="text-h4 font-semibold text-center">
+    <div class="flex flex-col justify-center h-screen space-y-8 p-2">
+      <h1 class="text-h4 md:text-h1 font-semibold text-center">
         ทำความรู้จักสมาชิกสภาร่างรัฐธรรมนูญ (สสร.)<br />
         แต่ละชุดในประวัติศาสตร์การเมืองไทย
       </h1>
       <button
-        class="bg-black rounded p-2 text-white text-body2 mx-auto"
+        class="bg-black rounded-lg py-2 px-4 text-white text-body2 font-bold mx-auto"
         on:click={scrollToContent}
       >
         เริ่มอ่านเนื้อหา
