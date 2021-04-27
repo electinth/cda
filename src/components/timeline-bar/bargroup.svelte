@@ -6,6 +6,7 @@
       topic: string;
       description: string;
       texts: string[];
+      highlights: string[];
     };
   }
 </script>
@@ -55,21 +56,21 @@
   >
     {#each dataList as data, index}
       <div class="w-full flex flex-row items-center">
-        <h3 class="hidden md:block font-bold px-2 w-28">
+        <h3 class="hidden md:block font-semibold px-2 w-28">
           พ.ศ. {YEARS[index]}
         </h3>
         <div class="flex-1 flex flex-col">
           <div bind:clientWidth={barWidth} class="w-full h-20">
             <Barchart bind:this={barcharts[index]} {X} {data} {appearance} />
           </div>
-          <h3
-            class="md:hidden font-bold text-white bg-black rounded px-1 mr-auto mb-2"
-          >
-            พ.ศ. {YEARS[index]}
-          </h3>
-
           <div>
-            {@html props.description.texts[index]}
+            <div class="mr-auto font-bold md:inline mb-2">
+              <span class="md:hidden text-white bg-black rounded px-1 mr-1">
+                พ.ศ. {YEARS[index]}
+              </span>
+              {props.description.highlights[index]}
+            </div>
+            {props.description.texts[index]}
           </div>
         </div>
       </div>
