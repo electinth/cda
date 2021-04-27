@@ -10,6 +10,7 @@
   import { CDA_COUNTS, YEARS } from '../../utils/stats';
   import PopulationRow from '../cda-space/info-dialog/population-row.svelte';
   import MemberRow from '../cda-space/info-dialog/member-row.svelte';
+  import ControlButton from '../cda-space/info-dialog/control-button.svelte';
 
   interface OriginNodeData {
     groupIndex: number;
@@ -44,29 +45,38 @@
     });
   });
 
-  let nodes: Sphere<OriginNodeData>[];
-  let selectedNodes: Sphere<OriginNodeData>[];
-  let selectedYears: string[];
+  let nodes: Sphere<OriginNodeData>[] = [];
+  let selectedNodes: Sphere<OriginNodeData>[] = [];
+  let selectedYears: string[] = [];
 
   const onYearSelected = ({ detail }: CustomEvent) => {
     selectedNodes = nodes.filter(({ group }) => group === detail);
   };
 
-  $: displayGroups =
-    selectedNodes && selectedNodes[0]
-      ? [groups[selectedNodes[0].data.groupIndex]]
-      : groups;
+  $: displayGroups = selectedNodes[0]
+    ? [groups[selectedNodes[0].data.groupIndex]]
+    : groups;
   $: displayMembers = selectedYears
     ? allMembers.filter(({ year }) => selectedYears.includes(year))
     : [];
 </script>
 
 <CdaSpace {data} bind:nodes bind:selectedNodes bind:selectedYears>
+  {#if selectedNodes.length > 0}
+    <div class="flex justify-end">
+      <ControlButton
+        state="selected"
+        on:click={() => {
+          selectedNodes = [];
+        }}
+      />
+    </div>
+  {/if}
   <InfoHead>ที่มาของ สสร.</InfoHead>
   {#each displayGroups as { name, ...rest }}
     <YearGroupBox {...rest} {selectedYears} on:select={onYearSelected} />
   {/each}
-  {#if selectedYears && selectedYears.length > 0}
+  {#if selectedYears.length > 0}
     {#key selectedYears[0]}
       <GroupBox class="flex flex-col space-y-2">
         <PopulationRow

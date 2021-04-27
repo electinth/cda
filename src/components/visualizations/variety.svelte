@@ -8,6 +8,7 @@
   import type { Sphere } from '../../utils/three/sphere';
   import { CDA_COUNTS, YEARS } from '../../utils/stats';
   import PopulationRow from '../cda-space/info-dialog/population-row.svelte';
+  import ControlButton from '../cda-space/info-dialog/control-button.svelte';
 
   interface VarietyNodeData {
     groupIndex: number;
@@ -25,8 +26,6 @@
     description?: string;
     subsets?: Array<Population>;
   }
-
-  const whiteColor = new Color('#ffffff');
 
   const groups = [
     {
@@ -190,16 +189,16 @@
       : monoColorNodes;
   });
 
-  let nodes: Sphere<VarietyNodeData>[];
-  let selectedNodes: Sphere<VarietyNodeData>[];
-  let selectedYears: string[];
+  let nodes: Sphere<VarietyNodeData>[] = [];
+  let selectedNodes: Sphere<VarietyNodeData>[] = [];
+  let selectedYears: string[] = [];
 
   const onYearSelected = ({ detail }: CustomEvent) => {
     selectedNodes = nodes.filter(({ group }) => group === detail);
   };
 
   $: displayGroups =
-    selectedNodes && selectedNodes[0]
+    selectedNodes.length > 0
       ? [groups[selectedNodes[0].data.groupIndex]]
       : groups;
 
@@ -207,6 +206,16 @@
 </script>
 
 <CdaSpace {data} bind:nodes bind:selectedNodes bind:selectedYears>
+  {#if selectedNodes.length > 0}
+    <div class="flex justify-end">
+      <ControlButton
+        state="selected"
+        on:click={() => {
+          selectedNodes = [];
+        }}
+      />
+    </div>
+  {/if}
   <InfoHead>ความหลากหลายของ สสร.</InfoHead>
   {#each displayGroups as { name, color, ...restProps }}
     <YearGroupBox
