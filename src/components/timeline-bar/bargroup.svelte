@@ -17,6 +17,7 @@
   import type { ChartApperanceProps, IData } from './animationConfig';
   import Barchart from './barchart.svelte';
   import Header from '../header.svelte';
+  import ReplayButton from '../replay-button.svelte';
 
   export let props: IBargroupProps;
 
@@ -47,8 +48,7 @@
 </Header>
 <IntersectionObserver element={ref} bind:intersecting once threshold={0.3}>
   <div class="w-full flex flex-row justify-end">
-    <button class="mr-10 border-black border-2" on:click={replay}>replay</button
-    >
+    <ReplayButton on:click={replay} />
   </div>
   <div
     bind:this={ref}

@@ -17,6 +17,7 @@
   import Marker from './marker.svelte';
   import Tooltip from './tooltip.svelte';
   import YearAxis from './year-axis.svelte';
+  import ReplayButton from '../replay-button.svelte';
 
   const PLANE_DISTANCE = 180;
 
@@ -238,15 +239,12 @@
   threshold={0.3}
 >
   <div class="relative mx-auto w-full">
-    <button
-      class="absolute top-0 right-0 rounded border border-black"
-      on:click={replayTransition}
-    >
-      replay
-    </button>
+    <ReplayButton class="absolute top-0 right-0" on:click={replayTransition} />
+
     <div class="hidden md:flex absolute left-0 top-0 bottom-0 z-10">
       <YearAxis bind:labelElements {selectedYears} />
     </div>
+
     <div
       class:cursor-pointer={hoveredSphere && hoveredSphere.isSelectable}
       bind:this={container}
