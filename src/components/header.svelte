@@ -3,15 +3,26 @@
 </script>
 
 <div
-  class="max-w-4xl flex flex-col justify-center items-center mx-auto my-9 text-center"
+  class="flex flex-col justify-center items-center my-9 text-center space-y-4 -mx-2 md:-mx-8"
 >
-  <div class="font-semibold text-body1 border-b-2 border-black pb-1">
+  <div class="font-semibold">
     หัวข้อที่ {number}
   </div>
-  <h2 class="font-semibold text-h3 my-3">
+  <div class="separator" />
+  <h2 class="font-semibold text-h3">
     <slot name="topic" />
   </h2>
-  <p class="text-body1">
+  <div class="separator" />
+  <p class="max-w-4xl w-full mx-auto px-2 md:px-8">
     <slot name="description" />
   </p>
 </div>
+
+<style>
+  .separator {
+    background-image: url('../images/separator.png');
+    background-size: contain;
+    height: 2px;
+    width: 100%;
+  }
+</style>
