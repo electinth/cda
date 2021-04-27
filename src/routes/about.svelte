@@ -80,11 +80,7 @@
     </div>
     <div class="space-y-2">
       <p class="font-bold">ออกแบบ 👩‍🎨</p>
-      <p>
-        <LinkExternal href="https://www.instagram.com/namsaisupavong/"
-          >ชาญ แสงวิโรจน์กุล</LinkExternal
-        >
-      </p>
+      <p>ชาญ แสงวิโรจน์กุล</p>
     </div>
     <div class="space-y-2">
       <p class="font-bold">สืบค้นและรวบรวมข้อมูล 🕵️‍♀️</p>

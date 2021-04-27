@@ -11,13 +11,15 @@
 
 <section class="mb-48">
   <div class="landing-intro">
-    <div class="flex flex-col justify-center h-screen space-y-8 p-2">
-      <h1 class="text-h4 md:text-h1 font-semibold text-center">
+    <div class="flex flex-col h-screen">
+      <h1
+        class="text-h4 md:text-h1 font-semibold text-center mt-44 md:mt-52 p-2 bg-white md:bg-opacity-0"
+      >
         ทำความรู้จักสมาชิกสภาร่างรัฐธรรมนูญ (สสร.)<br />
         แต่ละชุดในประวัติศาสตร์การเมืองไทย
       </h1>
       <button
-        class="bg-black rounded-lg py-2 px-4 text-white text-body2 font-bold mx-auto"
+        class="bg-black rounded-lg py-2 px-4 text-white text-body2 font-bold mx-auto mt-16 md:mt-36"
         on:click={scrollToContent}
       >
         เริ่มอ่านเนื้อหา
@@ -55,7 +57,7 @@
 
 <style>
   .landing-intro {
-    background-image: url('../images/landing-bg.jpg');
+    background-image: url('../images/landing-bg.png');
     height: 120vh;
     @apply bg-cover;
     @apply bg-top;
