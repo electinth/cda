@@ -22,7 +22,7 @@
         ในประวัติศาสตร์<br class="md:hidden" />การเมืองไทย
       </h1>
       <button
-        class="bg-black rounded-lg py-2 px-4 md:py-4 md:px-6 text-white md:text-h6 font-bold mx-auto mt-16 md:mt-36"
+        class="bg-black rounded-lg focus:ring ring-gold focus:outline-none py-2 px-4 md:py-4 md:px-6 text-white md:text-h6 font-bold mx-auto mt-16 md:mt-36"
         on:click={scrollToContent}
       >
         เริ่มอ่านเนื้อหา

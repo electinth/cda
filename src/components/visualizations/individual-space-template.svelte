@@ -127,15 +127,19 @@
       <ControlButton {state} on:click={() => onControlTriggered()} />
     </div>
     <div bind:clientHeight={infoHeadHeight}>
-      <InfoHead
-        bind:clientHeight={infoHeadHeight}
-        class="flex flex-row space-x-2"
+      <button
+        class="w-full rounded focus:ring ring-gold focus:outline-none"
         on:click={() => onControlTriggered()}
       >
-        <div class="flex-1 my-auto">{title}</div>
-        <div class="text-h4 font-bold">{membersData.length}</div>
-        <div class="my-auto">คน</div>
-      </InfoHead>
+        <InfoHead
+          bind:clientHeight={infoHeadHeight}
+          class="flex flex-row space-x-2 text-left"
+        >
+          <div class="flex-1 my-auto">{title}</div>
+          <div class="text-h4 font-bold">{membersData.length}</div>
+          <div class="my-auto">คน</div>
+        </InfoHead>
+      </button>
     </div>
   </div>
 
@@ -150,9 +154,14 @@
         {#if category && (displayIndex === 0 || category !== displayMembers[displayIndex - 1].category)}
           <div class="font-semibold mb-2">{categoriesLabel.get(category)}</div>
         {/if}
-        <SubgroupBox on:click={() => onMemberSelected(group)}>
-          <MemberRow {...memberData} />
-        </SubgroupBox>
+        <button
+          class="w-full rounded focus:ring ring-gold focus:outline-none"
+          on:click={() => onMemberSelected(group)}
+        >
+          <SubgroupBox class="text-left">
+            <MemberRow {...memberData} />
+          </SubgroupBox>
+        </button>
       </div>
     {/each}
   </GroupBox>

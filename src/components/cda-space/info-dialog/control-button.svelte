@@ -7,7 +7,8 @@
 </script>
 
 <button
-  class="rounded-full flex p-1 font-semobold space-x-1 {state === 'selected'
+  class="rounded-full flex p-1 font-semobold space-x-1 focus:ring ring-gold focus:outline-none {state ===
+  'selected'
     ? 'bg-white border border-black'
     : 'bg-black text-white px-3'}"
   on:click

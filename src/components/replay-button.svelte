@@ -1,4 +1,8 @@
-<button on:click class="opacity-30 hover:opacity-100 {$$props.class || ''}">
+<button
+  on:click
+  class="opacity-30 hover:opacity-100 focus:ring ring-gold focus:outline-none {$$props.class ||
+    ''}"
+>
   <svg
     xmlns="http://www.w3.org/2000/svg"
     enable-background="new 0 0 24 24"
