@@ -14,13 +14,15 @@
   <div class="landing-intro">
     <div class="flex flex-col h-screen">
       <h1
-        class="font-heading text-h4 md:text-h1 font-bold text-center mt-44 md:mt-52 p-2 bg-white md:bg-opacity-0"
+        class="font-heading text-h4 md:text-h1 font-bold text-center mt-44 md:mt-52 mx-auto p-2 bg-white"
       >
-        ทำความรู้จักสมาชิกสภาร่างรัฐธรรมนูญ (สสร.)<br />
-        แต่ละชุดในประวัติศาสตร์การเมืองไทย
+        ทำความรู้จักสมาชิก<br />
+        สภาร่างรัฐธรรมนูญ (สสร.) <br class="md:hidden" />
+        แต่ละชุด<br class="hidden md:inline" />
+        ในประวัติศาสตร์<br class="md:hidden" />การเมืองไทย
       </h1>
       <button
-        class="bg-black rounded-lg py-2 px-4 text-white text-body2 font-bold mx-auto mt-16 md:mt-36"
+        class="bg-black rounded-lg py-2 px-4 md:py-4 md:px-6 text-white md:text-h6 font-bold mx-auto mt-16 md:mt-36"
         on:click={scrollToContent}
       >
         เริ่มอ่านเนื้อหา
