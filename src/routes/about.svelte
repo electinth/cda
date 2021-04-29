@@ -112,4 +112,13 @@
       contact [at] elect.in.th
     </p>
   </div>
+
+  <div class="flex justify-center">
+    <a
+      href="/#"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="text-white bg-black rounded px-4 py-2">ดาวโหลดข้อมูล</a
+    >
+  </div>
 </div>

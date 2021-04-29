@@ -6,7 +6,7 @@
   {href}
   target="_blank"
   rel="noopener noreferrer"
-  class="break-words hover:underline"
+  class="break-words text-blue-900 hover:underline"
 >
   <slot />
 </a>
