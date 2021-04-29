@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Color } from 'three';
+  import type { Color } from 'three';
   import famousMembers from '../../data/famous-members.csv';
   import IndividualSpaceTemplate from './individual-space-template.svelte';
   import type {
@@ -7,6 +7,7 @@
     CategoryLabelMap,
   } from './individual-space-template.svelte';
   import { YEARS } from '../../utils/stats';
+  import { PRIMARY_COLORS } from '../../constants/viz-color';
 
   const categoriesLabel: CategoryLabelMap<string> = new Map([
     ['2491', 'พ.ศ. 2491'],
@@ -15,12 +16,12 @@
     ['2550', 'พ.ศ. 2550'],
   ]);
 
-  const groupsColor = new Map<string, Color>([
-    ['2491', new Color('#19B400')],
-    ['2502', new Color('#0066FF')],
-    ['2539', new Color('#FF007A')],
-    ['2550', new Color('#FF8A00')],
-  ]);
+  const groupsColor = new Map<string, Color>(
+    ['2491', '2502', '2539', '2550'].map((category, index) => [
+      category,
+      PRIMARY_COLORS[index],
+    ])
+  );
 
   const yearStartIndex = new Map<string, number>(
     YEARS.map((year) => [

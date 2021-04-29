@@ -5,6 +5,7 @@
   import type { IData } from '../timeline-bar/animationConfig';
   import Bargroup from '../timeline-bar/bargroup.svelte';
   import type { IBargroupProps } from '../timeline-bar/bargroup.svelte';
+  import { PRIMARY_COLORS } from '../../constants/viz-color';
 
   const margin = {
     top: 20,
@@ -13,26 +14,32 @@
     left: 20,
   };
 
+  const fillColor = {
+    start: 'black',
+    drafted: `#${PRIMARY_COLORS[0].getHexString()}`,
+    done: `#${PRIMARY_COLORS[1].getHexString()}`,
+  };
+
   const dataList = [
     [
-      { x: 0, event: 'start', fill: 'black' },
-      { x: 167, event: 'drafted', fill: '#0066FF' },
-      { x: 982, event: 'done', fill: '#FF8A00' },
+      { x: 0, event: 'start', fill: fillColor.start },
+      { x: 167, event: 'drafted', fill: fillColor.drafted },
+      { x: 982, event: 'done', fill: fillColor.done },
     ],
     [
-      { x: 0, event: 'start', fill: 'black' },
-      { x: 2507, event: 'drafted', fill: '#0066FF' },
-      { x: 1247, event: 'done', fill: '#FF8A00' },
+      { x: 0, event: 'start', fill: fillColor.start },
+      { x: 2507, event: 'drafted', fill: fillColor.drafted },
+      { x: 1247, event: 'done', fill: fillColor.done },
     ],
     [
-      { x: 0, event: 'start', fill: 'black' },
-      { x: 222, event: 'drafted', fill: '#0066FF' },
-      { x: 3266, event: 'done', fill: '#FF8A00' },
+      { x: 0, event: 'start', fill: fillColor.start },
+      { x: 222, event: 'drafted', fill: fillColor.drafted },
+      { x: 3266, event: 'done', fill: fillColor.done },
     ],
     [
-      { x: 0, event: 'start', fill: 'black' },
-      { x: 180, event: 'drafted', fill: '#0066FF' },
-      { x: 2464, event: 'done', fill: '#FF8A00' },
+      { x: 0, event: 'start', fill: fillColor.start },
+      { x: 180, event: 'drafted', fill: fillColor.drafted },
+      { x: 2464, event: 'done', fill: fillColor.done },
     ],
   ];
 

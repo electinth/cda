@@ -1,11 +1,12 @@
 <script lang="ts">
-  import { Color } from 'three';
+  import type { Color } from 'three';
   import leftearlyMembers from '../../data/leftearly-members.csv';
   import IndividualSpaceTemplate from './individual-space-template.svelte';
   import type {
     MembersData,
     CategoryLabelMap,
   } from './individual-space-template.svelte';
+  import { PRIMARY_COLORS } from '../../constants/viz-color';
 
   type LeftearlyMembersCategory = typeof leftearlyMembers[0]['category'];
 
@@ -14,10 +15,12 @@
     ['resigned', 'ลาออกระหว่างเป็นสมาชิกของสภาร่างรัฐธรรมนูญ'],
   ]);
 
-  const categoriesColor = new Map<LeftearlyMembersCategory, Color>([
-    ['death', new Color('#19B400')],
-    ['resigned', new Color('#FF8A00')],
-  ]);
+  const categoriesColor = new Map<LeftearlyMembersCategory, Color>(
+    ['death', 'resigned'].map((category: LeftearlyMembersCategory, index) => [
+      category,
+      PRIMARY_COLORS[index],
+    ])
+  );
 
   const deathCount = leftearlyMembers.filter(
     ({ category }) => category === 'death'

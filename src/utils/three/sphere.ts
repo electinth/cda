@@ -5,6 +5,7 @@ import {
   Color,
   Object3D,
 } from 'three';
+import { DEFAULT_COLOR, DISABLED_COLOR } from '../../constants/viz-color';
 
 export const SPHERE_SIZE = 4;
 const SPHERE_TRIANGLE = 32;
@@ -12,8 +13,6 @@ const SPHERE_DATA_SIZE = 8;
 const SPHERE_DATA_HOVER_SCALE = 1.5;
 const SPHERE_DATA_HALO_HOVER_SCALE = 2.5;
 const HALO_OPACITY = 0.2;
-export const DEFAULT_COLOR = new Color('#b3b3b3');
-export const DISABLED_COLOR = new Color('#f6f6f6');
 
 type SphereState = 'normal' | 'hovered' | 'selected';
 type ScaleArray = [number, number, number];

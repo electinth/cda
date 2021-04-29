@@ -1,11 +1,11 @@
 <script lang="ts">
-  import { Color } from 'three';
   import familyMembers from '../../data/family-members.csv';
   import IndividualSpaceTemplate from './individual-space-template.svelte';
   import type {
     MembersData,
     CategoryLabelMap,
   } from './individual-space-template.svelte';
+  import { PRIMARY_COLORS } from '../../constants/viz-color';
 
   type FamiltyMembersCategory = typeof familyMembers[0]['category'];
 
@@ -13,19 +13,6 @@
     ['same_year', 'นามสกุลเดียวกัน ในสภาร่างรัฐธรรมนูญชุดเดียวกัน'],
     ['different_year', 'นามสกุลเดียวกัน ในสภาร่างรัฐธรรมนูญชุดต่างกัน'],
   ]);
-
-  const groupsColor = [
-    new Color('#19B400'),
-    new Color('#FF8A00'),
-    new Color('#0066FF'),
-    new Color('#FF007A'),
-    new Color('#C86FFF'),
-    new Color('#4BD5E8'),
-    new Color('#B30D0D'),
-    new Color('#D0B34B'),
-    new Color('#1AB18D'),
-    new Color('#C86FFF'),
-  ];
 
   const sameYearCount = familyMembers.filter(
     ({ category }) => category === 'same_year'
@@ -36,7 +23,7 @@
       index,
       number: (category === 'same_year' ? index : index - sameYearCount) + 1,
       years: [year],
-      color: groupsColor[+group - 1],
+      color: PRIMARY_COLORS[+group - 1],
       description: `สภาร่างรัฐธรรมนูญ พ.ศ. ${year}`,
       image: 'https://place-hold.it/70',
       category,

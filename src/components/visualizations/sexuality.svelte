@@ -1,49 +1,52 @@
 <script lang="ts">
-  import { Color } from 'three';
   import CdaSpace from '../cda-space/cda-space.svelte';
   import femaleMembers from '../../data/female-members.csv';
   import InfoHead from '../cda-space/info-dialog/info-head.svelte';
   import YearGroupBox from '../cda-space/info-dialog/year-group-box.svelte';
   import GroupBox from '../cda-space/info-dialog/group-box.svelte';
-  import { DISABLED_COLOR, Sphere } from '../../utils/three/sphere';
+  import type { Sphere } from '../../utils/three/sphere';
   import SubgroupBox from '../cda-space/info-dialog/subgroup-box.svelte';
   import { CDA_COUNTS, YEARS } from '../../utils/stats';
   import PopulationRow from '../cda-space/info-dialog/population-row.svelte';
   import MemberRow from '../cda-space/info-dialog/member-row.svelte';
   import ControlButton from '../cda-space/info-dialog/control-button.svelte';
+  import {
+    PRIMARY_COLORS,
+    SECONDARY_COLORS,
+    DISABLED_COLOR,
+  } from '../../constants/viz-color';
 
   interface SexualityNodeData {
     groupIndex: number;
   }
 
-  const maleColor = new Color('#0066FF');
-  const femaleColor = new Color('#19B400');
-
   const groups = [
     {
       name: 'allmale',
       description: 'สสร.ชุดที่มีสมาชิกเป็นเพศชายทั้งหมด',
-      color: maleColor,
+      primaryColor: PRIMARY_COLORS[0],
+      hoveredColor: SECONDARY_COLORS[0],
       years: ['2491', '2502'],
     },
     {
       name: 'mix',
       description: 'สสร.ชุดที่มีสมาชิกทั้งเพศชายและหญิง ',
-      color: new Color('#FF8A00'),
+      primaryColor: PRIMARY_COLORS[1],
+      hoveredColor: SECONDARY_COLORS[1],
       years: ['2539', '2550'],
     },
   ];
 
   const data = YEARS.map((year) => {
     const groupIndex = groups.findIndex(({ years }) => years.includes(year));
-    const { color } = groups[groupIndex];
+    const { primaryColor, hoveredColor } = groups[groupIndex];
 
     const femaleCount = femaleMembers.filter((record) => record.year === year)
       .length;
 
     const monoColorNodes = new Array(CDA_COUNTS[year]).fill({
-      primaryColor: color.clone().multiplyScalar(1.5),
-      hoveredColor: color,
+      primaryColor,
+      hoveredColor,
       group: year,
       data: {
         groupIndex,
@@ -54,7 +57,8 @@
       ? monoColorNodes
       : monoColorNodes.map((node, index) => ({
           ...node,
-          selectedColor: index < femaleCount ? femaleColor : DISABLED_COLOR,
+          selectedColor:
+            index < femaleCount ? PRIMARY_COLORS[2] : DISABLED_COLOR,
         }));
   });
 
@@ -88,12 +92,12 @@
     </div>
   {/if}
   <InfoHead dark>เพศสภาพกับ สสร.</InfoHead>
-  {#each displayGroups as { color, description, years }}
+  {#each displayGroups as { primaryColor, description, years }}
     <YearGroupBox
       {description}
       {years}
       {selectedYears}
-      color={selectedYears && selectedYears.length > 0 ? null : color}
+      color={selectedYears && selectedYears.length > 0 ? null : primaryColor}
       on:select={onYearSelected}
     />
   {/each}
@@ -108,7 +112,7 @@
               isLarge
               label="สมาชิกที่เป็นเพศหญิง"
               amount={displayFemaleMembers.length}
-              color={femaleColor}
+              color={PRIMARY_COLORS[2]}
             />
             <p>จากจำนวนสมาชิกทั้งหมด {selectedYearPopulation} คน</p>
           </SubgroupBox>
@@ -117,7 +121,7 @@
               <MemberRow
                 {name}
                 number={index + 1}
-                color={femaleColor}
+                color={PRIMARY_COLORS[2]}
                 image="https://place-hold.it/70"
               />
             </SubgroupBox>
@@ -128,7 +132,7 @@
               isLarge
               label="สมาชิกที่เป็นเพศชาย"
               amount={selectedYearPopulation}
-              color={maleColor}
+              color={PRIMARY_COLORS[0]}
             />
             <p>จากจำนวนสมาชิกทั้งหมด {selectedYearPopulation} คน</p>
           </SubgroupBox>

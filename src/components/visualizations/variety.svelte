@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Color } from 'three';
+  import type { Color } from 'three';
   import CdaSpace from '../cda-space/cda-space.svelte';
   import InfoHead from '../cda-space/info-dialog/info-head.svelte';
   import YearGroupBox from '../cda-space/info-dialog/year-group-box.svelte';
@@ -9,7 +9,7 @@
   import { CDA_COUNTS, YEARS } from '../../utils/stats';
   import PopulationRow from '../cda-space/info-dialog/population-row.svelte';
   import ControlButton from '../cda-space/info-dialog/control-button.svelte';
-
+  import { PRIMARY_COLORS, SECONDARY_COLORS } from '../../constants/viz-color';
   interface VarietyNodeData {
     groupIndex: number;
   }
@@ -31,13 +31,15 @@
     {
       name: 'categorial',
       description: 'สสร.ชุดที่มีการแบ่งประเภทด้วยกฎหมาย',
-      color: new Color('#FF8A00'),
+      primaryColor: PRIMARY_COLORS[0],
+      hoveredColor: SECONDARY_COLORS[0],
       years: ['2491', '2539'],
     },
     {
       name: 'non-categorial',
       description: 'สสร.ชุดที่ไม่มีการแบ่งประเภทด้วยกฎหมาย',
-      color: new Color('#0066FF'),
+      primaryColor: PRIMARY_COLORS[1],
+      hoveredColor: SECONDARY_COLORS[1],
       years: ['2502', '2550'],
     },
   ];
@@ -47,14 +49,14 @@
       '2491',
       [
         {
-          color: new Color('#19B400'),
+          color: PRIMARY_COLORS[2],
           amount: 20,
           label: 'ผู้เป็นสมาชิกรัฐสภา',
           description:
             'ประกอบด้วยสมาชิกสภาผู้แทนราษฎรและสมาชิกวุฒิสภาอย่างละ 10 คน',
         },
         {
-          color: new Color('#FF007A'),
+          color: PRIMARY_COLORS[3],
           amount: 20,
           label: 'ผู้ไม่เป็นสมาชิกรัฐสภา',
           subsets: [
@@ -84,13 +86,13 @@
       '2539',
       [
         {
-          color: new Color('#19B400'),
+          color: PRIMARY_COLORS[4],
           amount: 76,
           label: 'ประชาชนผู้เป็นตัวแทนจังหวัด',
           description: 'จังหวัดละ 1 คน',
         },
         {
-          color: new Color('#FF007A'),
+          color: PRIMARY_COLORS[5],
           amount: 23,
           label: 'ผู้เชี่ยวชาญจาก 3 สาขา',
           subsets: [
@@ -109,7 +111,7 @@
       '2502',
       [
         {
-          color: new Color('#FF8A00'),
+          color: PRIMARY_COLORS[6],
           amount: 240,
           label: 'ไม่มีการแบ่งประเภท (ด้วยกฎหมาย)',
           subsets: [
@@ -140,7 +142,7 @@
       '2550',
       [
         {
-          color: new Color('#FF8A00'),
+          color: PRIMARY_COLORS[7],
           amount: 240,
           label: 'ไม่มีการแบ่งประเภท (ด้วยกฎหมาย)',
           subsets: [
@@ -168,12 +170,12 @@
 
   const data = YEARS.map((year) => {
     const groupIndex = groups.findIndex(({ years }) => years.includes(year));
-    const { color } = groups[groupIndex];
+    const { primaryColor, hoveredColor } = groups[groupIndex];
     const subgroup = subgroups.get(year);
 
     const monoColorNodes = new Array(CDA_COUNTS[year]).fill({
-      primaryColor: color.clone().multiplyScalar(1.5),
-      hoveredColor: color,
+      primaryColor,
+      hoveredColor,
       group: year,
       data: {
         groupIndex,
@@ -217,11 +219,11 @@
     </div>
   {/if}
   <InfoHead dark>ความหลากหลายของ สสร.</InfoHead>
-  {#each displayGroups as { name, color, ...restProps }}
+  {#each displayGroups as { name, primaryColor, ...restProps }}
     <YearGroupBox
       {...restProps}
       {selectedYears}
-      color={displaySubgroup ? null : color}
+      color={displaySubgroup ? null : primaryColor}
       on:select={onYearSelected}
     />
   {/each}

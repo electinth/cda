@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { Color } from 'three';
   import CdaSpace from '../cda-space/cda-space.svelte';
   import allMembers from '../../data/all-members.csv';
   import InfoHead from '../cda-space/info-dialog/info-head.svelte';
@@ -11,6 +10,7 @@
   import PopulationRow from '../cda-space/info-dialog/population-row.svelte';
   import MemberRow from '../cda-space/info-dialog/member-row.svelte';
   import ControlButton from '../cda-space/info-dialog/control-button.svelte';
+  import { PRIMARY_COLORS, SECONDARY_COLORS } from '../../constants/viz-color';
 
   interface OriginNodeData {
     groupIndex: number;
@@ -20,24 +20,26 @@
     {
       name: 'election',
       description: 'มีที่มาจากการเลือกตั้งโดยรัฐสภา 100%',
-      color: new Color('#FF8A00'),
+      primaryColor: PRIMARY_COLORS[0],
+      hoveredColor: SECONDARY_COLORS[0],
       years: ['2491', '2539'],
     },
     {
       name: 'king',
       description: 'มีที่มาจากการแต่งตั้งโดยพระมหากษัตริย์ 100%',
-      color: new Color('#0066FF'),
+      primaryColor: PRIMARY_COLORS[1],
+      hoveredColor: SECONDARY_COLORS[1],
       years: ['2502', '2550'],
     },
   ];
 
   const data = YEARS.map((year) => {
     const groupIndex = groups.findIndex(({ years }) => years.includes(year));
-    const { color } = groups[groupIndex];
+    const { primaryColor, hoveredColor } = groups[groupIndex];
 
     return new Array(CDA_COUNTS[year]).fill({
-      primaryColor: color.clone().multiplyScalar(1.5),
-      hoveredColor: color,
+      primaryColor,
+      hoveredColor,
       group: year,
       data: {
         groupIndex,
@@ -73,8 +75,13 @@
     </div>
   {/if}
   <InfoHead dark>ที่มาของ สสร.</InfoHead>
-  {#each displayGroups as { name, ...rest }}
-    <YearGroupBox {...rest} {selectedYears} on:select={onYearSelected} />
+  {#each displayGroups as { name, primaryColor: color, ...rest }}
+    <YearGroupBox
+      {...rest}
+      {color}
+      {selectedYears}
+      on:select={onYearSelected}
+    />
   {/each}
   {#if selectedYears.length > 0}
     {#key selectedYears[0]}
@@ -89,7 +96,7 @@
             <MemberRow
               {name}
               number={index + 1}
-              color={displayGroups[0].color}
+              color={displayGroups[0].primaryColor}
             />
           {/each}
         </SubgroupBox>
