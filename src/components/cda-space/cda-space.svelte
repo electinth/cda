@@ -222,7 +222,7 @@
 
 <svelte:window on:resize={updateCanvasSize} />
 
-<IntersectionObserver element={container} bind:intersecting threshold={0.3}>
+<IntersectionObserver element={container} bind:intersecting threshold={0.5}>
   <div class="relative mx-auto w-full">
     <ReplayButton class="absolute top-0 right-0" on:click={replayTransition} />
 
