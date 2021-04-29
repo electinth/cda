@@ -36,7 +36,7 @@
         category === 'death'
           ? `เสียชีวิตระหว่างเป็นสมาชิกของสภาร่างรัฐธรรมนูญ พ.ศ. ${year}`
           : `ลาออกระหว่างเป็นสมาชิกของสภาร่างรัฐธรรมนูญ พ.ศ. ${year}`,
-      image: 'https://place-hold.it/70',
+      image: `images/people/05_no${index + 1}_${year}.png`,
       category,
       group: index + 1,
       ...rest,

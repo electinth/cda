@@ -14,7 +14,7 @@
         number: index + 1,
         color: PRIMARY_COLORS[index],
         description: `เป็นสมาชิกของสภาร่างรัฐธรรมนูญ พ.ศ. ${years[0]} และสภาร่างรัฐธรรมนูญ พ.ศ. ${years[1]}`,
-        image: 'https://place-hold.it/70',
+        image: `images/people/04_no${index + 1}_${years.join('-')}.png`,
         group: index + 1,
         ...rest,
       };

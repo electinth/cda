@@ -37,7 +37,7 @@
       years: [year],
       color: groupsColor.get(year),
       description: `สภาร่างรัฐธรรมนูญ พ.ศ. ${year}`,
-      image: 'https://place-hold.it/70',
+      image: `images/people/07_no${index + 1}_${year}.png`,
       category: year,
       group: index + 1,
       ...rest,

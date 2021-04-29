@@ -25,7 +25,7 @@
       years: [year],
       color: PRIMARY_COLORS[+group - 1],
       description: `สภาร่างรัฐธรรมนูญ พ.ศ. ${year}`,
-      image: 'https://place-hold.it/70',
+      image: `images/people/06_no${index + 1}_${year}.png`,
       category,
       group,
       ...rest,

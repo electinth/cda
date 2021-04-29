@@ -37,6 +37,11 @@
     },
   ];
 
+  const femaleMembersWithImage = femaleMembers.map((member, index) => ({
+    ...member,
+    image: `images/people/03_no${index + 1}_${member.year}.png`,
+  }));
+
   const data = YEARS.map((year) => {
     const groupIndex = groups.findIndex(({ years }) => years.includes(year));
     const { primaryColor, hoveredColor } = groups[groupIndex];
@@ -75,7 +80,7 @@
       ? [groups[selectedNodes[0].data.groupIndex]]
       : groups;
   $: displayFemaleMembers = selectedYears
-    ? femaleMembers.filter(({ year }) => selectedYears.includes(year))
+    ? femaleMembersWithImage.filter(({ year }) => selectedYears.includes(year))
     : [];
   $: selectedYearPopulation = selectedYears && CDA_COUNTS[selectedYears[0]];
 </script>
@@ -116,13 +121,13 @@
             />
             <p>จากจำนวนสมาชิกทั้งหมด {selectedYearPopulation} คน</p>
           </SubgroupBox>
-          {#each displayFemaleMembers as { name }, index}
+          {#each displayFemaleMembers as { name, image }, index}
             <SubgroupBox>
               <MemberRow
                 {name}
                 number={index + 1}
                 color={PRIMARY_COLORS[2]}
-                image="https://place-hold.it/70"
+                {image}
               />
             </SubgroupBox>
           {/each}
