@@ -58,9 +58,12 @@
     >
       {#each dataList as data, index}
         <div class="w-full flex flex-row items-center">
-          <h3 class="hidden md:block font-semibold px-2 w-28">
-            พ.ศ. {YEARS[index]}
-          </h3>
+          <div class="w-28 hidden md:flex">
+            <h3 class="font-semibold px-2 border border-black rounded">
+              พ.ศ. {YEARS[index]}
+            </h3>
+          </div>
+
           <div class="flex-1 flex flex-col">
             <div bind:clientWidth={barWidth} class="w-full h-20">
               <Barchart bind:this={barcharts[index]} {X} {data} {appearance} />
