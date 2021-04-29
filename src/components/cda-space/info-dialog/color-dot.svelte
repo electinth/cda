@@ -3,6 +3,8 @@
 
   export let color: Color | null;
   export let number: number | string = '';
+
+  $: fontSize = number >= 100 ? 8 : number >= 10 ? 10 : 12;
 </script>
 
 <div
@@ -10,5 +12,8 @@
     'border-black border'}"
   style="background-color: #{color ? color.getHexString() : 'ffffff'};"
 >
-  <span class="m-auto text-body2 leading-none">{number}</span>
+  <span
+    class="m-auto leading-none font-semibold"
+    style="font-size: {fontSize}px;">{number}</span
+  >
 </div>
