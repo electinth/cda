@@ -14,17 +14,6 @@
       opacity: 1,
     },
   };
-  $: animationConfig = {
-    [ElementAppearance.hide]: {
-      opacity: 0,
-    },
-    [ElementAppearance.fade]: {
-      opacity: 0.5,
-    },
-    [ElementAppearance.show]: {
-      opacity: 1,
-    },
-  };
 
   export let radius: number = 5,
     height = 20,
