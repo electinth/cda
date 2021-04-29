@@ -13,10 +13,6 @@
   $: activePath = segment || '';
 </script>
 
-<svelte:head>
-  <title>Constitution Drafting Assembly of Thailand</title>
-</svelte:head>
-
 <div class="flex flex-col min-h-screen">
   {#if showStagingBanner}
     <staging-banner />
