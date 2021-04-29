@@ -84,12 +84,10 @@
       case 'hidden':
         isGroupBoxOpened = true;
         break;
-      case 'expanded':
-        isGroupBoxOpened = false;
-        break;
       case 'selected':
         selectedNodes = [];
-        break;
+      case 'expanded':
+        isGroupBoxOpened = false;
     }
   };
 
