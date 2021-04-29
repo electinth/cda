@@ -7,8 +7,8 @@
     return new Array(CDA_COUNTS[year]).fill({});
   });
 
-  const TRANSITION_END_DELAY = 2000;
-  const TRANSITION_DURATION = 1500;
+  const TRANSITION_END_DELAY = 1500;
+  const TRANSITION_DURATION = 900;
 
   const transitionDelay = TRANSITION_DURATION * 1.5 + TRANSITION_END_DELAY;
 
