@@ -112,7 +112,7 @@
       [
         {
           color: PRIMARY_COLORS[6],
-          amount: 240,
+          amount: CDA_COUNTS['2502'],
           label: 'ไม่มีการแบ่งประเภท (ด้วยกฎหมาย)',
           subsets: [
             {
@@ -143,7 +143,7 @@
       [
         {
           color: PRIMARY_COLORS[7],
-          amount: 240,
+          amount: CDA_COUNTS['2550'],
           label: 'ไม่มีการแบ่งประเภท (ด้วยกฎหมาย)',
           subsets: [
             {
