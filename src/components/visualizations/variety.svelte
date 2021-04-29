@@ -200,7 +200,7 @@
   };
 
   $: displayGroups =
-    selectedNodes.length > 0
+    selectedYears.length > 0 && selectedNodes.length > 0
       ? [groups[selectedNodes[0].data.groupIndex]]
       : groups;
 
@@ -219,9 +219,10 @@
     </div>
   {/if}
   <InfoHead dark>ความหลากหลายของ สสร.</InfoHead>
-  {#each displayGroups as { name, primaryColor, ...restProps }}
+  {#each displayGroups as { primaryColor, description, years }}
     <YearGroupBox
-      {...restProps}
+      {description}
+      {years}
       {selectedYears}
       color={displaySubgroup ? null : primaryColor}
       on:select={onYearSelected}

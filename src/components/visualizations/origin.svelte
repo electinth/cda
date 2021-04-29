@@ -55,9 +55,10 @@
     selectedNodes = nodes.filter(({ group }) => group === detail);
   };
 
-  $: displayGroups = selectedNodes[0]
-    ? [groups[selectedNodes[0].data.groupIndex]]
-    : groups;
+  $: displayGroups =
+    selectedYears.length > 0 && selectedNodes.length > 0
+      ? [groups[selectedNodes[0].data.groupIndex]]
+      : groups;
   $: displayMembers = selectedYears
     ? allMembers.filter(({ year }) => selectedYears.includes(year))
     : [];
@@ -75,9 +76,10 @@
     </div>
   {/if}
   <InfoHead dark>ที่มาของ สสร.</InfoHead>
-  {#each displayGroups as { name, primaryColor: color, ...rest }}
+  {#each displayGroups as { primaryColor: color, description, years }}
     <YearGroupBox
-      {...rest}
+      {description}
+      {years}
       {color}
       {selectedYears}
       on:select={onYearSelected}

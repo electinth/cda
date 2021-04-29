@@ -71,7 +71,7 @@
   };
 
   $: displayGroups =
-    selectedNodes.length > 0
+    selectedYears.length > 0 && selectedNodes.length > 0
       ? [groups[selectedNodes[0].data.groupIndex]]
       : groups;
   $: displayFemaleMembers = selectedYears
