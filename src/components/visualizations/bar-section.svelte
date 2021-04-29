@@ -130,7 +130,5 @@
 </script>
 
 {#each Object.entries(ChartsProps) as [, props]}
-  <section class="flex flex-col w-full max-w-screen-xl mx-auto">
-    <Bargroup bind:barWidth={w} {props} {X} {dataList} />
-  </section>
+  <Bargroup bind:barWidth={w} {props} {X} {dataList} />
 {/each}

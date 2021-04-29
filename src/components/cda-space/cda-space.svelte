@@ -18,6 +18,7 @@
   import Tooltip from './tooltip.svelte';
   import YearAxis from './year-axis.svelte';
   import ReplayButton from '../replay-button.svelte';
+  import VizContainer from '../viz-container.svelte';
 
   const PLANE_DISTANCE = 150;
 
@@ -223,7 +224,7 @@
 <svelte:window on:resize={updateCanvasSize} />
 
 <IntersectionObserver element={container} bind:intersecting threshold={0.5}>
-  <div class="relative mx-auto w-full">
+  <VizContainer class="relative">
     <ReplayButton class="absolute top-0 right-0" on:click={replayTransition} />
 
     <div class="hidden md:flex absolute left-0 top-0 bottom-0 z-10">
@@ -261,5 +262,5 @@
     >
       <slot />
     </div>
-  </div>
+  </VizContainer>
 </IntersectionObserver>

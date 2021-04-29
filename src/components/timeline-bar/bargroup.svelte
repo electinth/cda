@@ -18,6 +18,7 @@
   import Barchart from './barchart.svelte';
   import Header from '../header.svelte';
   import ReplayButton from '../replay-button.svelte';
+  import VizContainer from '../viz-container.svelte';
 
   export let props: IBargroupProps;
 
@@ -47,33 +48,35 @@
   <span slot="description">{props.description.description}</span>
 </Header>
 <IntersectionObserver element={ref} bind:intersecting threshold={0.5}>
-  <div class="w-full flex flex-row justify-end">
-    <ReplayButton on:click={replay} />
-  </div>
-  <div
-    bind:this={ref}
-    class="flex-1 w-full flex flex-col items-center space-y-8"
-  >
-    {#each dataList as data, index}
-      <div class="w-full flex flex-row items-center">
-        <h3 class="hidden md:block font-semibold px-2 w-28">
-          พ.ศ. {YEARS[index]}
-        </h3>
-        <div class="flex-1 flex flex-col">
-          <div bind:clientWidth={barWidth} class="w-full h-20">
-            <Barchart bind:this={barcharts[index]} {X} {data} {appearance} />
-          </div>
-          <div>
-            <div class="mr-auto font-bold md:inline mb-2">
-              <span class="md:hidden text-white bg-black rounded px-1 mr-1">
-                พ.ศ. {YEARS[index]}
-              </span>
-              {props.description.highlights[index]}
+  <VizContainer>
+    <div class="w-full flex flex-row justify-end">
+      <ReplayButton on:click={replay} />
+    </div>
+    <div
+      bind:this={ref}
+      class="flex-1 w-full flex flex-col items-center space-y-8"
+    >
+      {#each dataList as data, index}
+        <div class="w-full flex flex-row items-center">
+          <h3 class="hidden md:block font-semibold px-2 w-28">
+            พ.ศ. {YEARS[index]}
+          </h3>
+          <div class="flex-1 flex flex-col">
+            <div bind:clientWidth={barWidth} class="w-full h-20">
+              <Barchart bind:this={barcharts[index]} {X} {data} {appearance} />
             </div>
-            {props.description.texts[index]}
+            <div>
+              <div class="mr-auto font-bold md:inline mb-2">
+                <span class="md:hidden text-white bg-black rounded px-1 mr-1">
+                  พ.ศ. {YEARS[index]}
+                </span>
+                {props.description.highlights[index]}
+              </div>
+              {props.description.texts[index]}
+            </div>
           </div>
         </div>
-      </div>
-    {/each}
-  </div>
+      {/each}
+    </div>
+  </VizContainer>
 </IntersectionObserver>
