@@ -11,7 +11,7 @@
 
   <div class="relative flex flex-col w-full mt-4 space-y-4">
     <div class="separator" />
-    <h2 class="font-semibold text-h3">
+    <h2 class="font-heading font-semibold text-h3">
       <slot name="topic" />
     </h2>
     <div class="separator" />

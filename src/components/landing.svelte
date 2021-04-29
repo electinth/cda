@@ -14,7 +14,7 @@
   <div class="landing-intro">
     <div class="flex flex-col h-screen">
       <h1
-        class="text-h4 md:text-h1 font-semibold text-center mt-44 md:mt-52 p-2 bg-white md:bg-opacity-0"
+        class="font-heading text-h4 md:text-h1 font-bold text-center mt-44 md:mt-52 p-2 bg-white md:bg-opacity-0"
       >
         ทำความรู้จักสมาชิกสภาร่างรัฐธรรมนูญ (สสร.)<br />
         แต่ละชุดในประวัติศาสตร์การเมืองไทย

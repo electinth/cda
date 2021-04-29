@@ -19,9 +19,8 @@ module.exports = {
   darkMode: false,
   theme: {
     fontFamily: {
-      heading: ['Kondolar Thai', ...defaultTheme.fontFamily.serif],
-      subtitle: ['Anuphan', ...defaultTheme.fontFamily.sans],
-      body: ['Bai Jamjuri', ...defaultTheme.fontFamily.sans],
+      heading: ['Trirong', ...defaultTheme.fontFamily.serif],
+      body: ['Bai Jamjuree', ...defaultTheme.fontFamily.sans],
     },
     fontSize: {
       h1: ['61px', '84px'],
