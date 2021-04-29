@@ -18,7 +18,6 @@ jobs:
       - run: npm run build:export
         env:
           BASE_PATH: cda
-          SITE_URL: https://electinth.github.io/cda
       - uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}

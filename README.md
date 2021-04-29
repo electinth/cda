@@ -7,7 +7,7 @@ Storytelling about CDA throughout Thai history
 We build as a static site
 
 - Staging: https://electinth.github.io/cda/
-- Production: Not deployed yet
+- Production: https://elect.in.th/cda
 
 ## Tech stack
 
@@ -25,7 +25,3 @@ We build as a static site
 ## Build
 
 Run `export` with config environment
-
-```bash
-BASE_PATH=<site_base_path> SITE_URL=<site_absolute_url> GTAG=G-<google_analytics_id> yarn export
-```
