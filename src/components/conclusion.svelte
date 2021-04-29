@@ -2,7 +2,7 @@
   import GoldenFrame from './golden-frame.svelte';
 </script>
 
-<div class="landing-detail flex mt-72 md:mt-96 px-1">
+<div class="landing-detail flex px-1 -mx-3 md:-mx-8">
   <GoldenFrame class="transform -translate-y-1/3">
     <p>
       รายละเอียดน่าสนใจเกี่ยวกับสมาชิกสภาร่างรัฐธรรมนูญทั้ง 4

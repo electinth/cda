@@ -109,9 +109,9 @@
   </section>
 
   <BarSection />
-</div>
 
-<Conclusion />
+  <Conclusion />
+</div>
 
 <style>
   :global(p) {
