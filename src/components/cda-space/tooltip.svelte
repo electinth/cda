@@ -7,9 +7,12 @@
   export let image: string;
 </script>
 
-<img
-  class="absolute transform -translate-x-1/2 -translate-y-full p-1 rounded-full shadow object-cover bg-white"
+<object
+  title={alt}
+  data={image}
   style="top: {y - TOP_OFFSET}px; left: {x}px;"
-  src={image}
-  {alt}
-/>
+  type="image/png"
+  class="absolute transform -translate-x-1/2 -translate-y-full p-1 rounded-full shadow object-cover bg-white"
+>
+  <img src="images/people-default.png" {alt} />
+</object>

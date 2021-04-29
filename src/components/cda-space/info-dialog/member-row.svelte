@@ -11,11 +11,14 @@
 
 <div class="flex flex-row space-x-2">
   {#if image}
-    <img
-      src={image}
-      alt={name}
+    <object
+      title={name}
+      data={image}
+      type="image/png"
       class="rounded-full border border-black w-12 h-12 object-cover my-auto"
-    />
+    >
+      <img src="images/people-default.png" alt={name} />
+    </object>
   {/if}
   <div class="flex-1 flex flex-col space-y-1 my-auto">
     <div class="flex flex-row space-x-1">
