@@ -20,7 +20,7 @@
     <div class="text-center w-full max-w-screen-lg m-auto space-y-2">
       <p class="text-h4 font-heading font-bold">ELECT</p>
       <p class="text-h6 leading-normal">
-        จะพาทุกคนทำความรู้จักสมาชิกสภาร่างรัฐธรรมนูญ (สสร.) ทั้ง 4 ชุด
+        ขอพาทุกคนทำความรู้จักสมาชิกสภาร่างรัฐธรรมนูญ (สสร.) ทั้ง 4 ชุด
         ในประเทศไทย ผ่านการนำเสนอด้วย 10 หัวข้อที่น่าสนใจเกี่ยวกับ สสร. แต่ละชุด
       </p>
     </div>
@@ -30,10 +30,10 @@
 
   <section>
     <Header number={1}>
-      <svelte:fragment slot="topic">ที่มาของสสร.</svelte:fragment>
+      <svelte:fragment slot="topic">ที่มาของ สสร.</svelte:fragment>
       <svelte:fragment slot="description">
         ที่มาของสมาชิกสภาร่างรัฐธรรมนูญ (สสร.) 4 ชุด ของประเทศไทย
-        มาจากเลือกตั้งโดยรัฐสภา 2 ชุด และการแต่งตั้งโดยพระมหากษัตริย์ 2 ชุด
+        มาจากการเลือกตั้งโดยรัฐสภา 2 ชุด และการแต่งตั้งโดยพระมหากษัตริย์ 2 ชุด
         ซึ่งยังไม่เคยมีสมาชิกสภาร่างรัฐธรรมนูญชุดใดที่มาจากการเลือกตั้งโดยตรงของประชาชน
       </svelte:fragment>
     </Header>

@@ -52,7 +52,7 @@
       </li>
       <li>
         <LinkExternal
-          href="http://wiki.kpi.ac.th/index.php?title=สภาร่างรัฐธรรมนูญ#cite_note-4"
+          href="http://wiki.kpi.ac.th/index.php?title=สภาร่างรัฐธรรมนูญ"
           >บทความ “สภาร่างรัฐธรรมนูญ” จากเว็บไซต์ฐานข้อมูลการเมืองการปกครอง
           สถาบันพระปกเกล้า
         </LinkExternal>
@@ -113,12 +113,30 @@
     </p>
   </div>
 
+  <div class="space-y-4 md:space-y-6">
+    <h2 class="text-h4 font-bold">นโยบายการนำข้อมูลไปใช้ต่อ</h2>
+    <p>
+      ELECT มีความตั้งใจที่พัฒนาทุกโปรเจ็กต์ให้เป็น Open Source
+      และเปิดข้อมูลเป็น Open Data ภายใต้เงื่อนไข Creative Commons
+      Attribution-ShareAlike License คือสามารถนำไปเผยแพร่และดัดแปลงได้
+      โดยต้องระบุที่มา แต่ห้ามนำไปใช้เพื่อการค้า
+      และต้องเผยแพร่งานดัดแปลงโดยใช้สัญญาอนุญาตชนิดเดียวกัน
+    </p>
+    <p>
+      หากมีข้อสงสัยต้องการสอบถามเพิ่มเติม
+      ประสงค์แจ้งเปลี่ยนแปลงหรือเพิ่มเติมข้อมูลเพื่อความถูกต้อง
+      หรือมีข้อเสนอแนะใด ๆ สามารถติดต่อได้ที่ contact [at] elect.in.th
+    </p>
+  </div>
+
   <div class="flex justify-center">
     <a
-      href="/#"
+      href="https://docs.google.com/spreadsheets/d/1WqGp8hiHgOUhfVJams0WK6zorXhA2Td3coXqw0j2bvs/edit?usp=sharing"
       target="_blank"
       rel="noopener noreferrer"
-      class="text-white bg-black rounded px-4 py-2">ดาวโหลดข้อมูล</a
+      class="border border-black hover:text-white hover:bg-black rounded px-4 py-2"
     >
+      ดาวน์โหลดข้อมูล
+    </a>
   </div>
 </div>

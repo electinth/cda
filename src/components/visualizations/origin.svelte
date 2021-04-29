@@ -90,7 +90,7 @@
       <GroupBox class="flex flex-col space-y-2">
         <PopulationRow
           isLarge
-          label="จำนวนสสร."
+          label="จำนวน สสร."
           amount={displayMembers.length}
         />
         <SubgroupBox class="max-h-64 md:max-h-96 overflow-y-auto">
