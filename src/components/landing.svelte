@@ -30,7 +30,7 @@
     </div>
   </div>
 
-  <div class="landing-detail flex mb-24 px-1">
+  <div class="landing-detail flex mb-24">
     <GoldenFrame class="transform translate-y-24">
       <p>
         นับตั้งแต่การเปลี่ยนแปลงการปกครองจากระบอบสมบูรณาญาสิทธิราชย์เป็นระบอบประชาธิปไตยอันมีพระมหากษัตริย์ทรงเป็นพระประมุข

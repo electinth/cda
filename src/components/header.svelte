@@ -3,7 +3,7 @@
 </script>
 
 <div
-  class="flex flex-col justify-center items-center my-9 text-center -mx-2 md:-mx-8"
+  class="flex flex-col justify-center items-center my-9 text-center -mx-3 md:-mx-8"
 >
   <div class="font-semibold">
     หัวข้อที่ {number}
@@ -17,7 +17,7 @@
     <div class="separator" />
   </div>
 
-  <p class="max-w-4xl w-full mx-auto px-2 md:px-8 text-h6 mt-6">
+  <p class="max-w-4xl w-full mx-auto px-3 md:px-8 text-h6 mt-6">
     <slot name="description" />
   </p>
 </div>

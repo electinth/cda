@@ -15,8 +15,8 @@
 
 <Landing />
 
-<div class="space-y-52 md:space-y-72 px-2 md:px-8">
-  <section class="space-y-8 px-2 md:px-8 text-center">
+<div class="space-y-screen-h-1/2 px-3 md:px-8">
+  <section class="space-y-8 px-3 md:px-8 text-center">
     <div class="text-center w-full max-w-screen-lg m-auto space-y-2">
       <p class="text-h4 font-heading font-bold">ELECT</p>
       <p class="text-h6 leading-normal">

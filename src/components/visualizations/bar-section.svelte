@@ -130,5 +130,7 @@
 </script>
 
 {#each Object.entries(ChartsProps) as [, props]}
-  <Bargroup bind:barWidth={w} {props} {X} {dataList} />
+  <section>
+    <Bargroup bind:barWidth={w} {props} {X} {dataList} />
+  </section>
 {/each}

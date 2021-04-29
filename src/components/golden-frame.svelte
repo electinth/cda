@@ -1,8 +1,10 @@
 <div
-  class="frame m-auto p-2 md:p-8 text-h6 text-center w-full max-w-lg rounded-sm {$$props.class ||
+  class="frame m-auto p-6 text-h6 text-center w-full max-w-lg rounded-sm {$$props.class ||
     ''}"
 >
-  <div class="bg-white rounded-sm p-2 md:p-8 border border-black space-y-4">
+  <div
+    class="bg-white rounded-sm p-4 md:p-8 border border-black space-y-4 text-body1"
+  >
     <slot />
   </div>
 </div>

@@ -36,6 +36,9 @@ module.exports = {
       colors: {
         gold: '#f1edd6',
       },
+      spacing: {
+        'screen-h-1/2': '50vh',
+      },
     },
   },
   variants: {},
