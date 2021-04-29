@@ -17,7 +17,7 @@
     <div class="separator" />
   </div>
 
-  <p class="max-w-4xl w-full mx-auto px-3 md:px-8 text-h6 mt-6">
+  <p class="max-w-4xl w-full mx-auto px-3 md:px-8 text-h6 mt-6 leading-normal">
     <slot name="description" />
   </p>
 </div>
